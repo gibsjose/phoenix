@@ -57,7 +57,8 @@ ASRC =
 
 # List any extra directories to look for include files here.
 #     Each directory must be seperated by a space.
-EXTRAINCDIRS = utilities i2cmaster
+EXTRAINCDIRS = utilities i2cmaster /opt/homebrew-cask/Caskroom/arduino/1.6.5-r5/Arduino.app/Contents/Java/hardware/tools/avr/avr/include
+
 
 # Optional compiler flags.
 #  -g:        generate debugging information (for GDB, or for COFF conversion)
@@ -65,7 +66,7 @@ EXTRAINCDIRS = utilities i2cmaster
 #  -f...:     tuning, see gcc manual and avr-libc documentation
 #  -Wall...:  warning level
 #  -Wa,...:   tell GCC to pass this to the assembler.
-#    -ahlms:  create assembler listing
+#  -ahlms:    create assembler listing
 CFLAGS = -g -O$(OPT) \
 -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums \
 -Wall -Wstrict-prototypes \
@@ -90,8 +91,7 @@ ASFLAGS = -Wa,-adhlns=$(<:.S=.lst),-gstabs
 #  -Wl,...:   tell GCC to pass this to linker.
 #  -Map:      create map file
 #  --cref:    add cross reference to  map file
-LDFLAGS = -Wl,-Map=$(TARGET).map,--cref
-
+LDFLAGS = -Wl,-Map=$(TARGET).map,--cref -L/opt/homebrew-cask/Caskroom/arduino/1.6.5-r5/Arduino.app/Contents/Java/hardware/tools/avr/avr/lib
 
 # -------------------------------------------------------------
 # Additional libraries
