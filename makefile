@@ -91,7 +91,7 @@ ASFLAGS = -Wa,-adhlns=$(<:.S=.lst),-gstabs
 #  -Wl,...:   tell GCC to pass this to linker.
 #  -Map:      create map file
 #  --cref:    add cross reference to  map file
-LDFLAGS = -Wl,-Map=$(TARGET).map,--cref -L/opt/homebrew-cask/Caskroom/arduino/1.6.5-r5/Arduino.app/Contents/Java/hardware/tools/avr/avr/lib
+LDFLAGS = -Wl,-Map=$(TARGET).map,--cref
 
 # -------------------------------------------------------------
 # Additional libraries
