@@ -1,0 +1,21 @@
+#Binary Files
+*.bin
+*.hex
+*.eep
+*.cof
+*.elf
+*.map
+*.sym
+*.lss
+*.o
+*.lst
+*.d
+
+#Temporary Files
+*~
+~*
+*#
+.#*
+
+#Target
+jellyfish
