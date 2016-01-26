@@ -31,16 +31,35 @@ sudo apt-get install avrdude
 On Windows install `WinAVR` ([winavr.sourceforge.net/](http://winavr.sourceforge.net/)) and use `cygwin` to emulate a Terminal ([www.cygwin.com/](https://www.cygwin.com/)).
 
 #### OS X
-On OS X, install Homebrew ([http://brew.sh/](http://brew.sh/)) and then:
-```bash
-brew tap osx-cross/avr
-brew install avr-libc
-```
+Install Homebrew ([http://brew.sh/](http://brew.sh/)) and then:
 ```bash
 brew install avrdude
 ```
+<!-- ```bash
+brew tap osx-cross/avr
+brew install avr-libc
+``` -->
 
 > **Caveat:** To use a non-AVR programmer, such as the Olimex version of the AVRISP mkII, you will need to use version 5.11.1 or lower of `avrdude`, which is not obtainable via Homebrew. Either manually build it from source, or you can fool Homebrew into using the 5.11.1 source tarball instead of its own by changing the SHA256 checksum in the `avrdude.rb` formula.
+
+Install the Arduino IDE either via Homebrew Cask:
+```bash
+brew cask install arduino
+```
+
+Or manually download it from the Arduino website: https://www.arduino.cc/download_handler.php?f=/arduino-1.6.7-macosx.zip
+
+Include Arduino's binaries in your `PATH`:
+
+In your `~/.bashrc`:
+```bash
+export PATH="/Applications/Arduino.app/Contents/Java/hardware/tools/avr/bin/:$PATH"
+```
+
+Or if using `fish`, in your `~/.config/fish/config.fish`:
+```bash
+set -g -x PATH '/Applications/Arduino.app/Contents/Java/hardware/tools/avr/bin/' $PATH
+```
 
 ### Configure the Environment
 Next you need to set up a few environmental variables:
