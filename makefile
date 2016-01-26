@@ -57,7 +57,7 @@ ASRC =
 
 # List any extra directories to look for include files here.
 #     Each directory must be seperated by a space.
-EXTRAINCDIRS = utilities i2cmaster /opt/homebrew-cask/Caskroom/arduino/1.6.5-r5/Arduino.app/Contents/Java/hardware/tools/avr/avr/include
+EXTRAINCDIRS = utilities i2cmaster /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include
 
 
 # Optional compiler flags.
