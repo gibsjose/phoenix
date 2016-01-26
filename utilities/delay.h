@@ -1,7 +1,7 @@
 #ifndef DELAY_H
 #define DELAY_H
 
-#include "../rfcx-globals.h"    //F_CPU definition
+#include "../jellyfish-globals.h"    //F_CPU definition
 
 #include <util/delay.h>
 #include <avr/interrupt.h>

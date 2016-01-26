@@ -1,17 +1,19 @@
 /**********************************************************
-*	RFCx Microcontroller Software - Global Definitions
+*   Jellyfish FSW - Globals
 *
-*	Kalee Stutzman 	(stutzmak@mail.gvsu.edu)
-*	Joe Gibson		(gibsjose@mail.gvsu.edu)
+*   25 Jan 2016
 *
-*	08 July 2015
+*   Joe Gibson 						(joseph.gibson@nasa.gov)
+*	Jordi Vila Hernandez de Lorenzo	(jordi.vila.hdl@gmail.com)
 *
-*   www.rfcx.org
+*   License: MIT (http://user.mit-license.org)
+*
+*   https://github.com/gibsjose/jellyfish
 **********************************************************/
 
-#ifndef RFCX_GLOBALS_H
-#define RFCX_GLOBALS_H
+#ifndef JELLYFISH_GLOBALS_H
+#define JELLYFISH_GLOBALS_H
 
 #define F_CPU 8000000UL     //Clock Speed (Hz): Note that USART is garbled when using 1MHz instead of 8MHz
 
-#endif//RFCX_GLOBALS_H
+#endif//JELLYFISH_GLOBALS_H

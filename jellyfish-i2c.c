@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "rfcx-i2c.h"
+#include "jellyfish-i2c.h"
 
 //Initialize I2C peripheral
 void rfcx_i2c_init(void) {
