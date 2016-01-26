@@ -109,8 +109,7 @@ LDFLAGS += -lm
 # -------------------------------------------------------------
 # Programming support using avrdude. Settings and variables.
 #
-# Programming hardware: alf avr910 avrisp bascom bsd
-# dt006 pavr picoweb pony-stk200 sp12 stk200 stk500
+# Programming hardware: avrispmkII, arduino, or usbtiny
 #
 # Type: avrdude -c ?
 # to get a full listing.
@@ -157,8 +156,12 @@ OBJCOPY = avr-objcopy
 OBJDUMP = avr-objdump
 SIZE = avr-size
 
-# Programming support using avrdude.
-AVRDUDE = avrdude
+# Programming support using avrdude
+# Set to `avrdude` to use the version supplied with the Arduino IDE
+# Set to `/usr/local/Cellar/avrdude/6.1/bin/avrdude` to use the downgraded version 5.11.1
+# for compatibility with the Olimex brand AVRISP mkII programmer
+AVRDUDE = /usr/local/Cellar/avrdude/6.1/bin/avrdude
+# AVRDUDE = avrdude
 
 REMOVE = rm -f
 COPY = cp
