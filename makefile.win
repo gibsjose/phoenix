@@ -57,8 +57,7 @@ ASRC =
 
 # List any extra directories to look for include files here.
 #     Each directory must be seperated by a space.
-EXTRAINCDIRS = utilities i2cmaster /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include
-
+EXTRAINCDIRS = utilities i2cmaster "C:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include"
 
 # Optional compiler flags.
 #  -g:        generate debugging information (for GDB, or for COFF conversion)
@@ -152,8 +151,8 @@ SIZE = avr-size
 # Set to `avrdude` to use the version supplied with the Arduino IDE
 # Set to `/usr/local/Cellar/avrdude/6.1/bin/avrdude` to use the downgraded version 5.11.1
 # for compatibility with the Olimex brand AVRISP mkII programmer
-AVRDUDE = /usr/local/Cellar/avrdude/6.1/bin/avrdude
-# AVRDUDE = avrdude
+# AVRDUDE = /usr/local/Cellar/avrdude/6.1/bin/avrdude
+AVRDUDE = avrdude
 
 REMOVE = rm -f
 COPY = cp
