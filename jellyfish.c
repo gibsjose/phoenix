@@ -62,7 +62,7 @@ int main(void) {
 	rfcx_temp_data_init(&lm75);
 	rfcx_humid_data_init(&hih6130);
 	rfcx_adc_data_init(&ads1015);
-	rfcx_batteries_data_init(&batteries);
+	// rfcx_batteries_data_init(&batteries);
 
 	//Main Loop
 	while(true) {
@@ -161,7 +161,7 @@ int port_init(void) {
 	DDRB |= _BV(LED_DD);
 
 	//Initialize battery inputs/outputs
-	rfcx_batteries_init();
+	// rfcx_batteries_init();
 
 	return 0;
 }

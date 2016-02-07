@@ -57,7 +57,8 @@ ASRC =
 
 # List any extra directories to look for include files here.
 #     Each directory must be seperated by a space.
-EXTRAINCDIRS = utilities i2cmaster
+EXTRAINCDIRS = utilities i2cmaster /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include
+
 
 # Optional compiler flags.
 #  -g:        generate debugging information (for GDB, or for COFF conversion)
@@ -65,7 +66,7 @@ EXTRAINCDIRS = utilities i2cmaster
 #  -f...:     tuning, see gcc manual and avr-libc documentation
 #  -Wall...:  warning level
 #  -Wa,...:   tell GCC to pass this to the assembler.
-#    -ahlms:  create assembler listing
+#  -ahlms:    create assembler listing
 CFLAGS = -g -O$(OPT) \
 -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums \
 -Wall -Wstrict-prototypes \
@@ -92,7 +93,6 @@ ASFLAGS = -Wa,-adhlns=$(<:.S=.lst),-gstabs
 #  --cref:    add cross reference to  map file
 LDFLAGS = -Wl,-Map=$(TARGET).map,--cref
 
-
 # -------------------------------------------------------------
 # Additional libraries
 
@@ -109,8 +109,7 @@ LDFLAGS += -lm
 # -------------------------------------------------------------
 # Programming support using avrdude. Settings and variables.
 #
-# Programming hardware: alf avr910 avrisp bascom bsd
-# dt006 pavr picoweb pony-stk200 sp12 stk200 stk500
+# Programming hardware: avrispmkII, arduino, or usbtiny
 #
 # Type: avrdude -c ?
 # to get a full listing.
@@ -140,14 +139,6 @@ AVRDUDE_FLAGS = -p $(MCU) -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER)
 
 
 # -------------------------------------------------------------
-# Define directories, if needed.
-# @TODO Can this be removed?
-DIRAVR = c:/winavr
-DIRAVRBIN = $(DIRAVR)/bin
-DIRAVRUTILS = $(DIRAVR)/utils/bin
-DIRINC = .
-DIRLIB = $(DIRAVR)/avr/lib
-
 # Define programs and commands.
 SHELL = bash
 
@@ -157,8 +148,12 @@ OBJCOPY = avr-objcopy
 OBJDUMP = avr-objdump
 SIZE = avr-size
 
-# Programming support using avrdude.
-AVRDUDE = avrdude
+# Programming support using avrdude
+# Set to `avrdude` to use the version supplied with the Arduino IDE
+# Set to `/usr/local/Cellar/avrdude/6.1/bin/avrdude` to use the downgraded version 5.11.1
+# for compatibility with the Olimex brand AVRISP mkII programmer
+AVRDUDE = /usr/local/Cellar/avrdude/6.1/bin/avrdude
+# AVRDUDE = avrdude
 
 REMOVE = rm -f
 COPY = cp

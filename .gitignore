@@ -19,3 +19,6 @@
 
 #Target
 jellyfish
+
+#Ignore Generic Makefile
+makefile
