@@ -43,8 +43,12 @@ OPT = s
 # Target file name (without extension).
 TARGET = phoenix
 
+# Source directory
+SRC_DIR = src
+
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c phoenix-i2c.c utilities/usart.c utilities/delay.c i2cmaster/twimaster.c
+# SRC = $(TARGET).c phoenix-i2c.c utilities/usart.c utilities/delay.c i2cmaster/twimaster.c
+SRC = $(SRC_DIR)/$(TARGET).c $(SRC_DIR)/phoenix-i2c.c $(SRC_DIR)/uart/uart.c $(SRC_DIR)/delay/delay.c $(SRC_DIR)/i2cmaster/twimaster.c
 
 # List Assembler source files here.
 # Make them always end in a capital .S.  Files ending in a lowercase .s
@@ -57,7 +61,7 @@ ASRC =
 
 # List any extra directories to look for include files here.
 #     Each directory must be seperated by a space.
-EXTRAINCDIRS = utilities i2cmaster /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include
+EXTRAINCDIRS = $(SRC_DIR)/delay $(SRC_DIR)/i2cmaster $(SRC_DIR)/uart /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include
 
 
 # Optional compiler flags.

@@ -24,8 +24,9 @@
 #include <stdbool.h>
 
 #include "phoenix-i2c.h"
-#include "utilities/delay.h"
-#include "utilities/usart.h"
+#include "delay/delay.h"
+#include "uart/uart.h"
+//#include "utilities/usart.h"
 
 //USART Settings
 #define FOSC F_CPU          //Clock Speed (Hz)
