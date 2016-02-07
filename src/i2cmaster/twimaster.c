@@ -11,8 +11,6 @@
 
 #include <i2cmaster.h>
 
-#include "../utilities/usart.h"
-
 /* define CPU frequency in Mhz here if not defined in Makefile */
 #ifndef F_CPU
 #define F_CPU 8000000UL

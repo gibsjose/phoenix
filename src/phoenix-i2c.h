@@ -19,8 +19,8 @@
 #include "i2cmaster/i2cmaster.h"
 
 #include "phoenix-globals.h"
-#include "utilities/delay.h"
-#include "utilities/usart.h"
+#include "delay/delay.h"
+#include "uart/uart.h"
 
 //Simple Error Representation
 #define OK      0

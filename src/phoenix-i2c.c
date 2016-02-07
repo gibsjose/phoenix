@@ -38,13 +38,13 @@ int rfcx_temp_init() {
     address = TEMP_ADDR;
 
     //sprintf(str, "Device address: 0x%02X\r\n", address);
-    //usart_send_string(str);
+    //uart_puts(str);
 
     //Begin TWI communication
     ret = i2c_start(address + I2C_WRITE);
     if(ret) {
         i2c_stop();
-        usart_send_string("<-- ERROR: Unable to start communication-->\r\n");
+        uart_puts("<-- ERROR: Unable to start communication-->\r\n");
         return ERROR;
     }
 
@@ -52,7 +52,7 @@ int rfcx_temp_init() {
     ret = i2c_write(value);
     if(ret) {
         i2c_stop();
-        usart_send_string("<-- ERROR: Could not set pointer to LM75 config register -->\r\n");
+        uart_puts("<-- ERROR: Could not set pointer to LM75 config register -->\r\n");
         return ERROR;
     }
 
@@ -60,7 +60,7 @@ int rfcx_temp_init() {
     ret = i2c_write(value2);
     if(ret) {
         i2c_stop();
-        usart_send_string("<-- ERROR: Could not enable LM75 -->\r\n");
+        uart_puts("<-- ERROR: Could not enable LM75 -->\r\n");
         return ERROR;
     }
 
@@ -157,7 +157,7 @@ int rfcx_read_temp(temp_data_t * data) {
     ret = i2c_write(0x00);
     if(ret) {
         i2c_stop();
-        usart_send_string("<-- ERROR: Could not set pointer register to temp (0x00)-->\r\n");
+        uart_puts("<-- ERROR: Could not set pointer register to temp (0x00)-->\r\n");
         return ERROR;
     }
 
@@ -165,7 +165,7 @@ int rfcx_read_temp(temp_data_t * data) {
     ret = i2c_rep_start(TEMP_ADDR + I2C_READ);
     if(ret) {
         i2c_stop();
-        usart_send_string("<-- ERROR: Could not repeat start temp sensor-->\r\n");
+        uart_puts("<-- ERROR: Could not repeat start temp sensor-->\r\n");
         return ERROR;
     }
 
@@ -246,22 +246,22 @@ int rfcx_read_adc_pin(adc_data_t * data, int pin) {
     //Store correctly based on pin
     switch(pin) {
         case ADC_INPUT_VOLTAGE_PIN:
-            usart_send_string("Input Voltage: ");
+            uart_puts("Input Voltage: ");
             data->raw.input_voltage_msb = msb;
             data->raw.input_voltage_lsb = lsb;
             break;
         case ADC_OUTPUT_VOLTAGE_PIN:
-            usart_send_string("Output Voltage: ");
+            uart_puts("Output Voltage: ");
             data->raw.output_voltage_msb = msb;
             data->raw.output_voltage_lsb = lsb;
             break;
         case ADC_INPUT_CURRENT_PIN:
-            usart_send_string("Input Current: ");
+            uart_puts("Input Current: ");
             data->raw.input_current_msb = msb;
             data->raw.input_current_lsb = lsb;
             break;
         case ADC_OUTPUT_CURRENT_PIN:
-            usart_send_string("Output Current: ");
+            uart_puts("Output Current: ");
             data->raw.output_current_msb = msb;
             data->raw.output_current_lsb = lsb;
             break;
@@ -273,7 +273,7 @@ int rfcx_read_adc_pin(adc_data_t * data, int pin) {
 
     char str[32];
     sprintf(str, "msb: 0x%02X, lsb: 0x%02X\r\n", msb, lsb);
-    usart_send_string(str);
+    uart_puts(str);
 
     return OK;
 }
@@ -295,7 +295,7 @@ int rfcx_read_humid(humid_data_t * data) {
     ret = i2c_rep_start(HUMID_ADDR + I2C_READ);
     if(ret) {
         i2c_stop();
-        usart_send_string("<-- ERROR: Could not repeat start humidity sensor-->\r\n");
+        uart_puts("<-- ERROR: Could not repeat start humidity sensor-->\r\n");
         return ERROR;
     }
 
@@ -357,13 +357,13 @@ float convert_adc_data_pin(adc_data_t * data, int pin) {
 
     char str[32];
     sprintf(str, "msb: 0x%02X, lsb: 0x%02X\r\n", msb, lsb);
-    usart_send_string(str);
+    uart_puts(str);
 
     //Shift 'em
     tmp = ((msb << 8) | lsb) >> 4;
 
     sprintf(str, "tmp: 0x%02X\r\n", tmp);
-    usart_send_string(str);
+    uart_puts(str);
 
     //Scale by resolution
     voltage = ((float)tmp / ADC_RESOLUTION) * ADC_VOLTAGE_MAX;
@@ -373,7 +373,7 @@ float convert_adc_data_pin(adc_data_t * data, int pin) {
 
     dtostrf((double)voltage, 5, 2, tmp_str);
     sprintf(message, "Raw Voltage (%d):  %sV\r\n", (pin + 4), tmp_str);
-    usart_send_string(message);
+    uart_puts(message);
 
     switch(pin) {
         case ADC_INPUT_VOLTAGE_PIN:

@@ -45,18 +45,18 @@ int main(void) {
 
 	memset(message, 0, 128);
 
-	//Initialize USART at 9600 baud (UBRR defined in rfcx-mcu.h)
-	usart_init(UBRR);
+	//Initialize UART at 9600 baud
+	uart_init(UART_BAUD_SELECT(BAUD, F_CPU));
 
 	//Initialization
-	usart_send_string("Initializing...\r\n");
+	uart_puts("Initializing...\r\n");
 
 	ret = init();
 
 	if(ret) {
-		usart_send_string("<-- ERROR: Initialization failed -->\r\n");
+		uart_puts("<-- ERROR: Initialization failed -->\r\n");
 	} else {
-		usart_send_string("Initialization successful\r\n");
+		uart_puts("Initialization successful\r\n");
 	}
 
 	rfcx_temp_data_init(&lm75);
@@ -68,54 +68,54 @@ int main(void) {
 	while(true) {
 		//Sensor Loop
 		if(sensors) {
-			usart_send_string("\r\n-----------------------------\r\n");
+			uart_puts("\r\n-----------------------------\r\n");
 			//Temperature Sensor
 			rfcx_read_temp(&lm75);
 
-			usart_send_string("LM75BD:\r\n");
+			uart_puts("LM75BD:\r\n");
 			dtostrf((double)lm75.temperature, 5, 2, tmp_str);
 			sprintf(message, "\tTemperature: %sC\r\n", tmp_str);
-			usart_send_string(message);
+			uart_puts(message);
 
 			//Humidity Sensor
 			rfcx_read_humid(&hih6130);
 
-			usart_send_string("HIH6130:\r\n");
+			uart_puts("HIH6130:\r\n");
 			dtostrf((double)hih6130.humidity, 5, 2, tmp_str);
 			sprintf(message, "\tHumidity: %s%%\r\n", tmp_str);
-			usart_send_string(message);
+			uart_puts(message);
 
 			dtostrf((double)hih6130.temperature, 5, 2, tmp_str);
 			sprintf(message, "\tTemperature: %sC\r\n", tmp_str);
-			usart_send_string(message);
+			uart_puts(message);
 
 			rfcx_humid_status_string(humid_status, hih6130.status);
 			sprintf(message, "\tStatus: %s\r\n", humid_status);
-			usart_send_string(message);
+			uart_puts(message);
 
 			//Voltage/Current ADC
 			rfcx_read_adc(&ads1015);
 
 			dtostrf((double)ads1015.input_voltage, 5, 2, tmp_str);
 			sprintf(message, "\tInput Voltage:  %sV\r\n", tmp_str);
-			usart_send_string(message);
+			uart_puts(message);
 
 			dtostrf((double)ads1015.output_voltage, 5, 2, tmp_str);
 			sprintf(message, "\tOutput Voltage: %sV\r\n", tmp_str);
-			usart_send_string(message);
+			uart_puts(message);
 
 			dtostrf((double)ads1015.input_current * 1000.0, 5, 2, tmp_str);
 			sprintf(message, "\tInput Current:  %smA\r\n", tmp_str);
-			usart_send_string(message);
+			uart_puts(message);
 
 			dtostrf((double)ads1015.output_current * 1000.0, 5, 2, tmp_str);
 			sprintf(message, "\tOutput Current: %smA\r\n", tmp_str);
-			usart_send_string(message);
+			uart_puts(message);
 
 			//Battery Status
 			// rfcx_batteries_status(&batteries);
 			//
-			// usart_send_string("Batteries:\r\n");
+			// uart_puts("Batteries:\r\n");
 			// rfcx_battery_status_string(battery_1_status, batteries.battery_1.status);
 			// rfcx_battery_status_string(battery_2_status, batteries.battery_2.status);
 			//
@@ -123,9 +123,9 @@ int main(void) {
 			// 					"\tBattery 2 Status: %s\r\n",
 			// 					battery_1_status,
 			// 					battery_2_status);
-			// usart_send_string(message);
+			// uart_puts(message);
 
-			usart_send_string("-----------------------------\r\n");
+			uart_puts("-----------------------------\r\n");
 
 			//Clear sensor flag
 			sensors = false;
@@ -203,27 +203,27 @@ int device_init(void) {
 	//Initialize external I2C temp sensor (LM75BD)
 	ret = rfcx_temp_init();
 	if(ret) {
-		usart_send_string("<-- ERROR: Error initializing temp sensor -->\r\n");
+		uart_puts("<-- ERROR: Error initializing temp sensor -->\r\n");
 		return ret;
 	} else {
-		usart_send_string("Successfully initialized temp sensor\r\n");
+		uart_puts("Successfully initialized temp sensor\r\n");
 	}
 
 	//Initialize external I2C ADC (ADS1015)
 	ret = rfcx_adc_init();
 	if(ret) {
-		 usart_send_string("<-- ERROR: Error initializing ADC -->\r\n");
+		 uart_puts("<-- ERROR: Error initializing ADC -->\r\n");
 	} else {
-		 usart_send_string("Successfully initialized ADC\r\n");
+		 uart_puts("Successfully initialized ADC\r\n");
 	}
 
 	//Initialize external I2C humidity sensor (HIH6130)
 	ret = rfcx_humid_init();
 	if(ret) {
-		usart_send_string("<-- ERROR: Error initializing humidity sensor -->\r\n");
+		uart_puts("<-- ERROR: Error initializing humidity sensor -->\r\n");
 		return ret;
 	} else {
-		usart_send_string("Successfully initialized humidity sensor\r\n");
+		uart_puts("Successfully initialized humidity sensor\r\n");
 	}
 
 	return ret;
