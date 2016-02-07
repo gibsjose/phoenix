@@ -28,7 +28,7 @@
 MCU = atmega328p
 
 # Programming Interface ('arduino' for Arduino, 'avrispmkII' for the AVRISP mkII, or `usbtiny` for the Sparkfun AVR Pocket Programmer)
-JELLYFISH_PROGRAMMER ?= avrispmkII
+JELLYFISH_PROGRAMMER ?= arduino
 
 # Programmer Serial port (ex: usb, com5, ttyACM0)
 JELLYFISH_PORT ?= usb
