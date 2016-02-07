@@ -1,5 +1,5 @@
 /**********************************************************
-*   Jellyfish FSW - I2C
+*   Phoenix FSW - I2C
 *
 *   25 Jan 2016
 *
@@ -8,14 +8,14 @@
 *
 *   License: MIT (http://user.mit-license.org)
 *
-*   https://github.com/gibsjose/jellyfish
+*   https://github.com/gibsjose/phoenix
 **********************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
-#include "jellyfish-i2c.h"
+#include "phoenix-i2c.h"
 
 //Initialize I2C peripheral
 void rfcx_i2c_init(void) {

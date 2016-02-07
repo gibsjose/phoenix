@@ -1,5 +1,5 @@
 /**********************************************************
-*   Jellyfish FSW - Main
+*   Phoenix FSW - Main
 *
 *   25 Jan 2016
 *
@@ -8,10 +8,10 @@
 *
 *   License: MIT (http://user.mit-license.org)
 *
-*   https://github.com/gibsjose/jellyfish
+*   https://github.com/gibsjose/phoenix
 **********************************************************/
 
-#include "jellyfish.h"
+#include "phoenix.h"
 
 //Don't forget `volatile`!
 volatile bool sensors = false;

@@ -1,4 +1,4 @@
-# Jellyfish Drone FSW Makefile
+# Phoenix Drone FSW Makefile
 #
 # Note:
 # The warnings which appear while converting ELF to AVR Extended COFF (make extcoff)
@@ -28,10 +28,10 @@
 MCU = atmega328p
 
 # Programming Interface ('arduino' for Arduino, 'avrispmkII' for the AVRISP mkII, or `usbtiny` for the Sparkfun AVR Pocket Programmer)
-JELLYFISH_PROGRAMMER ?= arduino
+PHOENIX_PROGRAMMER ?= arduino
 
 # Programmer Serial port (ex: usb, com5, ttyACM0)
-JELLYFISH_PORT ?= usb
+PHOENIX_PORT ?= usb
 
 # Output format. (can be srec, ihex, binary)
 FORMAT = ihex
@@ -41,10 +41,10 @@ FORMAT = ihex
 OPT = s
 
 # Target file name (without extension).
-TARGET = jellyfish
+TARGET = phoenix
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c jellyfish-i2c.c utilities/usart.c utilities/delay.c i2cmaster/twimaster.c
+SRC = $(TARGET).c phoenix-i2c.c utilities/usart.c utilities/delay.c i2cmaster/twimaster.c
 
 # List Assembler source files here.
 # Make them always end in a capital .S.  Files ending in a lowercase .s
@@ -113,9 +113,9 @@ LDFLAGS += -lm
 # Type: avrdude -c ?
 # to get a full listing.
 #
-AVRDUDE_PROGRAMMER = $(JELLYFISH_PROGRAMMER)
+AVRDUDE_PROGRAMMER = $(PHOENIX_PROGRAMMER)
 
-AVRDUDE_PORT = $(JELLYFISH_PORT)	   # programmer connected to serial device
+AVRDUDE_PORT = $(PHOENIX_PORT)	   # programmer connected to serial device
 
 AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
 # AVRDUDE_WRITE_EEPROM = -U eeprom:w:$(TARGET).eep
