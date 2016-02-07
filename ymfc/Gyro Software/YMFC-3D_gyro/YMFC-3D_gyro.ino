@@ -13,11 +13,11 @@ void setup(){
   Serial.begin(9600);                                //Start the serial connetion @ 9600bps
 
   //The gyro is disabled by default and needs to be started
-  Wire.beginTransmission(105);                       //Start communication with the gyro (adress 1101001)
+  Wire.beginTransmission(107);                       //Start communication with the gyro (adress 1101001)
   Wire.write(0x20);                                  //We want to write to register 20
   Wire.write(0x0F);                                  //Set the register bits as 00001111 (Turn on the gyro and enable all axis)
   Wire.endTransmission();                            //End the transmission with the gyro
-  Wire.beginTransmission(105);                       //Start communication with the gyro (adress 1101001)
+  Wire.beginTransmission(107);                       //Start communication with the gyro (adress 1101001)
   Wire.write(0x23);                                  //We want to write to register 23
   Wire.write(0x80);                                  //Set the register bits as 10000000 (Block Data Update active)
   Wire.endTransmission();                            //End the transmission with the gyro
@@ -50,10 +50,10 @@ void loop(){
 }
 
 void gyro_signalen(){
-  Wire.beginTransmission(105);                       //Start communication with the gyro (adress 1101001)
+  Wire.beginTransmission(107);                       //Start communication with the gyro (adress 1101001)
   Wire.write(168);                                   //Start reading @ register 28h and auto increment with every read
   Wire.endTransmission();                            //End the transmission
-  Wire.requestFrom(105, 6);                          //Request 6 bytes from the gyro
+  Wire.requestFrom(107, 6);                          //Request 6 bytes from the gyro
   while(Wire.available() < 6);                       //Wait until the 6 bytes are received
   lowByte = Wire.read();                             //First received byte is the low part of the angular data
   highByte = Wire.read();                            //Second received byte is the high part of the angular data
