@@ -36,7 +36,7 @@
 #define TIMER1_COUNT    ((FOSC / 1024) - 1)     //Timer 1 count value for CTC mode: 1 second, at 1024 prescaler
 
 //Pin Definitions
-#define LED_PIN     PB2     //PB2 is the board LED, PB5 is the Arduino LED
+#define LED_PIN     PB5     //PB2 is the board LED, PB5 is the Arduino LED
 #define LED_DD      DDB2
 
 int init(void);
