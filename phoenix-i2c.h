@@ -1,5 +1,5 @@
 /**********************************************************
-*   Jellyfish FSW - I2C
+*   Phoenix FSW - I2C
 *
 *   25 Jan 2016
 *
@@ -8,17 +8,17 @@
 *
 *   License: MIT (http://user.mit-license.org)
 *
-*   https://github.com/gibsjose/jellyfish
+*   https://github.com/gibsjose/phoenix
 **********************************************************/
 
-#ifndef JELLYFISH_I2C_H
-#define JELLYFISH_I2C_H
+#ifndef PHOENIX_I2C_H
+#define PHOENIX_I2C_H
 
 #include <avr/io.h>
 #include <string.h>
 #include "i2cmaster/i2cmaster.h"
 
-#include "jellyfish-globals.h"
+#include "phoenix-globals.h"
 #include "utilities/delay.h"
 #include "utilities/usart.h"
 
@@ -134,4 +134,4 @@ void convert_humid_data(humid_data_t *);
 //String Conversion Helpers
 void rfcx_humid_status_string(char *, unsigned char);
 
-#endif//JELLYFISH_I2C_H
+#endif//PHOENIX_I2C_H

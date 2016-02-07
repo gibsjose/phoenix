@@ -1,5 +1,5 @@
 /**********************************************************
-*   Jellyfish FSW - Main
+*   Phoenix FSW - Main
 *
 *   25 Jan 2016
 *
@@ -8,13 +8,13 @@
 *
 *   License: MIT (http://user.mit-license.org)
 *
-*   https://github.com/gibsjose/jellyfish
+*   https://github.com/gibsjose/phoenix
 **********************************************************/
 
-#ifndef JELLYFISH_H
-#define JELLYFISH_H
+#ifndef PHOENIX_H
+#define PHOENIX_H
 
-#include "jellyfish-globals.h"   //Global definitions
+#include "phoenix-globals.h"   //Global definitions
 
 #include <util/delay.h>
 #include <avr/interrupt.h>
@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#include "jellyfish-i2c.h"
+#include "phoenix-i2c.h"
 #include "utilities/delay.h"
 #include "utilities/usart.h"
 
@@ -45,4 +45,4 @@ int timer1_init(void);
 int peripheral_init(void);
 int device_init(void);
 
-#endif//JELLYFISH_H
+#endif//PHOENIX_H
