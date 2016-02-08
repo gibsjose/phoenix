@@ -61,7 +61,7 @@ ASRC =
 
 # List any extra directories to look for include files here.
 #     Each directory must be seperated by a space.
-EXTRAINCDIRS = $(SRC_DIR)/delay $(SRC_DIR)/i2cmaster $(SRC_DIR)/uart /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include
+EXTRAINCDIRS = $(SRC_DIR)/delay $(SRC_DIR)/i2cmaster $(SRC_DIR)/uart "C:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include"
 
 # Optional compiler flags.
 #  -g:        generate debugging information (for GDB, or for COFF conversion)
