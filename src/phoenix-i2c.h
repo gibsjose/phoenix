@@ -27,6 +27,7 @@
 #define ERROR   1
 
 //I2C Addresses
+#define GYRO_ADDR   0x6B    //01101011, 107 gyroJordi
 #define TEMP_ADDR   0x90    //1001CBA0, A = B = C = 0 (pulled up/down in hardware)
 #define ADC_ADDR    0x92    //1001XX1X, ADDR connected to VCC
 #define HUMID_ADDR  0x4E    //01001110, Pre-defined address (0x27 << 1)

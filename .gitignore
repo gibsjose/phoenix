@@ -22,3 +22,5 @@ phoenix
 
 #Ignore Generic Makefile
 makefile
+tags
+.tags
