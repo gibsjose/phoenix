@@ -16,13 +16,16 @@
 //Don't forget `volatile`!
 volatile bool sensors = false;
 
+volatile bool test = false;
+
 //Timer 1 Compare Interrupt Vector (1s CTC Timer)
 ISR(TIMER1_COMPA_vect) {
 	//Blink LED
 	PORTB ^= _BV(LED_PIN);
 
 	//Initiate a sensor reading
-	sensors = true;
+	//sensors = true;
+	test = true;
 }
 
 int main(void) {
@@ -59,13 +62,19 @@ int main(void) {
 		uart_puts("Initialization successful\r\n");
 	}
 
-	rfcx_temp_data_init(&lm75);
-	rfcx_humid_data_init(&hih6130);
-	rfcx_adc_data_init(&ads1015);
+	// rfcx_temp_data_init(&lm75);
+	// rfcx_humid_data_init(&hih6130);
+	// rfcx_adc_data_init(&ads1015);
 	// rfcx_batteries_data_init(&batteries);
 
 	//Main Loop
 	while(true) {
+		//Test loop
+		if(test) {
+			uart_puts("Alive...\r\n");
+			test = false;
+		}
+
 		//Sensor Loop
 		if(sensors) {
 			uart_puts("\r\n-----------------------------\r\n");
@@ -192,7 +201,7 @@ int peripheral_init(void) {
 	timer1_init();
 
 	//Initialize I2C (TWI) peripheral as a whole
-	rfcx_i2c_init();
+	// rfcx_i2c_init();
 
 	return 0;
 }
@@ -201,30 +210,30 @@ int device_init(void) {
 	int ret = 0;
 
 	//Initialize external I2C temp sensor (LM75BD)
-	ret = rfcx_temp_init();
-	if(ret) {
-		uart_puts("<-- ERROR: Error initializing temp sensor -->\r\n");
-		return ret;
-	} else {
-		uart_puts("Successfully initialized temp sensor\r\n");
-	}
+	// ret = rfcx_temp_init();
+	// if(ret) {
+	// 	uart_puts("<-- ERROR: Error initializing temp sensor -->\r\n");
+	// 	return ret;
+	// } else {
+	// 	uart_puts("Successfully initialized temp sensor\r\n");
+	// }
 
 	//Initialize external I2C ADC (ADS1015)
-	ret = rfcx_adc_init();
-	if(ret) {
-		 uart_puts("<-- ERROR: Error initializing ADC -->\r\n");
-	} else {
-		 uart_puts("Successfully initialized ADC\r\n");
-	}
+	// ret = rfcx_adc_init();
+	// if(ret) {
+	// 	 uart_puts("<-- ERROR: Error initializing ADC -->\r\n");
+	// } else {
+	// 	 uart_puts("Successfully initialized ADC\r\n");
+	// }
 
-	//Initialize external I2C humidity sensor (HIH6130)
-	ret = rfcx_humid_init();
-	if(ret) {
-		uart_puts("<-- ERROR: Error initializing humidity sensor -->\r\n");
-		return ret;
-	} else {
-		uart_puts("Successfully initialized humidity sensor\r\n");
-	}
+	// //Initialize external I2C humidity sensor (HIH6130)
+	// ret = rfcx_humid_init();
+	// if(ret) {
+	// 	uart_puts("<-- ERROR: Error initializing humidity sensor -->\r\n");
+	// 	return ret;
+	// } else {
+	// 	uart_puts("Successfully initialized humidity sensor\r\n");
+	// }
 
 	return ret;
 }

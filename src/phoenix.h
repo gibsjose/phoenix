@@ -38,7 +38,7 @@
 
 //Pin Definitions
 #define LED_PIN     PB5     //PB2 is the board LED, PB5 is the Arduino LED
-#define LED_DD      DDB2
+#define LED_DD      DDB5
 
 int init(void);
 int port_init(void);
