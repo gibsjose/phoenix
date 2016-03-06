@@ -6,7 +6,7 @@
 *   Joe Gibson 						(joseph.gibson@nasa.gov)
 *	Jordi Vila Hernandez de Lorenzo	(jordi.vila.hdl@gmail.com)
 *
-*   License: MIT (http://user.mit-license.org)
+*   License: MIT (http://gibsjose.mit-license.org)
 *
 *   https://github.com/gibsjose/phoenix
 **********************************************************/
