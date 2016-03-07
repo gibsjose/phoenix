@@ -15,11 +15,12 @@
 
 //Initialize gyroscope
 uint8_t gyro_init(gyro_t * gyro) {
-    uart_puts("Initializing Gyroscope");
+    uart_puts("Initializing Gyroscope\r\n");
+    uint8_t ret = 0;
 
     //Allocate memory for the gyro data structure if need be
     if(gyro == NULL) {
-        gyro = (gyro_t *) malloc(sizeof(gyro_t));
+        return ERROR;
     }
 
     //Begin TWI communication
@@ -82,18 +83,19 @@ uint8_t gyro_init(gyro_t * gyro) {
 
 //Calibrate gyroscope
 uint8_t gyro_calibrate(gyro_t * gyro) {
-    uart_puts("Starting gyroscope calibration");
+    uart_puts("Starting gyroscope calibration\r\n");
 
     if(gyro == NULL) {
+        uart_puts("NULL\r\n");
         return ERROR;
     }
 
     //Sum up 2000 measurements
     for (int i = 0; i < GYRO_CALIBRATION_STEPS; i++ ){
         gyro_read(gyro);
-        gyro->roll_cal += gyro->roll;
-        gyro->pitch_cal += gyro->pitch;
-        gyro->yaw_cal += gyro->yaw;
+        gyro->roll_offset += gyro->roll;
+        gyro->pitch_offset += gyro->pitch;
+        gyro->yaw_offset += gyro->yaw;
 
         //Print a '.' every 100 readings
         if(!(i % 100)) {
@@ -103,13 +105,15 @@ uint8_t gyro_calibrate(gyro_t * gyro) {
         //Delay 4ms
         delay_us(4000);
     }
+
+    return OK;
 }
 
 //Read pitch, roll, and yaw from gyroscope and
 // apply calibration offsets
 uint8_t gyro_read(gyro_t * gyro) {
-    unsigned char msb;
-    unsigned char lsb;
+    char msb = 0;
+    char lsb = 0;
 
     if(gyro == NULL) {
         return ERROR;
@@ -120,22 +124,21 @@ uint8_t gyro_read(gyro_t * gyro) {
     i2c_write(GYRO_READ_REG | GYRO_AUTO_INC);   //Point to read register (0x28) and enable auto increment
 
     //Read all six bytes
-    //@TODO Does this need to be a i2c_rep_start()
     i2c_rep_start(GYRO_ADDR + I2C_READ);
 
     //Roll
-    msb = i2c_readAck();
     lsb = i2c_readAck();
+    msb = i2c_readAck();
     gyro->roll = ROLL_COEFFICIENT * ((msb << 8) | lsb) - gyro->roll_offset;
 
     //Pitch
-    msb = i2c_readAck();
     lsb = i2c_readAck();
+    msb = i2c_readAck();
     gyro->pitch = PITCH_COEFFICIENT * ((msb << 8) | lsb) - gyro->pitch_offset;
 
     //Yaw
-    msb = i2c_readAck();
-    lsb = i2c_readNak();
+    lsb = i2c_readAck();
+    msb = i2c_readNak();
     gyro->yaw = YAW_COEFFICIENT * ((msb << 8) | lsb) - gyro->yaw_offset;
 
     i2c_stop();
@@ -147,11 +150,11 @@ uint8_t gyro_read(gyro_t * gyro) {
 void gyro_print(gyro_t * gyro) {
     uart_puts("P: ");
     uart_putd(gyro->pitch);
-    uart_puts(" --- ")
+    uart_puts(" --- ");
 
     uart_puts(" R: ");
     uart_putd(gyro->roll);
-    uart_puts(" --- ")
+    uart_puts(" --- ");
 
     uart_puts(" Y: ");
     uart_putd(gyro->yaw);

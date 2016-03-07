@@ -27,7 +27,7 @@ ISR(TIMER1_COMPA_vect) {
 
 int main(void) {
 	//Data structures
-	gyro_t * gyro;
+	gyro_t * gyro = (gyro_t *)malloc(sizeof(gyro_t));
 
 	int ret = 0;
 
@@ -120,7 +120,7 @@ int peripheral_init(void) {
 	timer1_init();
 
 	//Initialize I2C (TWI) peripheral as a whole
-	// rfcx_i2c_init();
+	i2c_init();
 
 	return 0;
 }

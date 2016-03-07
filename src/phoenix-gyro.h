@@ -16,6 +16,7 @@
 
 #include <avr/io.h>
 #include <string.h>
+#include <stdlib.h>
 #include "i2cmaster/i2cmaster.h"
 
 #include "phoenix-globals.h"
@@ -23,10 +24,10 @@
 #include "uart/uart.h"
 
 //I2C Address
-#define GYRO_ADDR           0x6B    //Gyroscope I2C Address: 0x6B = 107 = 0b1101001
+#define GYRO_ADDR           0xD6    //Gyroscope I2C Address: 0xD6 = 214 = 0b11010010
 
 //Configuration
-#define GYRO_CALIBRATION_STEPS  2000    ///Number of measurements during gyro calibration
+#define GYRO_CALIBRATION_STEPS  200    ///Number of measurements during gyro calibration
 
 #define ROLL_COEFFICIENT     1.0        //Non-inverted
 #define PITCH_COEFFICIENT   -1.0        //Inverted
