@@ -24,7 +24,6 @@
 #include <stdbool.h>
 
 #include "phoenix-gyro.h"
-#include "phoenix-i2c.h"
 #include "delay/delay.h"
 #include "uart/uart.h"
 
