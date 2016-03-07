@@ -42,6 +42,7 @@ LICENSE:
 #include "uart.h"
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 /*
  *  constants and macros
