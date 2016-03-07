@@ -23,10 +23,10 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#include "phoenix-gyro.h"
 #include "phoenix-i2c.h"
 #include "delay/delay.h"
 #include "uart/uart.h"
-//#include "utilities/usart.h"
 
 //USART Settings
 #define FOSC F_CPU          //Clock Speed (Hz)
