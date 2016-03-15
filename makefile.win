@@ -31,7 +31,12 @@ MCU = atmega328p
 PHOENIX_PROGRAMMER ?= arduino
 
 # Programmer Serial port (ex: usb, com5, ttyACM0)
-PHOENIX_PORT ?= usb
+#PHOENIX_PORT ?= usb:bus:device
+#PHOENIX_PORT ?= /dev/ttyS17
+PHOENIX_PORT ?= com16
+#PHOENIX_PORT ?= c:\\cygwin64\\dev\\ttyS6
+
+
 
 # Output format. (can be srec, ihex, binary)
 FORMAT = ihex
