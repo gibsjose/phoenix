@@ -11,6 +11,13 @@
 *.lst
 *.d
 
+#Project Files
+.cproject
+.autotools
+.project
+.settings
+.DS_Store
+
 #Temporary Files
 *~
 ~*
