@@ -83,7 +83,7 @@ uint8_t gyro_init(gyro_t * gyro) {
 
 //Calibrate gyroscope
 uint8_t gyro_calibrate(gyro_t * gyro) {
-    uart_puts("Starting gyroscope calibration after recompiling..\r\n");
+    uart_puts("Starting gyroscope calibration\r\n");
 
     if(gyro == NULL) {
         uart_puts("NULL\r\n");
