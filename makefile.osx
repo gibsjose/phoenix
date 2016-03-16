@@ -28,7 +28,7 @@
 MCU = atmega328p
 
 # Programming Interface ('arduino' for Arduino, 'avrispmkII' for the AVRISP mkII, or `usbtiny` for the Sparkfun AVR Pocket Programmer)
-PHOENIX_PROGRAMMER ?= avrispmkII
+PHOENIX_PROGRAMMER ?= usbtiny
 
 # Programmer Serial port (ex: usb, com5, ttyACM0)
 PHOENIX_PORT ?= usb
