@@ -1,0 +1,552 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Begin	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.cpp	/^void FUTABA_SBUS::Begin(){$/;"	function	line:4	class:FUTABA_SBUS	signature:()
+Channel	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.cpp	/^int16_t FUTABA_SBUS::Channel(uint8_t ch) {$/;"	function	line:26	class:FUTABA_SBUS	signature:(uint8_t ch)
+DigiChannel	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.cpp	/^uint8_t FUTABA_SBUS::DigiChannel(uint8_t ch) {$/;"	function	line:35	class:FUTABA_SBUS	signature:(uint8_t ch)
+Servo	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.cpp	/^void FUTABA_SBUS::Servo(uint8_t ch, int16_t position) {$/;"	function	line:44	class:FUTABA_SBUS	signature:(uint8_t ch, int16_t position)
+DigiServo	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.cpp	/^void FUTABA_SBUS::DigiServo(uint8_t ch, uint8_t position) {$/;"	function	line:53	class:FUTABA_SBUS	signature:(uint8_t ch, uint8_t position)
+Failsafe	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.cpp	/^uint8_t FUTABA_SBUS::Failsafe(void) {$/;"	function	line:62	class:FUTABA_SBUS	signature:(void)
+PassthroughSet	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.cpp	/^void FUTABA_SBUS::PassthroughSet(int mode) {$/;"	function	line:66	class:FUTABA_SBUS	signature:(int mode)
+PassthroughRet	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.cpp	/^int FUTABA_SBUS::PassthroughRet(void) {$/;"	function	line:71	class:FUTABA_SBUS	signature:(void)
+UpdateServos	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.cpp	/^void FUTABA_SBUS::UpdateServos(void) {$/;"	function	line:75	class:FUTABA_SBUS	signature:(void)
+UpdateChannels	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.cpp	/^void FUTABA_SBUS::UpdateChannels(void) {$/;"	function	line:135	class:FUTABA_SBUS	signature:(void)
+FeedLine	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.cpp	/^void FUTABA_SBUS::FeedLine(void){$/;"	function	line:190	class:FUTABA_SBUS	signature:(void)
+FUTABA_SBUS_h	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^#define FUTABA_SBUS_h$/;"	macro	line:4
+SBUS_SIGNAL_OK	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^#define SBUS_SIGNAL_OK /;"	macro	line:10
+SBUS_SIGNAL_LOST	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^#define SBUS_SIGNAL_LOST /;"	macro	line:11
+SBUS_SIGNAL_FAILSAFE	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^#define SBUS_SIGNAL_FAILSAFE /;"	macro	line:12
+BAUDRATE	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^#define BAUDRATE /;"	macro	line:13
+RXBUFFER	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^#define RXBUFFER /;"	macro	line:14
+TXBUFFER	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^#define TXBUFFER /;"	macro	line:15
+PORTNUMBER	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^#define PORTNUMBER /;"	macro	line:16
+FUTABA_SBUS	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^class FUTABA_SBUS$/;"	class	line:20
+sbusData	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^		uint8_t sbusData[25];$/;"	member	line:23	class:FUTABA_SBUS
+channels	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^		int16_t channels[18];$/;"	member	line:24	class:FUTABA_SBUS
+servos	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^		int16_t servos[18];$/;"	member	line:25	class:FUTABA_SBUS
+failsafe_status	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^		uint8_t  failsafe_status;$/;"	member	line:26	class:FUTABA_SBUS
+sbus_passthrough	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^		int sbus_passthrough;$/;"	member	line:27	class:FUTABA_SBUS
+toChannels	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^		int toChannels;$/;"	member	line:28	class:FUTABA_SBUS
+port0	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^		SerialPort<PORTNUMBER,RXBUFFER,TXBUFFER> port0;$/;"	member	line:41	class:FUTABA_SBUS
+byte_in_sbus	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^		uint8_t byte_in_sbus;$/;"	member	line:42	class:FUTABA_SBUS
+bit_in_sbus	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^		uint8_t bit_in_sbus;$/;"	member	line:43	class:FUTABA_SBUS
+ch	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^		uint8_t ch;$/;"	member	line:44	class:FUTABA_SBUS
+bit_in_channel	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^		uint8_t bit_in_channel;$/;"	member	line:45	class:FUTABA_SBUS
+bit_in_servo	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^		uint8_t bit_in_servo;$/;"	member	line:46	class:FUTABA_SBUS
+inBuffer	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^		uint8_t inBuffer[25];$/;"	member	line:47	class:FUTABA_SBUS
+bufferIndex	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^		int bufferIndex;$/;"	member	line:48	class:FUTABA_SBUS
+inData	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^		uint8_t inData;$/;"	member	line:49	class:FUTABA_SBUS
+feedState	C:\cygwin64\home\Jordi\phoenix\individualTests\futaba receiver\FUTABA_SBUS\FUTABA_SBUS.h	/^		int feedState;$/;"	member	line:51	class:FUTABA_SBUS
+sensors	C:\cygwin64\home\Jordi\phoenix\individualTests\gyros\readGyros.c	/^volatile bool sensors = false;$/;"	variable	line:17
+ISR	C:\cygwin64\home\Jordi\phoenix\individualTests\gyros\readGyros.c	/^ISR(TIMER1_COMPA_vect) {$/;"	function	line:20
+main	C:\cygwin64\home\Jordi\phoenix\individualTests\gyros\readGyros.c	/^int main(void) {$/;"	function	line:28	signature:(void)
+init	C:\cygwin64\home\Jordi\phoenix\individualTests\gyros\readGyros.c	/^int init(void) {$/;"	function	line:130	signature:(void)
+port_init	C:\cygwin64\home\Jordi\phoenix\individualTests\gyros\readGyros.c	/^int port_init(void) {$/;"	function	line:151	signature:(void)
+timer1_init	C:\cygwin64\home\Jordi\phoenix\individualTests\gyros\readGyros.c	/^int timer1_init(void) {$/;"	function	line:161	signature:(void)
+peripheral_init	C:\cygwin64\home\Jordi\phoenix\individualTests\gyros\readGyros.c	/^int peripheral_init(void) {$/;"	function	line:182	signature:(void)
+device_init	C:\cygwin64\home\Jordi\phoenix\individualTests\gyros\readGyros.c	/^int device_init(void) {$/;"	function	line:192	signature:(void)
+PHOENIX_H	C:\cygwin64\home\Jordi\phoenix\individualTests\gyros\readGyros.h	/^#define PHOENIX_H$/;"	macro	line:15
+FOSC	C:\cygwin64\home\Jordi\phoenix\individualTests\gyros\readGyros.h	/^#define FOSC /;"	macro	line:31
+BAUD	C:\cygwin64\home\Jordi\phoenix\individualTests\gyros\readGyros.h	/^#define BAUD /;"	macro	line:32
+UBRR	C:\cygwin64\home\Jordi\phoenix\individualTests\gyros\readGyros.h	/^#define UBRR /;"	macro	line:33
+TIMER1_COUNT	C:\cygwin64\home\Jordi\phoenix\individualTests\gyros\readGyros.h	/^#define TIMER1_COUNT /;"	macro	line:36
+LED_PIN	C:\cygwin64\home\Jordi\phoenix\individualTests\gyros\readGyros.h	/^#define LED_PIN /;"	macro	line:39
+LED_DD	C:\cygwin64\home\Jordi\phoenix\individualTests\gyros\readGyros.h	/^#define LED_DD /;"	macro	line:40
+Phoenix Drone Flight Software	C:\cygwin64\home\Jordi\phoenix\README.md	/^# Phoenix Drone Flight Software$/;"	function	line:1
+Setup	C:\cygwin64\home\Jordi\phoenix\README.md	/^## Setup$/;"	function	line:6
+Required Packages	C:\cygwin64\home\Jordi\phoenix\README.md	/^### Required Packages$/;"	function	line:16
+Ubuntu	C:\cygwin64\home\Jordi\phoenix\README.md	/^#### Ubuntu$/;"	function	line:21
+Windows	C:\cygwin64\home\Jordi\phoenix\README.md	/^#### Windows$/;"	function	line:30
+OS X	C:\cygwin64\home\Jordi\phoenix\README.md	/^#### OS X$/;"	function	line:33
+Configure the Environment	C:\cygwin64\home\Jordi\phoenix\README.md	/^### Configure the Environment$/;"	function	line:64
+Oscillator Setup	C:\cygwin64\home\Jordi\phoenix\README.md	/^### Oscillator Setup$/;"	function	line:83
+AVRISP mkII Setup	C:\cygwin64\home\Jordi\phoenix\README.md	/^### AVRISP mkII Setup$/;"	function	line:92
+Create a new `udev` rules file:	C:\cygwin64\home\Jordi\phoenix\README.md	/^#### Create a new `udev` rules file:$/;"	function	line:97
+Atmel Corp. JTAG ICE mkII	C:\cygwin64\home\Jordi\phoenix\README.md	/^# Atmel Corp. JTAG ICE mkII$/;"	function	line:107
+Atmel Corp. AVRISP mkII	C:\cygwin64\home\Jordi\phoenix\README.md	/^# Atmel Corp. AVRISP mkII$/;"	function	line:109
+Atmel Corp. Dragon	C:\cygwin64\home\Jordi\phoenix\README.md	/^# Atmel Corp. Dragon$/;"	function	line:111
+Add yourself to the `dialout` group	C:\cygwin64\home\Jordi\phoenix\README.md	/^#### Add yourself to the `dialout` group$/;"	function	line:124
+Restart the `udev` service	C:\cygwin64\home\Jordi\phoenix\README.md	/^#### Restart the `udev` service$/;"	function	line:129
+Getting information about the device	C:\cygwin64\home\Jordi\phoenix\README.md	/^#### Getting information about the device$/;"	function	line:140
+delay_us	C:\cygwin64\home\Jordi\phoenix\src\delay\delay.c	/^int delay_us(unsigned long int microseconds) {$/;"	function	line:3	signature:(unsigned long int microseconds)
+DELAY_H	C:\cygwin64\home\Jordi\phoenix\src\delay\delay.h	/^#define DELAY_H$/;"	macro	line:2
+_I2CMASTER_H	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.h	/^#define _I2CMASTER_H /;"	macro	line:2
+I2C_READ	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.h	/^#define I2C_READ /;"	macro	line:91
+I2C_WRITE	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.h	/^#define I2C_WRITE /;"	macro	line:94
+i2c_read	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.h	/^#define i2c_read(/;"	macro	line:174
+SDA	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^#define SDA     	4		\/\/ SDA Port D, Pin 4   $/;"	define	line:43
+SCL	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^#define SCL		5		\/\/ SCL Port D, Pin 5$/;"	define	line:44
+SDA_PORT	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^#define SDA_PORT        PORTD           \/\/ SDA Port D$/;"	define	line:45
+SCL_PORT	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^#define SCL_PORT        PORTD           \/\/ SCL Port D         $/;"	define	line:46
+SDA_DDR	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^#define SDA_DDR		(_SFR_IO_ADDR(SDA_PORT) - 1)$/;"	define	line:51
+SCL_DDR	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^#define SCL_DDR		(_SFR_IO_ADDR(SCL_PORT) - 1)$/;"	define	line:52
+SDA_OUT	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^#define SDA_OUT		_SFR_IO_ADDR(SDA_PORT)$/;"	define	line:53
+SCL_OUT	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^#define SCL_OUT		_SFR_IO_ADDR(SCL_PORT)$/;"	define	line:54
+SDA_IN	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^#define SDA_IN		(_SFR_IO_ADDR(SDA_PORT) - 2)$/;"	define	line:55
+SCL_IN	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^#define SCL_IN		(_SFR_IO_ADDR(SCL_PORT) - 2)$/;"	define	line:56
+__tmp_reg__	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^#define __tmp_reg__ 0$/;"	define	line:60
+i2c_delay_T2	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_delay_T2:        ; 4 cycles$/;"	label	line:74
+i2c_init	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_init:$/;"	label	line:93
+i2c_start	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_start:$/;"	label	line:112
+i2c_rep_start	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_rep_start:$/;"	label	line:131
+i2c_start_wait	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_start_wait:$/;"	label	line:156
+i2c_start_wait1	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_start_wait1:$/;"	label	line:158
+i2c_start_wait_done	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_start_wait_done:$/;"	label	line:167
+i2c_stop	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_stop:$/;"	label	line:180
+i2c_write	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_write:$/;"	label	line:201
+i2c_write_bit	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_write_bit:$/;"	label	line:205
+i2c_write_first	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_write_first:$/;"	label	line:207
+i2c_write_low	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_write_low:$/;"	label	line:214
+i2c_write_high	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_write_high:$/;"	label	line:217
+i2c_get_ack	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_get_ack:$/;"	label	line:223
+i2c_ack_wait	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_ack_wait:$/;"	label	line:228
+i2c_readNak	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_readNak:$/;"	label	line:257
+i2c_readAck	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_readAck:$/;"	label	line:260
+i2c_read	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_read:$/;"	label	line:262
+i2c_read_bit	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_read_bit:$/;"	label	line:264
+i2c_read_stretch	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_read_stretch:$/;"	label	line:272
+i2c_put_ack	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_put_ack:$/;"	label	line:283
+i2c_put_ack_low	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_put_ack_low:                ;else$/;"	label	line:289
+i2c_put_ack_high	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_put_ack_high:$/;"	label	line:291
+i2c_put_ack_wait	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\i2cmaster.S	/^i2c_put_ack_wait:$/;"	label	line:294
+F_CPU	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\twimaster.c	/^#define F_CPU /;"	macro	line:16	file:
+SCL_CLOCK	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\twimaster.c	/^#define SCL_CLOCK /;"	macro	line:20	file:
+i2c_init	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\twimaster.c	/^void i2c_init(void)$/;"	function	line:25	signature:(void)
+i2c_start	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\twimaster.c	/^unsigned char i2c_start(unsigned char address)$/;"	function	line:39	signature:(unsigned char address)
+i2c_start_wait	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\twimaster.c	/^void i2c_start_wait(unsigned char address)$/;"	function	line:75	signature:(unsigned char address)
+i2c_rep_start	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\twimaster.c	/^unsigned char i2c_rep_start(unsigned char address)$/;"	function	line:126	signature:(unsigned char address)
+i2c_stop	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\twimaster.c	/^void i2c_stop(void)$/;"	function	line:136	signature:(void)
+i2c_write	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\twimaster.c	/^unsigned char i2c_write( unsigned char data )$/;"	function	line:154	signature:( unsigned char data )
+i2c_readAck	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\twimaster.c	/^unsigned char i2c_readAck(void)$/;"	function	line:178	signature:(void)
+i2c_readNak	C:\cygwin64\home\Jordi\phoenix\src\i2cmaster\twimaster.c	/^unsigned char i2c_readNak(void)$/;"	function	line:193	signature:(void)
+PHOENIX_GLOBALS_H	C:\cygwin64\home\Jordi\phoenix\src\phoenix-globals.h	/^#define PHOENIX_GLOBALS_H$/;"	macro	line:15
+F_CPU	C:\cygwin64\home\Jordi\phoenix\src\phoenix-globals.h	/^#define F_CPU /;"	macro	line:17
+OK	C:\cygwin64\home\Jordi\phoenix\src\phoenix-globals.h	/^#define OK /;"	macro	line:20
+ERROR	C:\cygwin64\home\Jordi\phoenix\src\phoenix-globals.h	/^#define ERROR /;"	macro	line:21
+gyro_init	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.c	/^uint8_t gyro_init(gyro_t * gyro) {$/;"	function	line:17	signature:(gyro_t * gyro)
+gyro_calibrate	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.c	/^uint8_t gyro_calibrate(gyro_t * gyro) {$/;"	function	line:85	signature:(gyro_t * gyro)
+gyro_read	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.c	/^uint8_t gyro_read(gyro_t * gyro) {$/;"	function	line:114	signature:(gyro_t * gyro)
+gyro_print	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.c	/^void gyro_print(gyro_t * gyro) {$/;"	function	line:150	signature:(gyro_t * gyro)
+gyro_loop	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.c	/^void gyro_loop(gyro_t * gyro) {$/;"	function	line:165	signature:(gyro_t * gyro)
+PHOENIX_GYRO_H	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define PHOENIX_GYRO_H$/;"	macro	line:15
+GYRO_ADDR	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define GYRO_ADDR /;"	macro	line:27
+GYRO_CALIBRATION_STEPS	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define GYRO_CALIBRATION_STEPS /;"	macro	line:30
+ROLL_COEFFICIENT	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define ROLL_COEFFICIENT /;"	macro	line:32
+PITCH_COEFFICIENT	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define PITCH_COEFFICIENT /;"	macro	line:33
+YAW_COEFFICIENT	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define YAW_COEFFICIENT /;"	macro	line:34
+GYRO_CTRL_1_REG	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define GYRO_CTRL_1_REG /;"	macro	line:37
+GYRO_CTRL_2_REG	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define GYRO_CTRL_2_REG /;"	macro	line:38
+GYRO_CTRL_3_REG	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define GYRO_CTRL_3_REG /;"	macro	line:39
+GYRO_CTRL_4_REG	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define GYRO_CTRL_4_REG /;"	macro	line:40
+GYRO_CTRL_5_REG	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define GYRO_CTRL_5_REG /;"	macro	line:41
+GYRO_PD	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define GYRO_PD /;"	macro	line:45
+GYRO_ZEN	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define GYRO_ZEN /;"	macro	line:46
+GYRO_YEN	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define GYRO_YEN /;"	macro	line:47
+GYRO_XEN	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define GYRO_XEN /;"	macro	line:48
+GYRO_BDU	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define GYRO_BDU /;"	macro	line:51
+GYRO_FS1	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define GYRO_FS1 /;"	macro	line:52
+GYRO_FS0	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define GYRO_FS0 /;"	macro	line:53
+GYRO_AUTO_INC	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define GYRO_AUTO_INC /;"	macro	line:57
+GYRO_READ_REG	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^#define GYRO_READ_REG /;"	macro	line:58
+gyro_t	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^typedef struct gyro_t {$/;"	struct	line:61
+roll	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^    double roll;            \/\/Roll (X)$/;"	member	line:63	struct:gyro_t
+pitch	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^    double pitch;           \/\/Pitch (Y)$/;"	member	line:64	struct:gyro_t
+yaw	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^    double yaw;             \/\/Yaw (Z)$/;"	member	line:65	struct:gyro_t
+roll_offset	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^    double roll_offset;$/;"	member	line:68	struct:gyro_t
+pitch_offset	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^    double pitch_offset;$/;"	member	line:69	struct:gyro_t
+yaw_offset	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^    double yaw_offset;$/;"	member	line:70	struct:gyro_t
+gyro_t	C:\cygwin64\home\Jordi\phoenix\src\phoenix-gyro.h	/^} gyro_t;$/;"	typedef	line:71	typeref:struct:gyro_t
+sensors	C:\cygwin64\home\Jordi\phoenix\src\phoenix.c	/^volatile bool sensors = false;$/;"	variable	line:17
+ISR	C:\cygwin64\home\Jordi\phoenix\src\phoenix.c	/^ISR(TIMER1_COMPA_vect) {$/;"	function	line:20
+main	C:\cygwin64\home\Jordi\phoenix\src\phoenix.c	/^int main(void) {$/;"	function	line:28	signature:(void)
+init	C:\cygwin64\home\Jordi\phoenix\src\phoenix.c	/^int init(void) {$/;"	function	line:66	signature:(void)
+port_init	C:\cygwin64\home\Jordi\phoenix\src\phoenix.c	/^int port_init(void) {$/;"	function	line:87	signature:(void)
+timer1_init	C:\cygwin64\home\Jordi\phoenix\src\phoenix.c	/^int timer1_init(void) {$/;"	function	line:97	signature:(void)
+peripheral_init	C:\cygwin64\home\Jordi\phoenix\src\phoenix.c	/^int peripheral_init(void) {$/;"	function	line:118	signature:(void)
+device_init	C:\cygwin64\home\Jordi\phoenix\src\phoenix.c	/^int device_init(void) {$/;"	function	line:128	signature:(void)
+PHOENIX_H	C:\cygwin64\home\Jordi\phoenix\src\phoenix.h	/^#define PHOENIX_H$/;"	macro	line:15
+FOSC	C:\cygwin64\home\Jordi\phoenix\src\phoenix.h	/^#define FOSC /;"	macro	line:31
+BAUD	C:\cygwin64\home\Jordi\phoenix\src\phoenix.h	/^#define BAUD /;"	macro	line:32
+UBRR	C:\cygwin64\home\Jordi\phoenix\src\phoenix.h	/^#define UBRR /;"	macro	line:33
+TIMER1_COUNT	C:\cygwin64\home\Jordi\phoenix\src\phoenix.h	/^#define TIMER1_COUNT /;"	macro	line:36
+LED_PIN	C:\cygwin64\home\Jordi\phoenix\src\phoenix.h	/^#define LED_PIN /;"	macro	line:39
+LED_DD	C:\cygwin64\home\Jordi\phoenix\src\phoenix.h	/^#define LED_DD /;"	macro	line:40
+UART_RX_BUFFER_MASK	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^#define UART_RX_BUFFER_MASK /;"	macro	line:52	file:
+UART_TX_BUFFER_MASK	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^#define UART_TX_BUFFER_MASK /;"	macro	line:53	file:
+UART0_RECEIVE_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_RECEIVE_INTERRUPT /;"	macro	line:67	file:
+UART0_TRANSMIT_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_TRANSMIT_INTERRUPT /;"	macro	line:68	file:
+UART0_STATUS	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_STATUS /;"	macro	line:69	file:
+UART0_CONTROL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROL /;"	macro	line:70	file:
+UART0_DATA	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_DATA /;"	macro	line:71	file:
+UART0_UDRIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UDRIE /;"	macro	line:72	file:
+UART0_UBRRL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRL /;"	macro	line:73	file:
+UART0_BIT_U2X	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_U2X /;"	macro	line:74	file:
+UART0_BIT_RXCIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXCIE /;"	macro	line:75	file:
+UART0_BIT_RXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXEN /;"	macro	line:76	file:
+UART0_BIT_TXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_TXEN /;"	macro	line:77	file:
+UART0_RECEIVE_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_RECEIVE_INTERRUPT /;"	macro	line:80	file:
+UART0_TRANSMIT_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_TRANSMIT_INTERRUPT /;"	macro	line:81	file:
+UART0_STATUS	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_STATUS /;"	macro	line:82	file:
+UART0_CONTROL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROL /;"	macro	line:83	file:
+UART0_DATA	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_DATA /;"	macro	line:84	file:
+UART0_UDRIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UDRIE /;"	macro	line:85	file:
+UART0_UBRRL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRL /;"	macro	line:86	file:
+UART0_BIT_U2X	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_U2X /;"	macro	line:87	file:
+UART0_BIT_RXCIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXCIE /;"	macro	line:88	file:
+UART0_BIT_RXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXEN /;"	macro	line:89	file:
+UART0_BIT_TXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_TXEN /;"	macro	line:90	file:
+UART0_RECEIVE_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_RECEIVE_INTERRUPT /;"	macro	line:93	file:
+UART0_TRANSMIT_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_TRANSMIT_INTERRUPT /;"	macro	line:94	file:
+UART0_STATUS	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_STATUS /;"	macro	line:95	file:
+UART0_CONTROL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROL /;"	macro	line:96	file:
+UART0_CONTROLC	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROLC /;"	macro	line:97	file:
+UART0_DATA	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_DATA /;"	macro	line:98	file:
+UART0_UDRIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UDRIE /;"	macro	line:99	file:
+UART0_UBRRL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRL /;"	macro	line:100	file:
+UART0_UBRRH	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRH /;"	macro	line:101	file:
+UART0_BIT_U2X	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_U2X /;"	macro	line:102	file:
+UART0_BIT_RXCIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXCIE /;"	macro	line:103	file:
+UART0_BIT_RXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXEN /;"	macro	line:104	file:
+UART0_BIT_TXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_TXEN /;"	macro	line:105	file:
+UART0_BIT_UCSZ0	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ0 /;"	macro	line:106	file:
+UART0_BIT_UCSZ1	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ1 /;"	macro	line:107	file:
+UART0_RECEIVE_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_RECEIVE_INTERRUPT /;"	macro	line:113	file:
+UART0_TRANSMIT_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_TRANSMIT_INTERRUPT /;"	macro	line:114	file:
+UART0_STATUS	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_STATUS /;"	macro	line:115	file:
+UART0_CONTROL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROL /;"	macro	line:116	file:
+UART0_CONTROLC	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROLC /;"	macro	line:117	file:
+UART0_DATA	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_DATA /;"	macro	line:118	file:
+UART0_UDRIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UDRIE /;"	macro	line:119	file:
+UART0_UBRRL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRL /;"	macro	line:120	file:
+UART0_UBRRH	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRH /;"	macro	line:121	file:
+UART0_BIT_U2X	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_U2X /;"	macro	line:122	file:
+UART0_BIT_RXCIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXCIE /;"	macro	line:123	file:
+UART0_BIT_RXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXEN /;"	macro	line:124	file:
+UART0_BIT_TXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_TXEN /;"	macro	line:125	file:
+UART0_BIT_UCSZ0	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ0 /;"	macro	line:126	file:
+UART0_BIT_UCSZ1	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ1 /;"	macro	line:127	file:
+UART0_BIT_URSEL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_URSEL /;"	macro	line:128	file:
+UART0_RECEIVE_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_RECEIVE_INTERRUPT /;"	macro	line:130	file:
+UART0_TRANSMIT_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_TRANSMIT_INTERRUPT /;"	macro	line:131	file:
+UART0_STATUS	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_STATUS /;"	macro	line:132	file:
+UART0_CONTROL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROL /;"	macro	line:133	file:
+UART0_CONTROLC	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROLC /;"	macro	line:134	file:
+UART0_DATA	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_DATA /;"	macro	line:135	file:
+UART0_UDRIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UDRIE /;"	macro	line:136	file:
+UART0_UBRRL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRL /;"	macro	line:137	file:
+UART0_UBRRH	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRH /;"	macro	line:138	file:
+UART0_BIT_U2X	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_U2X /;"	macro	line:139	file:
+UART0_BIT_RXCIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXCIE /;"	macro	line:140	file:
+UART0_BIT_RXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXEN /;"	macro	line:141	file:
+UART0_BIT_TXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_TXEN /;"	macro	line:142	file:
+UART0_BIT_UCSZ0	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ0 /;"	macro	line:143	file:
+UART0_BIT_UCSZ1	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ1 /;"	macro	line:144	file:
+UART0_BIT_URSEL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_URSEL /;"	macro	line:145	file:
+UART0_RECEIVE_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_RECEIVE_INTERRUPT /;"	macro	line:148	file:
+UART0_TRANSMIT_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_TRANSMIT_INTERRUPT /;"	macro	line:149	file:
+UART0_STATUS	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_STATUS /;"	macro	line:150	file:
+UART0_CONTROL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROL /;"	macro	line:151	file:
+UART0_DATA	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_DATA /;"	macro	line:152	file:
+UART0_UDRIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UDRIE /;"	macro	line:153	file:
+UART0_UBRRL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRL /;"	macro	line:154	file:
+UART0_UBRRH	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRH /;"	macro	line:155	file:
+UART0_BIT_U2X	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_U2X /;"	macro	line:156	file:
+UART0_BIT_RXCIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXCIE /;"	macro	line:157	file:
+UART0_BIT_RXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXEN /;"	macro	line:158	file:
+UART0_BIT_TXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_TXEN /;"	macro	line:159	file:
+ATMEGA_USART1	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define ATMEGA_USART1$/;"	macro	line:162	file:
+UART0_RECEIVE_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_RECEIVE_INTERRUPT /;"	macro	line:163	file:
+UART1_RECEIVE_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_RECEIVE_INTERRUPT /;"	macro	line:164	file:
+UART0_TRANSMIT_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_TRANSMIT_INTERRUPT /;"	macro	line:165	file:
+UART1_TRANSMIT_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_TRANSMIT_INTERRUPT /;"	macro	line:166	file:
+UART0_STATUS	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_STATUS /;"	macro	line:167	file:
+UART0_CONTROL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROL /;"	macro	line:168	file:
+UART0_CONTROLC	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROLC /;"	macro	line:169	file:
+UART0_DATA	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_DATA /;"	macro	line:170	file:
+UART0_UDRIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UDRIE /;"	macro	line:171	file:
+UART0_UBRRL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRL /;"	macro	line:172	file:
+UART0_UBRRH	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRH /;"	macro	line:173	file:
+UART0_BIT_URSEL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_URSEL /;"	macro	line:174	file:
+UART0_BIT_U2X	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_U2X /;"	macro	line:175	file:
+UART0_BIT_RXCIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXCIE /;"	macro	line:176	file:
+UART0_BIT_RXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXEN /;"	macro	line:177	file:
+UART0_BIT_TXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_TXEN /;"	macro	line:178	file:
+UART0_BIT_UCSZ0	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ0 /;"	macro	line:179	file:
+UART0_BIT_UCSZ1	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ1 /;"	macro	line:180	file:
+UART1_STATUS	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_STATUS /;"	macro	line:181	file:
+UART1_CONTROL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_CONTROL /;"	macro	line:182	file:
+UART1_CONTROLC	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_CONTROLC /;"	macro	line:183	file:
+UART1_DATA	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_DATA /;"	macro	line:184	file:
+UART1_UDRIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_UDRIE /;"	macro	line:185	file:
+UART1_UBRRL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_UBRRL /;"	macro	line:186	file:
+UART1_UBRRH	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_UBRRH /;"	macro	line:187	file:
+UART1_BIT_URSEL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_BIT_URSEL /;"	macro	line:188	file:
+UART1_BIT_U2X	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_BIT_U2X /;"	macro	line:189	file:
+UART1_BIT_RXCIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_BIT_RXCIE /;"	macro	line:190	file:
+UART1_BIT_RXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_BIT_RXEN /;"	macro	line:191	file:
+UART1_BIT_TXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_BIT_TXEN /;"	macro	line:192	file:
+UART1_BIT_UCSZ0	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_BIT_UCSZ0 /;"	macro	line:193	file:
+UART1_BIT_UCSZ1	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_BIT_UCSZ1 /;"	macro	line:194	file:
+UART0_RECEIVE_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_RECEIVE_INTERRUPT /;"	macro	line:200	file:
+UART0_TRANSMIT_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_TRANSMIT_INTERRUPT /;"	macro	line:201	file:
+UART0_STATUS	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_STATUS /;"	macro	line:202	file:
+UART0_CONTROL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROL /;"	macro	line:203	file:
+UART0_CONTROLC	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROLC /;"	macro	line:204	file:
+UART0_DATA	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_DATA /;"	macro	line:205	file:
+UART0_UDRIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UDRIE /;"	macro	line:206	file:
+UART0_UBRRL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRL /;"	macro	line:207	file:
+UART0_UBRRH	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRH /;"	macro	line:208	file:
+UART0_BIT_U2X	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_U2X /;"	macro	line:209	file:
+UART0_BIT_RXCIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXCIE /;"	macro	line:210	file:
+UART0_BIT_RXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXEN /;"	macro	line:211	file:
+UART0_BIT_TXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_TXEN /;"	macro	line:212	file:
+UART0_BIT_UCSZ0	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ0 /;"	macro	line:213	file:
+UART0_BIT_UCSZ1	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ1 /;"	macro	line:214	file:
+UART0_RECEIVE_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_RECEIVE_INTERRUPT /;"	macro	line:221	file:
+UART0_TRANSMIT_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_TRANSMIT_INTERRUPT /;"	macro	line:222	file:
+UART0_STATUS	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_STATUS /;"	macro	line:223	file:
+UART0_CONTROL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROL /;"	macro	line:224	file:
+UART0_CONTROLC	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROLC /;"	macro	line:225	file:
+UART0_DATA	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_DATA /;"	macro	line:226	file:
+UART0_UDRIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UDRIE /;"	macro	line:227	file:
+UART0_UBRRL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRL /;"	macro	line:228	file:
+UART0_UBRRH	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRH /;"	macro	line:229	file:
+UART0_BIT_U2X	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_U2X /;"	macro	line:230	file:
+UART0_BIT_RXCIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXCIE /;"	macro	line:231	file:
+UART0_BIT_RXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXEN /;"	macro	line:232	file:
+UART0_BIT_TXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_TXEN /;"	macro	line:233	file:
+UART0_BIT_UCSZ0	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ0 /;"	macro	line:234	file:
+UART0_BIT_UCSZ1	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ1 /;"	macro	line:235	file:
+UART0_RECEIVE_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_RECEIVE_INTERRUPT /;"	macro	line:238	file:
+UART0_TRANSMIT_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_TRANSMIT_INTERRUPT /;"	macro	line:239	file:
+UART0_STATUS	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_STATUS /;"	macro	line:240	file:
+UART0_CONTROL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROL /;"	macro	line:241	file:
+UART0_CONTROLC	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROLC /;"	macro	line:242	file:
+UART0_DATA	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_DATA /;"	macro	line:243	file:
+UART0_UDRIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UDRIE /;"	macro	line:244	file:
+UART0_UBRRL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRL /;"	macro	line:245	file:
+UART0_UBRRH	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRH /;"	macro	line:246	file:
+UART0_BIT_U2X	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_U2X /;"	macro	line:247	file:
+UART0_BIT_RXCIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXCIE /;"	macro	line:248	file:
+UART0_BIT_RXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXEN /;"	macro	line:249	file:
+UART0_BIT_TXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_TXEN /;"	macro	line:250	file:
+UART0_BIT_UCSZ0	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ0 /;"	macro	line:251	file:
+UART0_BIT_UCSZ1	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ1 /;"	macro	line:252	file:
+UART0_RECEIVE_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_RECEIVE_INTERRUPT /;"	macro	line:263	file:
+UART0_TRANSMIT_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_TRANSMIT_INTERRUPT /;"	macro	line:264	file:
+UART0_STATUS	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_STATUS /;"	macro	line:265	file:
+UART0_CONTROL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROL /;"	macro	line:266	file:
+UART0_CONTROLC	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROLC /;"	macro	line:267	file:
+UART0_DATA	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_DATA /;"	macro	line:268	file:
+UART0_UDRIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UDRIE /;"	macro	line:269	file:
+UART0_UBRRL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRL /;"	macro	line:270	file:
+UART0_UBRRH	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRH /;"	macro	line:271	file:
+UART0_BIT_U2X	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_U2X /;"	macro	line:272	file:
+UART0_BIT_RXCIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXCIE /;"	macro	line:273	file:
+UART0_BIT_RXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXEN /;"	macro	line:274	file:
+UART0_BIT_TXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_TXEN /;"	macro	line:275	file:
+UART0_BIT_UCSZ0	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ0 /;"	macro	line:276	file:
+UART0_BIT_UCSZ1	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ1 /;"	macro	line:277	file:
+ATMEGA_USART1	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define ATMEGA_USART1$/;"	macro	line:285	file:
+UART0_RECEIVE_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_RECEIVE_INTERRUPT /;"	macro	line:286	file:
+UART1_RECEIVE_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_RECEIVE_INTERRUPT /;"	macro	line:287	file:
+UART0_TRANSMIT_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_TRANSMIT_INTERRUPT /;"	macro	line:288	file:
+UART1_TRANSMIT_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_TRANSMIT_INTERRUPT /;"	macro	line:289	file:
+UART0_STATUS	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_STATUS /;"	macro	line:290	file:
+UART0_CONTROL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROL /;"	macro	line:291	file:
+UART0_CONTROLC	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROLC /;"	macro	line:292	file:
+UART0_DATA	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_DATA /;"	macro	line:293	file:
+UART0_UDRIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UDRIE /;"	macro	line:294	file:
+UART0_UBRRL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRL /;"	macro	line:295	file:
+UART0_UBRRH	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRH /;"	macro	line:296	file:
+UART0_BIT_U2X	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_U2X /;"	macro	line:297	file:
+UART0_BIT_RXCIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXCIE /;"	macro	line:298	file:
+UART0_BIT_RXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXEN /;"	macro	line:299	file:
+UART0_BIT_TXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_TXEN /;"	macro	line:300	file:
+UART0_BIT_UCSZ0	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ0 /;"	macro	line:301	file:
+UART0_BIT_UCSZ1	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ1 /;"	macro	line:302	file:
+UART1_STATUS	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_STATUS /;"	macro	line:303	file:
+UART1_CONTROL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_CONTROL /;"	macro	line:304	file:
+UART1_CONTROLC	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_CONTROLC /;"	macro	line:305	file:
+UART1_DATA	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_DATA /;"	macro	line:306	file:
+UART1_UDRIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_UDRIE /;"	macro	line:307	file:
+UART1_UBRRL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_UBRRL /;"	macro	line:308	file:
+UART1_UBRRH	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_UBRRH /;"	macro	line:309	file:
+UART1_BIT_U2X	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_BIT_U2X /;"	macro	line:310	file:
+UART1_BIT_RXCIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_BIT_RXCIE /;"	macro	line:311	file:
+UART1_BIT_RXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_BIT_RXEN /;"	macro	line:312	file:
+UART1_BIT_TXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_BIT_TXEN /;"	macro	line:313	file:
+UART1_BIT_UCSZ0	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_BIT_UCSZ0 /;"	macro	line:314	file:
+UART1_BIT_UCSZ1	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART1_BIT_UCSZ1 /;"	macro	line:315	file:
+UART0_RECEIVE_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_RECEIVE_INTERRUPT /;"	macro	line:320	file:
+UART0_TRANSMIT_INTERRUPT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_TRANSMIT_INTERRUPT /;"	macro	line:321	file:
+UART0_STATUS	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_STATUS /;"	macro	line:322	file:
+UART0_CONTROL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROL /;"	macro	line:323	file:
+UART0_CONTROLC	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_CONTROLC /;"	macro	line:324	file:
+UART0_DATA	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_DATA /;"	macro	line:325	file:
+UART0_UDRIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UDRIE /;"	macro	line:326	file:
+UART0_UBRRL	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRL /;"	macro	line:327	file:
+UART0_UBRRH	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_UBRRH /;"	macro	line:328	file:
+UART0_BIT_U2X	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_U2X /;"	macro	line:329	file:
+UART0_BIT_RXCIE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXCIE /;"	macro	line:330	file:
+UART0_BIT_RXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_RXEN /;"	macro	line:331	file:
+UART0_BIT_TXEN	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_TXEN /;"	macro	line:332	file:
+UART0_BIT_UCSZ0	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ0 /;"	macro	line:333	file:
+UART0_BIT_UCSZ1	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ #define UART0_BIT_UCSZ1 /;"	macro	line:334	file:
+UART_TxBuf	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^static volatile unsigned char UART_TxBuf[UART_TX_BUFFER_SIZE];$/;"	variable	line:344	file:
+UART_RxBuf	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^static volatile unsigned char UART_RxBuf[UART_RX_BUFFER_SIZE];$/;"	variable	line:345	file:
+UART_TxHead	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^static volatile unsigned char UART_TxHead;$/;"	variable	line:346	file:
+UART_TxTail	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^static volatile unsigned char UART_TxTail;$/;"	variable	line:347	file:
+UART_RxHead	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^static volatile unsigned char UART_RxHead;$/;"	variable	line:348	file:
+UART_RxTail	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^static volatile unsigned char UART_RxTail;$/;"	variable	line:349	file:
+UART_LastRxError	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^static volatile unsigned char UART_LastRxError;$/;"	variable	line:350	file:
+UART1_TxBuf	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^static volatile unsigned char UART1_TxBuf[UART_TX_BUFFER_SIZE];$/;"	variable	line:353	file:
+UART1_RxBuf	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^static volatile unsigned char UART1_RxBuf[UART_RX_BUFFER_SIZE];$/;"	variable	line:354	file:
+UART1_TxHead	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^static volatile unsigned char UART1_TxHead;$/;"	variable	line:355	file:
+UART1_TxTail	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^static volatile unsigned char UART1_TxTail;$/;"	variable	line:356	file:
+UART1_RxHead	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^static volatile unsigned char UART1_RxHead;$/;"	variable	line:357	file:
+UART1_RxTail	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^static volatile unsigned char UART1_RxTail;$/;"	variable	line:358	file:
+UART1_LastRxError	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^static volatile unsigned char UART1_LastRxError;$/;"	variable	line:359	file:
+ISR	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ISR (UART0_RECEIVE_INTERRUPT)$/;"	function	line:364
+ISR	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ISR (UART0_TRANSMIT_INTERRUPT)$/;"	function	line:407
+uart_init	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^void uart_init(unsigned int baudrate)$/;"	function	line:435	signature:(unsigned int baudrate)
+uart_getc	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^unsigned int uart_getc(void)$/;"	function	line:492	signature:(void)
+uart_putc	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^void uart_putc(unsigned char data)$/;"	function	line:525	signature:(unsigned char data)
+uart_puts	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^void uart_puts(const char *s )$/;"	function	line:551	signature:(const char *s )
+uart_putd	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^void uart_putd(double d)$/;"	function	line:565	signature:(double d)
+uart_puts_p	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^void uart_puts_p(const char *progmem_s )$/;"	function	line:579	signature:(const char *progmem_s )
+ISR	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ISR(UART1_RECEIVE_INTERRUPT)$/;"	function	line:594
+ISR	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^ISR(UART1_TRANSMIT_INTERRUPT)$/;"	function	line:629
+uart1_init	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^void uart1_init(unsigned int baudrate)$/;"	function	line:657	signature:(unsigned int baudrate)
+uart1_getc	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^unsigned int uart1_getc(void)$/;"	function	line:710	signature:(void)
+uart1_putc	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^void uart1_putc(unsigned char data)$/;"	function	line:743	signature:(unsigned char data)
+uart1_puts	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^void uart1_puts(const char *s )$/;"	function	line:769	signature:(const char *s )
+uart1_puts_p	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.c	/^void uart1_puts_p(const char *progmem_s )$/;"	function	line:783	signature:(const char *progmem_s )
+UART_H	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.h	/^#define UART_H$/;"	macro	line:2
+UART_BAUD_SELECT	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.h	/^#define UART_BAUD_SELECT(/;"	macro	line:69
+UART_BAUD_SELECT_DOUBLE_SPEED	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.h	/^#define UART_BAUD_SELECT_DOUBLE_SPEED(/;"	macro	line:75
+UART_RX_BUFFER_SIZE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.h	/^#define UART_RX_BUFFER_SIZE /;"	macro	line:83
+UART_TX_BUFFER_SIZE	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.h	/^#define UART_TX_BUFFER_SIZE /;"	macro	line:92
+UART_FRAME_ERROR	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.h	/^#define UART_FRAME_ERROR /;"	macro	line:103
+UART_OVERRUN_ERROR	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.h	/^#define UART_OVERRUN_ERROR /;"	macro	line:104
+UART_PARITY_ERROR	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.h	/^#define UART_PARITY_ERROR /;"	macro	line:105
+UART_BUFFER_OVERFLOW	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.h	/^#define UART_BUFFER_OVERFLOW /;"	macro	line:106
+UART_NO_DATA	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.h	/^#define UART_NO_DATA /;"	macro	line:107
+uart_puts_P	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.h	/^#define uart_puts_P(/;"	macro	line:199
+uart1_puts_P	C:\cygwin64\home\Jordi\phoenix\src\uart\uart.h	/^#define uart1_puts_P(/;"	macro	line:214
+__L3GD20_H__	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^#define __L3GD20_H__$/;"	macro	line:18
+L3GD20_ADDRESS	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^#define L3GD20_ADDRESS /;"	macro	line:27
+L3GD20_POLL_TIMEOUT	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^#define L3GD20_POLL_TIMEOUT /;"	macro	line:28
+L3GD20_ID	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^#define L3GD20_ID /;"	macro	line:29
+L3GD20H_ID	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^#define L3GD20H_ID /;"	macro	line:30
+L3GD20_SENSITIVITY_250DPS	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^#define L3GD20_SENSITIVITY_250DPS /;"	macro	line:32
+L3GD20_SENSITIVITY_500DPS	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^#define L3GD20_SENSITIVITY_500DPS /;"	macro	line:33
+L3GD20_SENSITIVITY_2000DPS	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^#define L3GD20_SENSITIVITY_2000DPS /;"	macro	line:34
+L3GD20_DPS_TO_RADS	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^#define L3GD20_DPS_TO_RADS /;"	macro	line:35
+Adafruit_L3GD20	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^class Adafruit_L3GD20$/;"	class	line:37
+L3GD20_REGISTER_WHO_AM_I	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_WHO_AM_I            = 0x0F,   \/\/ 11010100   r$/;"	enumerator	line:42	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_CTRL_REG1	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_CTRL_REG1           = 0x20,   \/\/ 00000111   rw$/;"	enumerator	line:43	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_CTRL_REG2	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_CTRL_REG2           = 0x21,   \/\/ 00000000   rw$/;"	enumerator	line:44	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_CTRL_REG3	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_CTRL_REG3           = 0x22,   \/\/ 00000000   rw$/;"	enumerator	line:45	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_CTRL_REG4	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_CTRL_REG4           = 0x23,   \/\/ 00000000   rw$/;"	enumerator	line:46	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_CTRL_REG5	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_CTRL_REG5           = 0x24,   \/\/ 00000000   rw$/;"	enumerator	line:47	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_REFERENCE	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_REFERENCE           = 0x25,   \/\/ 00000000   rw$/;"	enumerator	line:48	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_OUT_TEMP	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_OUT_TEMP            = 0x26,   \/\/            r$/;"	enumerator	line:49	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_STATUS_REG	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_STATUS_REG          = 0x27,   \/\/            r$/;"	enumerator	line:50	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_OUT_X_L	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_OUT_X_L             = 0x28,   \/\/            r$/;"	enumerator	line:51	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_OUT_X_H	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_OUT_X_H             = 0x29,   \/\/            r$/;"	enumerator	line:52	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_OUT_Y_L	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_OUT_Y_L             = 0x2A,   \/\/            r$/;"	enumerator	line:53	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_OUT_Y_H	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_OUT_Y_H             = 0x2B,   \/\/            r$/;"	enumerator	line:54	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_OUT_Z_L	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_OUT_Z_L             = 0x2C,   \/\/            r$/;"	enumerator	line:55	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_OUT_Z_H	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_OUT_Z_H             = 0x2D,   \/\/            r$/;"	enumerator	line:56	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_FIFO_CTRL_REG	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_FIFO_CTRL_REG       = 0x2E,   \/\/ 00000000   rw$/;"	enumerator	line:57	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_FIFO_SRC_REG	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_FIFO_SRC_REG        = 0x2F,   \/\/            r$/;"	enumerator	line:58	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_INT1_CFG	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_INT1_CFG            = 0x30,   \/\/ 00000000   rw$/;"	enumerator	line:59	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_INT1_SRC	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_INT1_SRC            = 0x31,   \/\/            r$/;"	enumerator	line:60	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_TSH_XH	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_TSH_XH              = 0x32,   \/\/ 00000000   rw$/;"	enumerator	line:61	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_TSH_XL	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_TSH_XL              = 0x33,   \/\/ 00000000   rw$/;"	enumerator	line:62	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_TSH_YH	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_TSH_YH              = 0x34,   \/\/ 00000000   rw$/;"	enumerator	line:63	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_TSH_YL	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_TSH_YL              = 0x35,   \/\/ 00000000   rw$/;"	enumerator	line:64	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_TSH_ZH	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_TSH_ZH              = 0x36,   \/\/ 00000000   rw$/;"	enumerator	line:65	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_TSH_ZL	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_TSH_ZL              = 0x37,   \/\/ 00000000   rw$/;"	enumerator	line:66	enum:Adafruit_L3GD20::__anon1
+L3GD20_REGISTER_INT1_DURATION	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_INT1_DURATION       = 0x38    \/\/ 00000000   rw$/;"	enumerator	line:67	enum:Adafruit_L3GD20::__anon1
+l3gd20Registers_t	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^    } l3gd20Registers_t;$/;"	typedef	line:68	class:Adafruit_L3GD20	typeref:enum:Adafruit_L3GD20::__anon1
+L3DS20_RANGE_250DPS	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3DS20_RANGE_250DPS,$/;"	enumerator	line:72	enum:Adafruit_L3GD20::__anon2
+L3DS20_RANGE_500DPS	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3DS20_RANGE_500DPS,$/;"	enumerator	line:73	enum:Adafruit_L3GD20::__anon2
+L3DS20_RANGE_2000DPS	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      L3DS20_RANGE_2000DPS$/;"	enumerator	line:74	enum:Adafruit_L3GD20::__anon2
+l3gd20Range_t	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^    } l3gd20Range_t;$/;"	typedef	line:75	class:Adafruit_L3GD20	typeref:enum:Adafruit_L3GD20::__anon2
+l3gd20Data_s	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^    typedef struct l3gd20Data_s$/;"	struct	line:77	class:Adafruit_L3GD20
+x	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      float x;$/;"	member	line:79	struct:Adafruit_L3GD20::l3gd20Data_s
+y	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      float y;$/;"	member	line:80	struct:Adafruit_L3GD20::l3gd20Data_s
+z	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^      float z;$/;"	member	line:81	struct:Adafruit_L3GD20::l3gd20Data_s
+l3gd20Data	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^    } l3gd20Data;$/;"	typedef	line:82	class:Adafruit_L3GD20	typeref:struct:Adafruit_L3GD20::l3gd20Data_s
+data	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^    l3gd20Data data;    \/\/ Last read will be available here$/;"	member	line:90	class:Adafruit_L3GD20
+address	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^    byte address;$/;"	member	line:96	class:Adafruit_L3GD20
+range	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^    l3gd20Range_t range;$/;"	member	line:97	class:Adafruit_L3GD20
+_miso	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^    int8_t _miso, _mosi, _clk, _cs;$/;"	member	line:98	class:Adafruit_L3GD20
+_mosi	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^    int8_t _miso, _mosi, _clk, _cs;$/;"	member	line:98	class:Adafruit_L3GD20
+_clk	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^    int8_t _miso, _mosi, _clk, _cs;$/;"	member	line:98	class:Adafruit_L3GD20
+_cs	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20.h	/^    int8_t _miso, _mosi, _clk, _cs;$/;"	member	line:98	class:Adafruit_L3GD20
+Adafruit_L3GD20	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.cpp	/^Adafruit_L3GD20::Adafruit_L3GD20(int8_t cs, int8_t miso, int8_t mosi, int8_t clk) {$/;"	function	line:24	class:Adafruit_L3GD20	signature:(int8_t cs, int8_t miso, int8_t mosi, int8_t clk)
+Adafruit_L3GD20	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.cpp	/^Adafruit_L3GD20::Adafruit_L3GD20(void) {$/;"	function	line:31	class:Adafruit_L3GD20	signature:(void)
+begin	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.cpp	/^bool Adafruit_L3GD20::begin(l3gd20Range_t rng, byte addr)$/;"	function	line:36	class:Adafruit_L3GD20	signature:(l3gd20Range_t rng, byte addr)
+read	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.cpp	/^void Adafruit_L3GD20::read()$/;"	function	line:148	class:Adafruit_L3GD20	signature:()
+write8	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.cpp	/^void Adafruit_L3GD20::write8(l3gd20Registers_t reg, byte value)$/;"	function	line:213	class:Adafruit_L3GD20	signature:(l3gd20Registers_t reg, byte value)
+read8	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.cpp	/^byte Adafruit_L3GD20::read8(l3gd20Registers_t reg)$/;"	function	line:232	class:Adafruit_L3GD20	signature:(l3gd20Registers_t reg)
+SPIxfer	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.cpp	/^uint8_t Adafruit_L3GD20::SPIxfer(uint8_t x) {$/;"	function	line:257	class:Adafruit_L3GD20	signature:(uint8_t x)
+__L3GD20_H__	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^#define __L3GD20_H__$/;"	macro	line:18
+L3GD20_ADDRESS	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^#define L3GD20_ADDRESS /;"	macro	line:27
+L3GD20_POLL_TIMEOUT	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^#define L3GD20_POLL_TIMEOUT /;"	macro	line:28
+L3GD20_ID	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^#define L3GD20_ID /;"	macro	line:29
+L3GD20H_ID	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^#define L3GD20H_ID /;"	macro	line:30
+L3GD20_SENSITIVITY_250DPS	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^#define L3GD20_SENSITIVITY_250DPS /;"	macro	line:32
+L3GD20_SENSITIVITY_500DPS	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^#define L3GD20_SENSITIVITY_500DPS /;"	macro	line:33
+L3GD20_SENSITIVITY_2000DPS	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^#define L3GD20_SENSITIVITY_2000DPS /;"	macro	line:34
+L3GD20_DPS_TO_RADS	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^#define L3GD20_DPS_TO_RADS /;"	macro	line:35
+Adafruit_L3GD20	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^class Adafruit_L3GD20$/;"	class	line:37
+L3GD20_REGISTER_WHO_AM_I	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_WHO_AM_I            = 0x0F,   \/\/ 11010100   r$/;"	enumerator	line:42	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_CTRL_REG1	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_CTRL_REG1           = 0x20,   \/\/ 00000111   rw$/;"	enumerator	line:43	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_CTRL_REG2	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_CTRL_REG2           = 0x21,   \/\/ 00000000   rw$/;"	enumerator	line:44	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_CTRL_REG3	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_CTRL_REG3           = 0x22,   \/\/ 00000000   rw$/;"	enumerator	line:45	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_CTRL_REG4	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_CTRL_REG4           = 0x23,   \/\/ 00000000   rw$/;"	enumerator	line:46	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_CTRL_REG5	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_CTRL_REG5           = 0x24,   \/\/ 00000000   rw$/;"	enumerator	line:47	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_REFERENCE	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_REFERENCE           = 0x25,   \/\/ 00000000   rw$/;"	enumerator	line:48	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_OUT_TEMP	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_OUT_TEMP            = 0x26,   \/\/            r$/;"	enumerator	line:49	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_STATUS_REG	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_STATUS_REG          = 0x27,   \/\/            r$/;"	enumerator	line:50	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_OUT_X_L	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_OUT_X_L             = 0x28,   \/\/            r$/;"	enumerator	line:51	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_OUT_X_H	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_OUT_X_H             = 0x29,   \/\/            r$/;"	enumerator	line:52	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_OUT_Y_L	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_OUT_Y_L             = 0x2A,   \/\/            r$/;"	enumerator	line:53	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_OUT_Y_H	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_OUT_Y_H             = 0x2B,   \/\/            r$/;"	enumerator	line:54	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_OUT_Z_L	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_OUT_Z_L             = 0x2C,   \/\/            r$/;"	enumerator	line:55	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_OUT_Z_H	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_OUT_Z_H             = 0x2D,   \/\/            r$/;"	enumerator	line:56	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_FIFO_CTRL_REG	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_FIFO_CTRL_REG       = 0x2E,   \/\/ 00000000   rw$/;"	enumerator	line:57	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_FIFO_SRC_REG	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_FIFO_SRC_REG        = 0x2F,   \/\/            r$/;"	enumerator	line:58	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_INT1_CFG	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_INT1_CFG            = 0x30,   \/\/ 00000000   rw$/;"	enumerator	line:59	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_INT1_SRC	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_INT1_SRC            = 0x31,   \/\/            r$/;"	enumerator	line:60	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_TSH_XH	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_TSH_XH              = 0x32,   \/\/ 00000000   rw$/;"	enumerator	line:61	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_TSH_XL	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_TSH_XL              = 0x33,   \/\/ 00000000   rw$/;"	enumerator	line:62	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_TSH_YH	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_TSH_YH              = 0x34,   \/\/ 00000000   rw$/;"	enumerator	line:63	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_TSH_YL	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_TSH_YL              = 0x35,   \/\/ 00000000   rw$/;"	enumerator	line:64	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_TSH_ZH	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_TSH_ZH              = 0x36,   \/\/ 00000000   rw$/;"	enumerator	line:65	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_TSH_ZL	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_TSH_ZL              = 0x37,   \/\/ 00000000   rw$/;"	enumerator	line:66	enum:Adafruit_L3GD20::__anon3
+L3GD20_REGISTER_INT1_DURATION	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3GD20_REGISTER_INT1_DURATION       = 0x38    \/\/ 00000000   rw$/;"	enumerator	line:67	enum:Adafruit_L3GD20::__anon3
+l3gd20Registers_t	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^    } l3gd20Registers_t;$/;"	typedef	line:68	class:Adafruit_L3GD20	typeref:enum:Adafruit_L3GD20::__anon3
+L3DS20_RANGE_250DPS	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3DS20_RANGE_250DPS,$/;"	enumerator	line:72	enum:Adafruit_L3GD20::__anon4
+L3DS20_RANGE_500DPS	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3DS20_RANGE_500DPS,$/;"	enumerator	line:73	enum:Adafruit_L3GD20::__anon4
+L3DS20_RANGE_2000DPS	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      L3DS20_RANGE_2000DPS$/;"	enumerator	line:74	enum:Adafruit_L3GD20::__anon4
+l3gd20Range_t	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^    } l3gd20Range_t;$/;"	typedef	line:75	class:Adafruit_L3GD20	typeref:enum:Adafruit_L3GD20::__anon4
+l3gd20Data_s	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^    typedef struct l3gd20Data_s$/;"	struct	line:77	class:Adafruit_L3GD20
+x	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      float x;$/;"	member	line:79	struct:Adafruit_L3GD20::l3gd20Data_s
+y	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      float y;$/;"	member	line:80	struct:Adafruit_L3GD20::l3gd20Data_s
+z	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^      float z;$/;"	member	line:81	struct:Adafruit_L3GD20::l3gd20Data_s
+l3gd20Data	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^    } l3gd20Data;$/;"	typedef	line:82	class:Adafruit_L3GD20	typeref:struct:Adafruit_L3GD20::l3gd20Data_s
+data	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^    l3gd20Data data;    \/\/ Last read will be available here$/;"	member	line:90	class:Adafruit_L3GD20
+address	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^    byte address;$/;"	member	line:96	class:Adafruit_L3GD20
+range	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^    l3gd20Range_t range;$/;"	member	line:97	class:Adafruit_L3GD20
+_miso	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^    int8_t _miso, _mosi, _clk, _cs;$/;"	member	line:98	class:Adafruit_L3GD20
+_mosi	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^    int8_t _miso, _mosi, _clk, _cs;$/;"	member	line:98	class:Adafruit_L3GD20
+_clk	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^    int8_t _miso, _mosi, _clk, _cs;$/;"	member	line:98	class:Adafruit_L3GD20
+_cs	C:\cygwin64\home\Jordi\phoenix\src\ymfc\Gyro Software\Adafruit_L3GD20_test\Adafruit_L3GD20\Adafruit_L3GD20.h	/^    int8_t _miso, _mosi, _clk, _cs;$/;"	member	line:98	class:Adafruit_L3GD20
