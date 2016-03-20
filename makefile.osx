@@ -47,7 +47,7 @@ TARGET = phoenix
 SRC_DIR = src
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(SRC_DIR)/$(TARGET).c $(SRC_DIR)/uart/uart.c $(SRC_DIR)/delay/delay.c $(SRC_DIR)/i2cmaster/twimaster.c $(SRC_DIR)/phoenix-gyro.c
+SRC = $(SRC_DIR)/$(TARGET).c $(SRC_DIR)/uart/uart.c $(SRC_DIR)/delay/delay.c $(SRC_DIR)/i2cmaster/twimaster.c $(SRC_DIR)/phoenix-gyro.c $(SRC_DIR)/phoenix-controls.c
 
 # List Assembler source files here.
 # Make them always end in a capital .S.  Files ending in a lowercase .s
