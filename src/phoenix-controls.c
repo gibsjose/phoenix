@@ -1,5 +1,5 @@
 /**********************************************************
-*   Phoenix FSW - Gyroscope
+*   Phoenix FSW - Controls
 *
 *   25 Jan 2016
 *
@@ -11,7 +11,36 @@
 *   https://github.com/gibsjose/phoenix
 **********************************************************/
 
-#include "phoenix-gyro.h"
+#include "phoenix-controls.h"
+
+//JVila: This should actually be on a interrput subroutine..
+void receiver_read(receiver_inputs_t * receiver){
+
+}
+
+//TO FINISH.
+void receiver_scale(receiver_inputs_t * receiver){
+
+  receiver->roll_scaled = receive
+}
+
+
+void receiver_read(gyro_t * gyro) {
+    uart_puts("P: ");
+    uart_putd(gyro->pitch);
+    uart_puts(" --- ");
+
+    uart_puts(" R: ");
+    uart_putd(gyro->roll);
+    uart_puts(" --- ");
+
+    uart_puts(" Y: ");
+    uart_putd(gyro->yaw);
+    uart_puts(" ---\r\n");
+}
+
+
+
 
 //Initialize gyroscope
 uint8_t gyro_init(gyro_t * gyro) {
@@ -149,31 +178,16 @@ uint8_t gyro_read(gyro_t * gyro) {
 //Print the gyro data
 void gyro_print(gyro_t * gyro) {
     uart_puts("P: ");
-    uart_putd(gyro->pitch_filtered);
+    uart_putd(gyro->pitch);
     uart_puts(" --- ");
 
     uart_puts(" R: ");
-    uart_putd(gyro->roll_filtered);
+    uart_putd(gyro->roll);
     uart_puts(" --- ");
 
     uart_puts(" Y: ");
-    uart_putd(gyro->yaw_filtered);
+    uart_putd(gyro->yaw);
     uart_puts(" ---\r\n");
-}
-
-
-//Scale the gyro data
-void gyro_scale(gyro_t * gyro) {
-   gyro->pitch = gyro->pitch * SCALE_COEFFICIENT ;
-   gyro->roll = gyro->roll * SCALE_COEFFICIENT ;
-   gyro->yaw = gyro->yaw * SCALE_COEFFICIENT ;
-}
-
-//Low pass filter the velocity
-void gyro_filter(gyro_t * gyro) {
-   gyro->pitch_filtered = gyro->pitch_filtered * (1 - FILTER_COEFFICIENT) + gyro->pitch * FILTER_COEFFICIENT;
-   gyro->roll_filtered = gyro->roll_filtered * (1 - FILTER_COEFFICIENT) + gyro->roll * FILTER_COEFFICIENT;
-   gyro->yaw = gyro->yaw_filtered * (1 - FILTER_COEFFICIENT) + gyro->yaw * FILTER_COEFFICIENT;
 }
 
 //Gyro test loop
@@ -184,12 +198,6 @@ void gyro_loop(gyro_t * gyro) {
     //Take a reading
     gyro_read(gyro);
 
-    //Scale the readout according to the sensitivity
-    gyro_scale(gyro);
-
-    //Filter the gyro velocities
-    gyro_filter(gyro);
-
-    //Print gyro filtered data
+    //Print gyro data
     gyro_print(gyro);
 }

@@ -28,7 +28,7 @@ ISR(TIMER1_COMPA_vect) {
 int main(void) {
 	//Data structures
 	gyro_t * gyro = (gyro_t *)malloc(sizeof(gyro_t));
-
+	receiver_t * receiver = (receiver_t)malloc(sizeof(receiver_t));
 	int ret = 0;
 
 	//Initialize UART at 9600 baud
