@@ -13,12 +13,13 @@
 
 #include "phoenix-controls.h"
 
-//JVila: This should actually be on a interrput subroutine..
+//JVila: This should actually be on a interrput subroutine retrieving the length of the PWM pulses on the receiver pins...
 void receiver_read(receiver_inputs_t * receiver){
  /*receiver->roll = ...
  receiver->pitch = ...
  receiver->gas = ...
- receiver->yaw = ...*/
+ receiver->yaw = ...
+ receiver_scale(receiver)*/
 }
 
 void receiver_scale(receiver_inputs_t * receiver){
@@ -117,177 +118,99 @@ else{
 
 }
 
+void calculate_setpoints(receiver_inputs_t * receiver, setpoints_t * setpoints){
+  //Roll Setpoints
+  //We need a little dead band of 16us for better results.
+  if(receiver->roll > 1508){
+      setpoints->roll = (receiver->roll - 1508)/MODE;
+  }
+  else if(receiver->roll < 1492){
+      setpoints->roll = (receiver->roll - 1492)/MODE;
+  }
+  else{
+    setpoints->roll = 0;
+  }
 
+  //Pitch Setpoints
+  //We need a little dead band of 16us for better results.
+  if(receiver->pitch > 1508){
+      setpoints->pitch = (receiver->pitch - 1508)/MODE;
+  }
+  else if(receiver->roll < 1492){
+      setpoints->pitch = (receiver->pitch - 1492)/MODE;
+  }
+  else{
+    setpoints->pitch = 0;
+  }
 
-void receiver_read(gyro_t * gyro) {
-    uart_puts("P: ");
-    uart_putd(gyro->pitch);
-    uart_puts(" --- ");
-
-    uart_puts(" R: ");
-    uart_putd(gyro->roll);
-    uart_puts(" --- ");
-
-    uart_puts(" Y: ");
-    uart_putd(gyro->yaw);
-    uart_puts(" ---\r\n");
+  //Yaw Setpoints
+  //We need a little dead band of 16us for better results.
+  if(receiver->yaw > 1508){
+      setpoints->yaw = (receiver->yaw - 1508)/MODE;
+  }
+  else if(receiver->yaw < 1492){
+      setpoints->yaw = (receiver->yaw - 1492)/MODE;
+  }
+  else{
+    setpoints->yaw = 0;
+  }
 }
 
+void pid_controller(PID_input_t * PID_input, PID_Settings_t * PID_settings, PID_output_t * PID_output){
 
 
+  PID_output->error = PID_input->target - PID_input->measurement;               //Calculate error signal
 
-//Initialize gyroscope
-uint8_t gyro_init(gyro_t * gyro) {
-    uart_puts("Initializing Gyroscope\r\n");
-    uint8_t ret = 0;
+  // Proportional contribution
+  PID_output->P_contribution = PID_settings->KP * PID_output->error;
 
-    //Allocate memory for the gyro data structure if need be
-    if(gyro == NULL) {
-        return ERROR;
-    }
+  // Integral contribution
+  PID_output->I_contribution = PID_input->accomulated_error;                    //Dumb but clearer
+  PID_output->I_contribution = PID_output->I_contribution  + PID_settings->KI * PID_output->error;
 
-    //Begin TWI communication
-    ret = i2c_start(GYRO_ADDR + I2C_WRITE);
-    if(ret) {
-        i2c_stop();
-        uart_puts("<-- ERROR: Unable to start gyroscope communication-->\r\n");
-        return ERROR;
-    }
+  if(PID_output->I_contribution > PID_settings->upper_limit){ // Do not let the Integral gain build up too much
+    PID_output->I_contribution = PID_settings->upper_limit;
+  }
+  if(PID_output->I_contribution < PID_settings->lower_limit){
+    PID_output->I_contribution = PID_settings->lower_limit;
+  }
+  PID_input->accomulated_error = PID_output->I_contribution; //To be used next time we compte the contribution
 
-    //Set the pointer to the control 1 register
-    ret = i2c_write(GYRO_CTRL_1_REG);
-    if(ret) {
-        i2c_stop();
-        uart_puts("<-- ERROR: Could not set pointer to gyroscope CTRL 1 register -->\r\n");
-        return ERROR;
-    }
+  // Derivative contribution
+  PID_output->D_contribution = PID_settings->KD * (PID_output->error - PID_input->last_error);
+  PID_input->last_error = PID_output->error;
 
-    // Turn on the gyroscope and enable all axes (0x0F)
-    ret = i2c_write(GYRO_PD | GYRO_ZEN | GYRO_YEN | GYRO_XEN);
-    if(ret) {
-        i2c_stop();
-        uart_puts("<-- ERROR: Could not write to gyroscope -->\r\n");
-        return ERROR;
-    }
+  // Add up all the contributions to form the command signal
+  PID_output->ut = PID_output->P_contribution + PID_output->I_contribution + PID_output->D_contribution;
 
-    //Start communication again
-    ret = i2c_rep_start(GYRO_ADDR + I2C_WRITE);
-    if(ret) {
-        i2c_stop();
-        uart_puts("<-- ERROR: Unable to start gyroscope communication-->\r\n");
-        return ERROR;
-    }
-
-    //Set the pointer to the control 4 register
-    ret = i2c_write(GYRO_CTRL_4_REG);
-    if(ret) {
-        i2c_stop();
-        uart_puts("<-- ERROR: Could not set pointer to gyroscope CTRL 1 register -->\r\n");
-        return ERROR;
-    }
-
-    //Block data update: output registers not updated until read and set full scale
-    // selection to 500 dps (FS1:FS0 as 01) (0x90)
-    ret = i2c_write(GYRO_BDU | GYRO_FS0);
-    if(ret) {
-        i2c_stop();
-        uart_puts("<-- ERROR: Could not write to gyroscope -->\r\n");
-        return ERROR;
-    }
-
-    //Release bus
-    i2c_stop();
-
-    //Give the gyroscope a bit of time (250ms) to start
-    delay_us(250000);
-
-    return OK;
+  // Make sure we are not over the limits, coerce output
+  if(PID_output->ut > PID_settings->upper_limit){
+    PID_output->ut = PID_settings->upper_limit;
+  }
+  if(PID_output->ut < PID_settings->lower_limit){
+    PID_output->ut = PID_settings->lower_limit;
+  }
 }
 
-//Calibrate gyroscope
-uint8_t gyro_calibrate(gyro_t * gyro) {
-    uart_puts("Starting gyroscope calibration tes\r\n");
+void calculate_pids(setpoints_t * setpoints, receiver_inputs_t * receiver, PID_Settings_t * PID ){
 
-    if(gyro == NULL) {
-        uart_puts("NULL\r\n");
-        return ERROR;
-    }
+//Roll calculations
 
-    //Sum up 2000 measurements
-    for (int i = 0; i < GYRO_CALIBRATION_STEPS; i++ ){
-        gyro_read(gyro);
-        gyro->roll_offset += gyro->roll;
-        gyro->pitch_offset += gyro->pitch;
-        gyro->yaw_offset += gyro->yaw;
 
-        //Print a '.' every 100 readings
-        if(!(i % 100)) {
-            uart_puts(".");
-        }
-
-        //Delay 4ms
-        delay_us(4000);
-    }
-
-    return OK;
 }
 
-//Read pitch, roll, and yaw from gyroscope and
-// apply calibration offsets
-uint8_t gyro_read(gyro_t * gyro) {
-    char msb = 0;
-    char lsb = 0;
+//Print something
+//  uart_puts("something");
 
-    if(gyro == NULL) {
-        return ERROR;
-    }
-
-    //Point to the read register
-    i2c_start(GYRO_ADDR + I2C_WRITE);           //Begin TWI communication
-    i2c_write(GYRO_READ_REG | GYRO_AUTO_INC);   //Point to read register (0x28) and enable auto increment
-
-    //Read all six bytes
-    i2c_rep_start(GYRO_ADDR + I2C_READ);
-
-    //Roll
-    lsb = i2c_readAck();
-    msb = i2c_readAck();
-    gyro->roll = ROLL_COEFFICIENT * ((msb << 8) | lsb) - gyro->roll_offset;
-
-    //Pitch
-    lsb = i2c_readAck();
-    msb = i2c_readAck();
-    gyro->pitch = PITCH_COEFFICIENT * ((msb << 8) | lsb) - gyro->pitch_offset;
-
-    //Yaw
-    lsb = i2c_readAck();
-    msb = i2c_readNak();
-    gyro->yaw = YAW_COEFFICIENT * ((msb << 8) | lsb) - gyro->yaw_offset;
-
-    i2c_stop();
-
-    return OK;
-}
-
-//Print the gyro data
-void gyro_print(gyro_t * gyro) {
-    uart_puts("P: ");
-    uart_putd(gyro->pitch);
-    uart_puts(" --- ");
-
-    uart_puts(" R: ");
-    uart_putd(gyro->roll);
-    uart_puts(" --- ");
-
-    uart_puts(" Y: ");
-    uart_putd(gyro->yaw);
-    uart_puts(" ---\r\n");
-}
-
-//Gyro test loop
-void gyro_loop(gyro_t * gyro) {
+//Control loop sequence
+void control_loop(receiver_inputs_t * receiver, setpoints_t * setpoints) {
     //Wait 250ms
     delay_us(250000);
+    receiver_read(receiver); //Interrput subroutine
+    receiver_scale(receiver);
+    //malloc setpoints
+    calculate_setpoints(receiver, setpoints);
+
 
     //Take a reading
     gyro_read(gyro);

@@ -57,10 +57,10 @@
                                         //  1x -> 2000 dps
 
 //Gyro readout scale coefficient transform gyro readout counts into degrees per second
-#define SCALE_COEFFICIENT   0.0175 // 17.5 mili-dregrees per second per count if using  GYRO_FS1 = 0 and GYRO_FS0 = 1 
+#define SCALE_COEFFICIENT   0.0175 // 17.5 mili-dregrees per second per count if using  GYRO_FS1 = 0 and GYRO_FS0 = 1
 
 //We low-pass filter the velocity read from the gyro. 0.8 and 0.2 are good values
-#define FILTER_COEFFICIENT  0.2
+#define FILTER_COEFFICIENT  0.2  //That is the weight we will assign to the new gyro readouts
 
 #define GYRO_AUTO_INC       (1 << 7)    //Auto increment
 #define GYRO_READ_REG       0x28        //Read register (0x28)
