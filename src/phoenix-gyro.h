@@ -88,8 +88,8 @@ typedef struct gyro_t {
 uint8_t gyro_init(gyro_t *);
 uint8_t gyro_calibrate(gyro_t *);
 uint8_t gyro_read(gyro_t *);
-uint8_t gyro_scale(gyro_t *);
-uint8_t gyro_filter(gyro_t *);
+void gyro_scale(gyro_t *);
+void gyro_filter(gyro_t *);
 void gyro_print(gyro_t *);
 void gyro_loop(gyro_t *);
 

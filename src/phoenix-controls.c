@@ -13,6 +13,26 @@
 
 #include "phoenix-controls.h"
 
+//Initialize variables
+PID_Settings_t pid_settings_roll = {
+    P_ROLL,               // Gain setting for the roll P-controller
+    I_ROLL,              // Gain setting for the roll I-controller
+    D_ROLL,                // Gain setting for the roll D-controller
+    UPPER_LIMIT,               // Maximum output of the PID-controller
+    LOWER_LIMIT,              // Minimum output of the PID-controller
+};
+
+PID_Settings_t *pid_settings_pitch = pid_settings_roll ;
+
+PID_Settings_t pid_settings_yaw = {
+    P_YAW,                 // Gain setting for the yaw P-controller
+    I_YAW,              // Gain setting for the yaw I-controller
+    D_YAW,                 // Gain setting for the yaw D-controller
+    UPPER_LIMIT,               // Maximum output of the PID-controller
+    LOWER_LIMIT,              // Minimum output of the PID-controller
+};
+
+
 //JVila: This should actually be on a interrput subroutine retrieving the length of the PWM pulses on the receiver pins...
 void receiver_read(receiver_inputs_t * receiver){
  /*receiver->roll = ...
@@ -237,9 +257,6 @@ void control_loop(receiver_inputs_t * receiver, setpoints_t * setpoints) {
     calculate_setpoints(receiver, setpoints);
     //malloc pid_input_roll,  pid_input_pitch, pid_input_yaw and pid_output_roll, pid_output_pitch and pid_output_yaw
     calculate_pids(setpoints, gyro);
-
-
-
 
     //Take a reading
     gyro_read(gyro);
