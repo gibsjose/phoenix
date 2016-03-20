@@ -192,11 +192,36 @@ void pid_controller(PID_input_t * PID_input, PID_Settings_t * PID_settings, PID_
   }
 }
 
-void calculate_pids(setpoints_t * setpoints, receiver_inputs_t * receiver, PID_Settings_t * PID ){
 
-//Roll calculations
+void calculate_pids(setpoints_t * setpoints, gyro_t * gyro ){
 
+// malloc PID_input, PID_output_t OUTSIDE the function
+  PID_input_t * pid_input_roll = (PID_input_t *)malloc(sizeof(PID_input_t));
+  PID_output_t * pid_output_roll = (PID_output_t *)malloc(sizeof(PID_output_t));
 
+  PID_input_t * pid_input_pitch = (PID_input_t *)malloc(sizeof(PID_input_t));
+  PID_output_t * pid_output_pitch = (PID_output_t *)malloc(sizeof(PID_output_t));
+
+  PID_input_t * pid_input_yaw = (PID_input_t *)malloc(sizeof(PID_input_t));
+  PID_output_t * pid_output_yaw = (PID_output_t *)malloc(sizeof(PID_output_t));
+
+// ROLL Set inputs
+  pid_input_roll->target = setpoints->roll_setpoint;
+  pid_input_roll->measurement = gyro->roll_filtered;
+//Populate the PID output for the ROLL axis
+  pid_controller(pid_input_roll, pid_settings_roll, pid_output_roll);
+
+// PITCH set inputs
+  pid_input_pitch->target = setpoints->pitch_setpoint;
+  pid_input_pitch->measurement = gyro->pitch_filtered;
+//Populate the PID output for the PITCH axis
+    pid_controller(pid_input_pitch, pid_settings_pitch, pid_output_pitch);
+
+// YAW set inputs
+    pid_input_yaw->target = setpoints->yaw_setpoint;
+    pid_input_yaw->measurement = gyro->yaw_filtered;
+//Populate the PID output for the YAW axis
+    pid_controller(pid_input_yaw, pid_settings_yaw, pid_output_yaw);
 }
 
 //Print something
@@ -210,6 +235,10 @@ void control_loop(receiver_inputs_t * receiver, setpoints_t * setpoints) {
     receiver_scale(receiver);
     //malloc setpoints
     calculate_setpoints(receiver, setpoints);
+    //malloc pid_input_roll,  pid_input_pitch, pid_input_yaw and pid_output_roll, pid_output_pitch and pid_output_yaw
+    calculate_pids(setpoints, gyro);
+
+
 
 
     //Take a reading

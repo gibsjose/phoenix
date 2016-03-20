@@ -46,9 +46,9 @@
 //See calculate_setpoints(receiver_inputs_t * receiver, setpoints_t * setpoints) for details
 
 //Values a gyro range of +-500 dps.
-#define EXTREME = 1.5     //Allows 500/1.5 = 333.3 degrees per second max setpointr
-#define SPORT = 3         //Allows 500/3 = 166.67 degrees per second max setpoint
-#define RELAX = 4         //Allows 500/4 = 125 degrees per second max setpoint
+#define EXTREME = 1.5     //Allows 500/1.5 = 333.3 degrees per second max angular rate (= max setpoint)
+#define SPORT = 3         //Allows 500/3 = 166.67 degrees per second max angular rate (= max setpoint)
+#define RELAX = 4         //Allows 500/4 = 125 degrees per second max angular rate (= max setpoint)
 
 #define MODE = SPORT ;
 
