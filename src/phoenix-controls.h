@@ -21,6 +21,7 @@
 
 #include "phoenix-globals.h"
 #include "phoenix-gyro.h"
+#include "phoenix.h"
 #include "delay/delay.h"
 #include "uart/uart.h"
 
@@ -84,7 +85,7 @@
 
 
 //PID gains and settings data
-typedef struct PID_Settings_t {
+typedef struct PID_settings_t {
     //Coeficients
     double KP;           // Proportional gain
     double KI;           // Integral gain
@@ -93,12 +94,12 @@ typedef struct PID_Settings_t {
     //Limits of the contribution of each PID controller
     double upper_limit;
     double lower_limit;
-} PID_Settings_t;
+} PID_settings_t;
 
 
 
 //Remote controller receiver inputs for the Futaba 7C transmitter and Futaba R617FS receiver.
-typedef struct receiver_t {
+typedef struct receiver_inputs_t {
     // roll, pitch, gas and yaw receiver inputs.
     double roll;            // Roll channel 1
     double pitch;           // Pitch channel 2
@@ -111,13 +112,13 @@ typedef struct receiver_t {
     double gas_scaled;             // Throttle channel 3
     double yaw_scaled;             // Yaw channel 4
 
-} receiver_t;
+} receiver_inputs_t;
 
 typedef struct setpoints_t{
   // The receiver values from [1000 to 2000] sharp,  are scaled again and transformed into actual setpoints for the PID controller with a different range
-  double roll_setpoint;
-  double pitch_setpoint;
-  double yaw_setpoint;
+  double roll;
+  double pitch;
+  double yaw;
 }setpoints_t;
 
 typedef struct PID_input_t{
@@ -136,11 +137,11 @@ typedef struct PID_output_t{
 }PID_output_t;
 
 //Function declarations
-void receiver_read(receiver_t *);
-void receiver_scale(receiver_t *);
-void calculate_setpoints(receiver_t *, setpoints_t *);
-void calculate_pids(receiver_t *, setpoints_t *);
-void pid_controller(PID_input_t *, PID_Settings_t *, PID_output_t *);
+void receiver_read(receiver_inputs_t *);
+void receiver_scale(receiver_inputs_t *);
+void calculate_setpoints(receiver_inputs_t *, setpoints_t *);
+void calculate_pids(setpoints_t *, gyro_t *);
+void pid_controller(PID_input_t *, PID_settings_t *, PID_output_t *);
 
 
 

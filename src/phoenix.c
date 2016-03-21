@@ -16,6 +16,43 @@
 //Don't forget `volatile`!
 volatile bool sensors = false;
 
+//Initialize PID Settings, which will be constant global structs
+PID_settings_t pid_settings_roll = {
+    P_ROLL,               // Gain setting for the roll P-controller
+    I_ROLL,              // Gain setting for the roll I-controller
+    D_ROLL,                // Gain setting for the roll D-controller
+    UPPER_LIMIT,               // Maximum output of the PID-controller
+    LOWER_LIMIT,              // Minimum output of the PID-controller
+};
+
+PID_settings_t pid_settings_pitch = {
+    P_ROLL,               // Same configuration as ROLL
+    I_ROLL,              //
+    D_ROLL,              //
+    UPPER_LIMIT,         //
+    LOWER_LIMIT,         //
+};
+
+PID_settings_t pid_settings_yaw = {
+    P_YAW,                 // Gain setting for the yaw P-controller
+    I_YAW,              // Gain setting for the yaw I-controller
+    D_YAW,                 // Gain setting for the yaw D-controller
+    UPPER_LIMIT,               // Maximum output of the PID-controller
+    LOWER_LIMIT,              // Minimum output of the PID-controller
+};
+
+//Global variables to be used by the PID_controller
+PID_input_t  pid_input_roll = {0,0,0,0};
+PID_output_t pid_output_roll = {0,0,0,0};
+
+PID_input_t  pid_input_pitch = {0,0,0,0};
+PID_output_t pid_output_pitch = {0,0,0,0};
+
+PID_input_t  pid_input_yaw = {0,0,0,0};
+PID_output_t pid_output_yaw = {0,0,0,0};
+
+
+
 //Timer 1 Compare Interrupt Vector (1s CTC Timer)
 ISR(TIMER1_COMPA_vect) {
 	//Blink LED
@@ -28,7 +65,7 @@ ISR(TIMER1_COMPA_vect) {
 int main(void) {
 	//Data structures
 	gyro_t * gyro = (gyro_t *)malloc(sizeof(gyro_t));
-	receiver_t * receiver = (receiver_t*)malloc(sizeof(receiver_t));
+	receiver_inputs_t * receiver = (receiver_inputs_t*)malloc(sizeof(receiver_inputs_t));
 	int ret = 0;
 
 	//Initialize UART at 9600 baud
