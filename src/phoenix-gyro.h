@@ -84,6 +84,7 @@ typedef struct gyro_t {
 
 } gyro_t;
 
+extern gyro_t *gyro;
 //Function declarations
 uint8_t gyro_init(gyro_t *);
 uint8_t gyro_calibrate(gyro_t *);

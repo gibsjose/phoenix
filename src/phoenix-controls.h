@@ -25,20 +25,6 @@
 #include "delay/delay.h"
 #include "uart/uart.h"
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//PID gain and limit settings
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Gains for the ROLL PID, are the same as the PITCH PID
-#define P_ROLL  1.4
-#define I_ROLL  0.05
-#define D_ROLL  15
-
-#define P_YAW  4
-#define I_YAW  0.02
-#define D_YAW  0
-
-#define UPPER_LIMIT  400
-#define LOWER_LIMIT  -400
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Phoenix operation MODE
@@ -96,6 +82,9 @@ typedef struct PID_settings_t {
     double lower_limit;
 } PID_settings_t;
 
+extern PID_settings_t *pid_settings_roll;
+extern PID_settings_t *pid_settings_pitch;
+extern PID_settings_t *pid_settings_yaw;
 
 
 //Remote controller receiver inputs for the Futaba 7C transmitter and Futaba R617FS receiver.
@@ -127,6 +116,10 @@ typedef struct PID_input_t{
   double last_error;               // Used internally for the PID_controller calculations
   double accomulated_error;        // Used internally for the PID_controller calculations
 }PID_input_t;
+extern PID_input_t *pid_input_roll;
+extern PID_input_t *pid_input_pitch;
+extern PID_input_t *pid_input_yaw;
+
 
 typedef struct PID_output_t{
   double ut;                       // Command signal, contribution to be applied to the ESCs
@@ -135,6 +128,9 @@ typedef struct PID_output_t{
   double I_contribution;           // Useful telemetry and monitoring data to adjust PID gains
   double D_contribution;           // Useful telemetry and monitoring data to adjust PID gains
 }PID_output_t;
+extern PID_output_t *pid_output_roll;
+extern PID_output_t *pid_output_pitch;
+extern PID_output_t *pid_output_yaw;
 
 //Function declarations
 void receiver_read(receiver_inputs_t *);
