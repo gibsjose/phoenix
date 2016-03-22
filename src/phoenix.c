@@ -13,6 +13,7 @@
 
 #include "phoenix.h"
 
+
 //Don't forget `volatile`!
 volatile bool sensors = false;
 
@@ -30,36 +31,36 @@ ISR(TIMER1_COMPA_vect) {
 
 int main(void) {
 	//malloc data structures
-	gyro_t * gyro = (gyro_t *)malloc(sizeof(gyro_t));
+	gyro_t *gyro = (gyro_t *)malloc(sizeof(gyro_t));
+	receiver = (receiver_inputs_t*)malloc(sizeof(receiver_inputs_t));
+	setpoints = (setpoints_t*)malloc(sizeof(setpoints_t));
 
-  pid_input_roll = (PID_input_t *)malloc(sizeof(PID_input_t));
-  pid_input_pitch = (PID_input_t *)malloc(sizeof(PID_input_t));
-  pid_input_yaw = (PID_input_t *)malloc(sizeof(PID_input_t));
+   PID_input_t *pid_input_roll = (PID_input_t *)malloc(sizeof(PID_input_t));
+   PID_input_t *pid_input_pitch = (PID_input_t *)malloc(sizeof(PID_input_t));
+   PID_input_t *pid_input_yaw = (PID_input_t *)malloc(sizeof(PID_input_t));
 
-  pid_output_roll = (PID_output_t *)malloc(sizeof(PID_output_t));
-  pid_output_pitch = (PID_output_t *)malloc(sizeof(PID_output_t));
-  pid_output_yaw = (PID_output_t *)malloc(sizeof(PID_output_t));
+   PID_output_t *pid_output_roll = (PID_output_t *)malloc(sizeof(PID_output_t));
+   PID_output_t *pid_output_pitch = (PID_output_t *)malloc(sizeof(PID_output_t));
+   PID_output_t *pid_output_yaw = (PID_output_t *)malloc(sizeof(PID_output_t));
 
-  /*pid_settings_roll = (PID_settings_t *)malloc(sizeof(PID_settings_t));
-  pid_settings_roll.KP = P_ROLL;   // Gain setting for the roll P-controller
+  const PID_settings_t *pid_settings_roll = (PID_settings_t *)malloc(sizeof(PID_settings_t));
+  /*pid_settings_roll.KP = P_ROLL;   // Gain setting for the roll P-controller
   pid_settings_roll->KI = I_ROLL;   // Gain setting for the roll I-controller
   pid_settings_roll->KD = D_ROLL;   // Gain setting for the roll D-controller
   pid_settings_roll->upper_limit = UPPER_LIMIT; // Maximum output of the PID-controller
-  pid_settings_roll->lower_limit = LOWER_LIMIT; // Minimum output of the PID-controller
+  pid_settings_roll->lower_limit = LOWER_LIMIT; // Minimum output of the PID-controller*/
 
-  pid_settings_pitch = (PID_settings_t *)malloc(sizeof(PID_settings_t));
-  pid_settings_pitch = pid_settings_roll;*/
+  const PID_settings_t *pid_settings_pitch = (PID_settings_t *)malloc(sizeof(PID_settings_t));
 
-  pid_settings_yaw = (PID_settings_t *)malloc(sizeof(PID_settings_t));
-  pid_settings_yaw = (struct PID_settings_t*){
+  const PID_settings_t *pid_settings_yaw = (PID_settings_t *)malloc(sizeof(PID_settings_t));
+  /*pid_settings_yaw = (struct PID_settings_t*){
       P_YAW,                 // Gain setting for the yaw P-controller
       I_YAW,              // Gain setting for the yaw I-controller
       D_YAW,                 // Gain setting for the yaw D-controller
       UPPER_LIMIT,               // Maximum output of the PID-controller
       LOWER_LIMIT,              // Minimum output of the PID-controller
-  };
+  };*/
 
-	receiver_inputs_t * receiver = (receiver_inputs_t*)malloc(sizeof(receiver_inputs_t));
 	int ret = 0;
 
 	//Initialize UART at 9600 baud
@@ -83,7 +84,15 @@ int main(void) {
 
 	//Main Loop
 	while(true) {
+		//Read and print the gyro data
 		gyro_loop(gyro);
+
+		//Calculate the pid_output to feed into the ESCs
+		void calculate_pids(gyro, pid_input_roll, pid_input_pitch, pid_input_yaw,
+		  pid_settings_roll, pid_settings_pitch, pid_settings_yaw, pid_output_roll
+		  , pid_output_pitch, pid_output_yaw );
+
+
 
 		//Sensor Loop
 		if(sensors) {

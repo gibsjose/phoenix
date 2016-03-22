@@ -25,6 +25,7 @@
 
 #include "phoenix-gyro.h"
 #include "phoenix-controls.h"
+#include "phoenix-receiver.h"
 
 #include "delay/delay.h"
 #include "uart/uart.h"
