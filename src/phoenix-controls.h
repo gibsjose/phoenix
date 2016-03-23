@@ -21,10 +21,7 @@
 
 #include "phoenix-globals.h"
 #include "phoenix-gyro.h"
-#include "phoenix.h"
 #include "phoenix-receiver.h"
-#include "delay/delay.h"
-#include "uart/uart.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PID gain and limit settings
@@ -34,6 +31,10 @@
 #define P_ROLL  1.4
 #define I_ROLL 0.05
 #define D_ROLL 15
+
+#define P_PITCH  1.4
+#define I_PITCH 0.05
+#define D_PITCH 15
 
 #define P_YAW 4
 #define I_YAW 0.02
@@ -73,19 +74,19 @@ typedef struct PID_roll_t {
     PID_input_t input;
     PID_settings_t settings;
     PID_output_t output;
-}PID_roll_t
+}PID_roll_t;
 
 typedef struct PID_pitch_t {
     PID_input_t input;
     PID_settings_t settings;
     PID_output_t output;
-}PID_pitch_t
+}PID_pitch_t;
 
 typedef struct PID_yaw_t {
     PID_input_t input;
     PID_settings_t settings;
     PID_output_t output;
-}PID_yaw_t
+}PID_yaw_t;
 
 //Function declarations
 void init_pid_settings(PID_roll_t *, PID_pitch_t *, PID_yaw_t *);

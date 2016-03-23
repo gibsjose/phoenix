@@ -37,9 +37,6 @@ PHOENIX_PORT ?= com16
 #PHOENIX_PORT ?= c:\\cygwin64\\dev\\ttyS6
 #PHOENIX_PORT ?= ttyS14
 
-
-
-
 # Output format. (can be srec, ihex, binary)
 FORMAT = ihex
 

@@ -22,7 +22,6 @@
 #include "phoenix-globals.h"
 #include "phoenix-gyro.h"
 #include "phoenix.h"
-#include "phoenix-controls.h"
 #include "delay/delay.h"
 #include "uart/uart.h"
 

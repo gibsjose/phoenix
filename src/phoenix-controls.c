@@ -86,19 +86,19 @@ void calculate_pids(gyro_t * gyro, setpoints_t * setpoints, PID_roll_t * roll, P
     roll->input.measurement = gyro->roll_filtered;
 
     //Populate the PID output for the ROLL axis
-    pid_controller(roll->input, roll->settings, roll->output);
+    pid_controller(&(roll->input), &(roll->settings), &(roll->output));
 
     // PITCH set inputs
-    pid_input_pitch->target = setpoints->pitch;
-    pid_input_pitch->measurement = gyro->pitch_filtered;
+    pitch->input.target = setpoints->pitch;
+    pitch->input.measurement = gyro->pitch_filtered;
 
     //Populate the PID output for the PITCH axis
-    pid_controller(pitch->input, pitch->settings, pitch->output);
+    pid_controller(&(pitch->input), &(pitch->settings), &(pitch->output));
 
     // YAW set inputs
-    pid_input_yaw->target = setpoints->yaw;
-    pid_input_yaw->measurement = gyro->yaw_filtered;
+    yaw->input.target = setpoints->yaw;
+    yaw->input.measurement = gyro->yaw_filtered;
 
     //Populate the PID output for the YAW axis
-    pid_controller(yaw->input, yaw->settings, yaw->output);
+    pid_controller(&(yaw->input), &(yaw->settings), &(yaw->output));
 }
