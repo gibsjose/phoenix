@@ -28,13 +28,15 @@
 MCU = atmega328p
 
 # Programming Interface ('arduino' for Arduino, 'avrispmkII' for the AVRISP mkII, or `usbtiny` for the Sparkfun AVR Pocket Programmer)
-PHOENIX_PROGRAMMER ?= arduino
+PHOENIX_PROGRAMMER ?= usbtiny
 
 # Programmer Serial port (ex: usb, com5, ttyACM0)
-#PHOENIX_PORT ?= usb:bus:device
+#PHOENIX_PORT ?= \\.\\com18
 #PHOENIX_PORT ?= /dev/ttyS17
 PHOENIX_PORT ?= com16
 #PHOENIX_PORT ?= c:\\cygwin64\\dev\\ttyS6
+#PHOENIX_PORT ?= ttyS14
+
 
 
 
@@ -52,7 +54,7 @@ TARGET = phoenix
 SRC_DIR = src
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(SRC_DIR)/$(TARGET).c $(SRC_DIR)/uart/uart.c $(SRC_DIR)/delay/delay.c $(SRC_DIR)/i2cmaster/twimaster.c $(SRC_DIR)/phoenix-gyro.c
+SRC = $(SRC_DIR)/$(TARGET).c $(SRC_DIR)/uart/uart.c $(SRC_DIR)/delay/delay.c $(SRC_DIR)/i2cmaster/twimaster.c $(SRC_DIR)/phoenix-gyro.c $(SRC_DIR)/phoenix-controls.c $(SRC_DIR)/phoenix-receiver.c
 
 # List Assembler source files here.
 # Make them always end in a capital .S.  Files ending in a lowercase .s
@@ -128,7 +130,8 @@ AVRDUDE_PORT = $(PHOENIX_PORT)	   # programmer connected to serial device
 AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
 # AVRDUDE_WRITE_EEPROM = -U eeprom:w:$(TARGET).eep
 
-AVRDUDE_FLAGS = -p $(MCU) -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER)
+#AVRDUDE_FLAGS = -p $(MCU) -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER) -v -v -v -v
+AVRDUDE_FLAGS = -p $(MCU)  -c $(AVRDUDE_PROGRAMMER)
 
 # Uncomment the following if you want avrdude's erase cycle counter.
 # Note that this counter needs to be initialized first using -Yn,

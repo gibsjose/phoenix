@@ -24,6 +24,9 @@
 #include <stdbool.h>
 
 #include "phoenix-gyro.h"
+#include "phoenix-controls.h"
+#include "phoenix-receiver.h"
+
 #include "delay/delay.h"
 #include "uart/uart.h"
 
@@ -38,6 +41,7 @@
 //Pin Definitions
 #define LED_PIN     PB5     //PB2 is the board LED, PB5 is the Arduino LED
 #define LED_DD      DDB5
+
 
 int init(void);
 int port_init(void);
