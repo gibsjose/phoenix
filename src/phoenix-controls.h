@@ -26,19 +26,21 @@
 #include "delay/delay.h"
 #include "uart/uart.h"
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Phoenix operation MODE
+//PID gain and limit settings
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//We will limit the maximum angular speed that the Roll, Pitch and Yaw receivers channel can request to Phoenix
-//See calculate_setpoints(receiver_inputs_t * receiver, setpoints_t * setpoints) for details
 
-//Values a gyro range of +-500 dps.
-#define EXTREME  1.5     //Allows 500/1.5 = 333.3 degrees per second max angular rate (= max setpoint)
-#define SPORT  3         //Allows 500/3 = 166.67 degrees per second max angular rate (= max setpoint)
-#define RELAX  4         //Allows 500/4 = 125 degrees per second max angular rate (= max setpoint)
+// Gains for the ROLL PID, are the same as the PITCH PID
+#define P_ROLL  1.4
+#define I_ROLL 0.05
+#define D_ROLL 15
 
-#define MODE SPORT
+#define P_YAW 4
+#define I_YAW 0.02
+#define D_YAW 0
+
+#define UPPER_LIMIT 400
+#define LOWER_LIMIT -400
 
 //PID gains and settings data
 typedef struct PID_settings_t {
@@ -67,17 +69,27 @@ typedef struct PID_output_t{
   double D_contribution;           // Useful telemetry and monitoring data to adjust PID gains
 }PID_output_t;
 
+typedef struct PID_roll_t {
+    PID_input_t input;
+    PID_settings_t settings;
+    PID_output_t output;
+}PID_roll_t
+
+typedef struct PID_pitch_t {
+    PID_input_t input;
+    PID_settings_t settings;
+    PID_output_t output;
+}PID_pitch_t
+
+typedef struct PID_yaw_t {
+    PID_input_t input;
+    PID_settings_t settings;
+    PID_output_t output;
+}PID_yaw_t
+
 //Function declarations
-void calculate_pids(gyro_t *,  PID_input_t *,  PID_input_t *,  PID_input_t *,
-   PID_settings_t *, PID_settings_t *, PID_settings_t *, PID_output_t *, PID_output_t *, PID_output_t *);
+void init_pid_settings(PID_roll_t *, PID_pitch_t *, PID_yaw_t *);
+void calculate_pids(gyro_t *, setpoints_t *, PID_roll_t *, PID_pitch_t *, PID_yaw_t *);
 void pid_controller(PID_input_t *, PID_settings_t *, PID_output_t *);
-
-
-
-
-//Question: What does return OK do when the expected return is a uint8_t ?
-/*//Function declarations
-uint8_t gyro_init(gyro_t *);
-*/
 
 #endif//PHOENIX_CONTROLS_H

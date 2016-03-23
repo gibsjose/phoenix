@@ -26,7 +26,6 @@
 #include "delay/delay.h"
 #include "uart/uart.h"
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Phoenix operation MODE
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -95,11 +94,5 @@ typedef struct setpoints_t{
 void receiver_read(receiver_inputs_t *);
 void receiver_scale(receiver_inputs_t *);
 void calculate_setpoints(receiver_inputs_t *, setpoints_t *);
-
-
-//Question: What does return OK do when the expected return is a uint8_t ?
-/*//Function declarations
-uint8_t gyro_init(gyro_t *);
-*/
 
 #endif//PHOENIX_RECEIVER_H

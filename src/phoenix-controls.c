@@ -13,75 +13,92 @@
 
 #include "phoenix-controls.h"
 
+//Initialize PID settings for pitch, roll, yaw
+void init_pid_settings(PID_roll_t *roll, PID_pitch_t *pitch, PID_yaw_t *yaw) {
+    //Initialize settings
+    PID_settings_t *settings;
 
+    //Roll
+    settings = &(roll->settings);
+    settings->KP = P_ROLL;
+    settings->KI = I_ROLL;
+    settings->KD = D_ROLL;
+    settings->upper_limit = UPPER_LIMIT;
+    settings->lower_limit = LOWER_LIMIT;
+
+    //Pitch
+    settings = &(pitch->settings);
+    settings->KP = P_PITCH;
+    settings->KI = I_PITCH;
+    settings->KD = D_PITCH;
+    settings->upper_limit = UPPER_LIMIT;
+    settings->lower_limit = LOWER_LIMIT;
+
+    //Yaw
+    settings = &(yaw->settings);
+    settings->KP = P_YAW;
+    settings->KI = I_YAW;
+    settings->KD = D_YAW;
+    settings->upper_limit = UPPER_LIMIT;
+    settings->lower_limit = LOWER_LIMIT;
+}
+
+//Calculates the PID output from the input and settings
 void pid_controller(PID_input_t * PID_input, PID_settings_t * PID_settings, PID_output_t * PID_output){
 
+    PID_output->error = PID_input->target - PID_input->measurement;               //Calculate error signal
 
-  PID_output->error = PID_input->target - PID_input->measurement;               //Calculate error signal
+    // Proportional contribution
+    PID_output->P_contribution = PID_settings->KP * PID_output->error;
 
-  // Proportional contribution
-  PID_output->P_contribution = PID_settings->KP * PID_output->error;
+    // Integral contribution
+    PID_output->I_contribution = PID_input->accomulated_error;                    //Dumb but clearer
+    PID_output->I_contribution = PID_output->I_contribution  + PID_settings->KI * PID_output->error;
 
-  // Integral contribution
-  PID_output->I_contribution = PID_input->accomulated_error;                    //Dumb but clearer
-  PID_output->I_contribution = PID_output->I_contribution  + PID_settings->KI * PID_output->error;
+    if(PID_output->I_contribution > PID_settings->upper_limit){ // Do not let the Integral gain build up too much
+        PID_output->I_contribution = PID_settings->upper_limit;
+    }
+    if(PID_output->I_contribution < PID_settings->lower_limit){
+        PID_output->I_contribution = PID_settings->lower_limit;
+    }
+    PID_input->accomulated_error = PID_output->I_contribution; //To be used next time we compte the contribution
 
-  if(PID_output->I_contribution > PID_settings->upper_limit){ // Do not let the Integral gain build up too much
-    PID_output->I_contribution = PID_settings->upper_limit;
-  }
-  if(PID_output->I_contribution < PID_settings->lower_limit){
-    PID_output->I_contribution = PID_settings->lower_limit;
-  }
-  PID_input->accomulated_error = PID_output->I_contribution; //To be used next time we compte the contribution
+    // Derivative contribution
+    PID_output->D_contribution = PID_settings->KD * (PID_output->error - PID_input->last_error);
+    PID_input->last_error = PID_output->error;
 
-  // Derivative contribution
-  PID_output->D_contribution = PID_settings->KD * (PID_output->error - PID_input->last_error);
-  PID_input->last_error = PID_output->error;
+    // Add up all the contributions to form the command signal
+    PID_output->ut = PID_output->P_contribution + PID_output->I_contribution + PID_output->D_contribution;
 
-  // Add up all the contributions to form the command signal
-  PID_output->ut = PID_output->P_contribution + PID_output->I_contribution + PID_output->D_contribution;
-
-  // Make sure we are not over the limits, coerce output
-  if(PID_output->ut > PID_settings->upper_limit){
-    PID_output->ut = PID_settings->upper_limit;
-  }
-  if(PID_output->ut < PID_settings->lower_limit){
-    PID_output->ut = PID_settings->lower_limit;
-  }
+    // Make sure we are not over the limits, coerce output
+    if(PID_output->ut > PID_settings->upper_limit){
+        PID_output->ut = PID_settings->upper_limit;
+    }
+    if(PID_output->ut < PID_settings->lower_limit){
+        PID_output->ut = PID_settings->lower_limit;
+    }
 }
 
-//setpoints_t * setpoints will be a global volatile
-void calculate_pids(gyro_t * gyro, PID_input_t * pid_input_roll, PID_input_t * pid_input_pitch, PID_input_t * pid_input_yaw,
-  PID_settings_t * pid_settings_roll, PID_settings_t * pid_settings_yaw, PID_settings_t * pid_settings_pitch, PID_output_t * pid_output_roll
-  , PID_output_t * pid_output_pitch, PID_output_t * pid_output_yaw ){
+//Performs calculation of PID outputs from gyro and setpoints
+void calculate_pids(gyro_t * gyro, setpoints_t * setpoints, PID_roll_t * roll, PID_pitch_t * pitch, PID_yaw_t * yaw) {
+    // ROLL Set inputs
+    roll->input.target = setpoints->roll;
+    roll->input.measurement = gyro->roll_filtered;
 
-// ROLL Set inputs
-  pid_input_roll->target = setpoints->roll;
-  pid_input_roll->measurement = gyro->roll_filtered;
-//Populate the PID output for the ROLL axis
-  pid_controller(pid_input_roll, pid_settings_roll, pid_output_roll);
+    //Populate the PID output for the ROLL axis
+    pid_controller(roll->input, roll->settings, roll->output);
 
-// PITCH set inputs
-  pid_input_pitch->target = setpoints->pitch;
-  pid_input_pitch->measurement = gyro->pitch_filtered;
-//Populate the PID output for the PITCH axis
-    pid_controller(pid_input_pitch, pid_settings_pitch, pid_output_pitch);
+    // PITCH set inputs
+    pid_input_pitch->target = setpoints->pitch;
+    pid_input_pitch->measurement = gyro->pitch_filtered;
 
-// YAW set inputs
+    //Populate the PID output for the PITCH axis
+    pid_controller(pitch->input, pitch->settings, pitch->output);
+
+    // YAW set inputs
     pid_input_yaw->target = setpoints->yaw;
     pid_input_yaw->measurement = gyro->yaw_filtered;
-//Populate the PID output for the YAW axis
-    pid_controller(pid_input_yaw, pid_settings_yaw, pid_output_yaw);
+
+    //Populate the PID output for the YAW axis
+    pid_controller(yaw->input, yaw->settings, yaw->output);
 }
-
-//Print something
-//  uart_puts("something");
-
-/*Control loop sequence
-
-void calculate_pids(gyro_t * gyro, PID_input_t * pid_input_roll, PID_input_t * pid_input_pitch, PID_input_t * pid_input_yaw,
-  PID_settings_t * pid_settings_roll, PID_settings_t * pid_settings_yaw, PID_settings_t * pid_settings_pitch, PID_output_t * pid_output_roll
-  , PID_output_t * pid_output_pitch , PID_output_t * pid_output_yaw )
-
-
-*/
