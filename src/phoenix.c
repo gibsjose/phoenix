@@ -35,7 +35,7 @@ int main(void) {
 	PID_roll_t *pid_roll = (PID_roll_t *)malloc(sizeof(PID_roll_t));
 	PID_yaw_t *pid_yaw = (PID_yaw_t *)malloc(sizeof(PID_yaw_t));
 	ESC_outputs_t *esc= (ESC_outputs_t*)malloc(sizeof(ESC_outputs_t));
-
+  int *sign;
 	int ret = 0;
 	int start;
 
@@ -88,13 +88,13 @@ int main(void) {
 		}
 
 		else{
-			uart_puts("Calculating ESC pulses duration to stop motors \r\n");
+			//uart_puts("Calculating ESC pulses duration to stop motors \r\n");
 			calculate_esc_pulses_to_stop_motors(esc);
 		}
 
-		uart_puts("Commanding PWM signals \r\n");
+		//uart_puts("Commanding PWM signals \r\n");
 		//commandPWMSignals(esc);
-		//PWM_loop();
+		PWM_loop(&sign);
 
 
 		//Check for receiver read flag

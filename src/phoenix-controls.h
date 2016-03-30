@@ -121,5 +121,5 @@ void init_esc_pins();
 void calculate_esc_pulses_duration(receiver_inputs_t*, PID_roll_t*, PID_pitch_t*,PID_yaw_t*, ESC_outputs_t*);
 void calculate_esc_pulses_to_stop_motors(ESC_outputs_t*);
 void commandPWMSignals(ESC_outputs_t*);
-void PWM_loop();
+void PWM_loop(int*);
 #endif//PHOENIX_CONTROLS_H

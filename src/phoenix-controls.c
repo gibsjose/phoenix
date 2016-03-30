@@ -113,7 +113,8 @@ void init_esc_pins(){
   //Configure Timer 1: Pins 9 & 10
   // CS12, CS11, CS10 = 100 (prescaler = 256)
   // WGM13, WGM12, WGM11, WGM10 = 0101 (Mode 5)
-  TCCR1A |= (1<<COM1A1) | (1<<COM1A0) | (1<<COM1B1) | (1<<COM1B0) | (1<<WGM11) | (1<<WGM10);
+  //TCCR1A |= (1<<COM1A1) | (1<<COM1A0) | (1<<COM1B1) | (1<<COM1B0) | (1<<WGM11) | (1<<WGM10);
+  TCCR1A |= (1<<WGM11) | (1<<WGM10);
   TCCR1B |= (1<<WGM13) | (1<<WGM12) | (1<<CS12) | (1<<CS11) | (1<<CS10);
 
   //Configure Timer 2: Pins 11 & 3
@@ -176,14 +177,12 @@ void commandPWMSignals(ESC_outputs_t *esc){
   OCR2B = (int) temp;                                                           //OCR2B = Pin 3
 }
 
-void PWM_loop(){
-  int sign = 1;
-
-  OCR2B = OCR2B + sign;
+void PWM_loop(int *sign){
+  OCR2B = OCR2B + *sign;
   if(OCR2B==255){
-    sign = -1;
+    *sign = -1;
   }
   if(OCR2B==0){
-    sign = 1;
+    *sign = 1;
   }
-}
+  }
