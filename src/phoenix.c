@@ -34,8 +34,10 @@ int main(void) {
 	PID_pitch_t *pid_pitch = (PID_pitch_t *)malloc(sizeof(PID_pitch_t));
 	PID_roll_t *pid_roll = (PID_roll_t *)malloc(sizeof(PID_roll_t));
 	PID_yaw_t *pid_yaw = (PID_yaw_t *)malloc(sizeof(PID_yaw_t));
+	ESC_outputs_t *esc= (ESC_outputs_t*)malloc(sizeof(ESC_outputs_t));
 
 	int ret = 0;
+	int start;
 
 	//Initialize UART at 9600 baud
 	uart_init(UART_BAUD_SELECT(BAUD, F_CPU));
@@ -59,13 +61,34 @@ int main(void) {
 	//Initialize PID settings for roll, pitch, yaw
 	init_pid_settings(pid_roll, pid_pitch, pid_yaw);
 
+	//Initialize esc pins as outputs and timer registers
+	init_esc_pins();
+
+
+// Read initial batt voltage //The variable battery_voltage holds 1050 if the battery voltage is 10.5V.
+  //battery_voltage = (analogRead(0) + 65) * 1.2317;
 	//Main Loop
 	while(true) {
+	 	// @TODO set start status
+
 		//Read and print the gyro data
 		gyro_loop(gyro);
 
 		//Calculate the PID output to feed into the ESCs
 		calculate_pids(gyro, setpoints, pid_roll, pid_pitch, pid_yaw);
+
+		if (start == 2){ //The motors are started
+			//battery_voltage = battery_voltage * 0.92 + (analogRead(0) + 65) * 0.09853;
+			//Read battery voltage()
+			calculate_esc_pulses_duration(receiver, pid_roll, pid_pitch, pid_yaw, esc);
+  	}
+
+	   else{
+			 calculate_esc_pulses_to_stop_motors(esc);
+	   }
+
+		 commandPWMSignals(esc);
+
 
 		//Check for receiver read flag
 		if(receiver_flag) {
@@ -79,6 +102,8 @@ int main(void) {
 
 	return 0;
 }
+
+
 
 int init(void) {
 	int ret = 0;

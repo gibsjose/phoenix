@@ -102,3 +102,66 @@ void calculate_pids(gyro_t * gyro, setpoints_t * setpoints, PID_roll_t * roll, P
     //Populate the PID output for the YAW axis
     pid_controller(&(yaw->input), &(yaw->settings), &(yaw->output));
 }
+
+void init_esc_pins(){
+  //Registers setup for ESC output
+  //OC1A = Pin 9, OC1B = Pin 10, OC2A = Pin 11, OC2B = Pin 3
+  //B (digital pin 8 to 13), C (analog input pins), D (digital pins 0 to 7)
+  DDRB = DDRB | PIN_9 | PIN_10  | PIN_11;
+  DDRD = DDRD | PIN_3 ;
+
+
+  TCCR2A |= COM2A1 | COM2B1 | WGM21 | WGM20; //Fast PWM
+  TCCR2B |= CS22 | CS21; //64 preescaler
+
+//Initial values under 1000 us, motors stopped
+  OCR2A = 61;
+  OCR2B = 61;
+}
+
+void calculate_esc_pulses_duration(receiver_inputs_t *receiver, PID_roll_t * roll, PID_pitch_t * pitch, PID_yaw_t * yaw, ESC_outputs_t *esc){
+
+    if (receiver->gas_scaled > 1800) receiver->gas_scaled = 1800;                            //We need some room to keep full control at full throttle.
+    esc->esc_1 = receiver->gas_scaled + roll->output.ut - pitch->output.ut + yaw->output.ut; //Calculate the pulse for esc 1 (front-left - CCW)
+    esc->esc_2 = receiver->gas_scaled - roll->output.ut - pitch->output.ut - yaw->output.ut; //Calculate the pulse for esc 2 (front-right - CW)
+    esc->esc_3 = receiver->gas_scaled + roll->output.ut + pitch->output.ut + yaw->output.ut; //Calculate the pulse for esc 3 (rear-right - CCW)
+    esc->esc_4 = receiver->gas_scaled - roll->output.ut + pitch->output.ut - yaw->output.ut; //Calculate the pulse for esc 4 (rear-left - CW)
+
+/*   @TODO compensate for voltage drop if (battery_voltage < 1240 && battery_voltage > 800){                   //Is the battery connected?
+      esc_1 += esc_1 * ((1240 - battery_voltage)/(float)3500);              //Compensate the esc-1 pulse for voltage drop.
+      esc_2 += esc_2 * ((1240 - battery_voltage)/(float)3500);              //Compensate the esc-2 pulse for voltage drop.
+      esc_3 += esc_3 * ((1240 - battery_voltage)/(float)3500);              //Compensate the esc-3 pulse for voltage drop.
+      esc_4 += esc_4 * ((1240 - battery_voltage)/(float)3500);              //Compensate the esc-4 pulse for voltage drop.
+    }*/
+
+    if (esc->esc_1 < 1200) esc->esc_1 = 1200;                                         //Keep the motors running.
+    if (esc->esc_2 < 1200) esc->esc_2 = 1200;                                         //Keep the motors running.
+    if (esc->esc_3 < 1200) esc->esc_3 = 1200;                                         //Keep the motors running.
+    if (esc->esc_4 < 1200) esc->esc_4 = 1200;                                         //Keep the motors running.
+
+    if(esc->esc_1 > 2000)esc->esc_1 = 2000;                                           //Limit the esc-1 pulse to 2000us.
+    if(esc->esc_2 > 2000)esc->esc_2 = 2000;                                           //Limit the esc-2 pulse to 2000us.
+    if(esc->esc_3 > 2000)esc->esc_3 = 2000;                                           //Limit the esc-3 pulse to 2000us.
+    if(esc->esc_4 > 2000)esc->esc_4 = 2000;                                           //Limit the esc-4 pulse to 2000us.
+}
+
+void calculate_esc_pulses_to_stop_motors(ESC_outputs_t *esc){
+  esc->esc_1 = 1000;                                                           //If start is not 2 keep a 1000us pulse for ess-1.
+  esc->esc_2 = 1000;                                                           //If start is not 2 keep a 1000us pulse for ess-2.
+  esc->esc_3 = 1000;                                                           //If start is not 2 keep a 1000us pulse for ess-3.
+  esc->esc_4 = 1000;                                                           //If start is not 2 keep a 1000us pulse for ess-4.
+}
+
+
+void commandPWMSignals(ESC_outputs_t *esc){
+  double temp;
+  temp = (256*esc->esc_1)/4096 -1;
+  OCR1A = (int) temp;                                                           //OCR1A = Pin 9
+  temp = (256*esc->esc_2)/4096 -1;
+  OCR1B = (int) temp;                                                           //OCR1B = Pin 10
+  temp = (256*esc->esc_3)/4096 -1;
+  OCR2A = (int) temp;                                                           //OCR2A = Pin 11
+  temp = (256*esc->esc_4)/4096 -1;
+  OCR2B = (int) temp;                                                           //OCR2B = Pin 3
+
+}
