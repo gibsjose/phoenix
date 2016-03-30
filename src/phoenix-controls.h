@@ -51,7 +51,7 @@
 #define PIN_10           (1 << 2)    //Bit to configure Pin 10 as output on PORTB
 #define PIN_11           (1 << 3)    //Bit to configure Pin 11 as output on PORTB
 #define PIN_3           (1 << 3)    //Bit to configure Pin 3 as output on PORTD
-/* Apparently they are defined on the arduino library
+/* Apparently they are defined on the arduino library already..
 #define COM2A1          (1<<7)
 #define COM2B1          (1<<5)
 #define WGM21           (1<<1)
@@ -121,5 +121,5 @@ void init_esc_pins();
 void calculate_esc_pulses_duration(receiver_inputs_t*, PID_roll_t*, PID_pitch_t*,PID_yaw_t*, ESC_outputs_t*);
 void calculate_esc_pulses_to_stop_motors(ESC_outputs_t*);
 void commandPWMSignals(ESC_outputs_t*);
-
+void PWM_loop();
 #endif//PHOENIX_CONTROLS_H

@@ -43,7 +43,7 @@ int main(void) {
 	uart_init(UART_BAUD_SELECT(BAUD, F_CPU));
 
 	//Initialization
-	uart_puts("Initializing...\r\n");
+	uart_puts("Initializing ...\r\n");
 
 	ret = init();
 	if(ret) {
@@ -51,43 +51,50 @@ int main(void) {
 	} else {
 		uart_puts("Initialization successful\r\n");
 	}
-
+/*
 	//Initialize gyroscope
 	gyro_init(gyro);
 
 	//Calibrate gyroscope
-	gyro_calibrate(gyro);
+	gyro_calibrate(gyro);*/
 
 	//Initialize PID settings for roll, pitch, yaw
+	uart_puts("Initializing PID Settings \r\n");
+
 	init_pid_settings(pid_roll, pid_pitch, pid_yaw);
 
 	//Initialize esc pins as outputs and timer registers
+	uart_puts("Initializing ESC pins and configuring timing registers \r\n");
 	init_esc_pins();
 
 
-// Read initial batt voltage //The variable battery_voltage holds 1050 if the battery voltage is 10.5V.
-  //battery_voltage = (analogRead(0) + 65) * 1.2317;
+	// Read initial batt voltage //The variable battery_voltage holds 1050 if the battery voltage is 10.5V.
+	//battery_voltage = (analogRead(0) + 65) * 1.2317;
 	//Main Loop
 	while(true) {
-	 	// @TODO set start status
+		// @TODO set start status
 
 		//Read and print the gyro data
-		gyro_loop(gyro);
+//		gyro_loop(gyro);
 
 		//Calculate the PID output to feed into the ESCs
-		calculate_pids(gyro, setpoints, pid_roll, pid_pitch, pid_yaw);
+//		calculate_pids(gyro, setpoints, pid_roll, pid_pitch, pid_yaw);
 
 		if (start == 2){ //The motors are started
 			//battery_voltage = battery_voltage * 0.92 + (analogRead(0) + 65) * 0.09853;
 			//Read battery voltage()
+			uart_puts("Calculating ESC pulses duration \r\n");
 			calculate_esc_pulses_duration(receiver, pid_roll, pid_pitch, pid_yaw, esc);
-  	}
+		}
 
-	   else{
-			 calculate_esc_pulses_to_stop_motors(esc);
-	   }
+		else{
+			uart_puts("Calculating ESC pulses duration to stop motors \r\n");
+			calculate_esc_pulses_to_stop_motors(esc);
+		}
 
-		 commandPWMSignals(esc);
+		uart_puts("Commanding PWM signals \r\n");
+		//commandPWMSignals(esc);
+		//PWM_loop();
 
 
 		//Check for receiver read flag
