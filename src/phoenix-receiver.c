@@ -21,6 +21,35 @@ void receiver_read(receiver_inputs_t * receiver) {
  receiver->yaw = ...
  receiver_scale(receiver)*/
 }
+//Print the receiver and scaled receiver data
+void receiver_print(receiver_inputs_t * receiver) {
+    uart_puts("-------- Receiver Inputs --------");
+    uart_puts("Roll: ");
+    uart_putd(receiver->roll);
+    uart_puts("\t");
+    uart_putd(receiver->roll_scaled);
+    uart_puts(" ---\r\n");
+
+
+    uart_puts("Pitch: ");
+    uart_putd(receiver->pitch);
+    uart_puts("\t");
+    uart_putd(receiver->pitch_scaled);
+    uart_puts(" ---\r\n");
+
+    uart_puts("Yaw: ");
+    uart_putd(receiver->yaw);
+    uart_puts("\t");
+    uart_putd(receiver->yaw_scaled);
+    uart_puts(" ---\r\n");
+
+    uart_puts("Gas: ");
+    uart_putd(receiver->gas);
+    uart_puts("\t");
+    uart_putd(receiver->gas_scaled);
+    uart_puts(" ---\r\n");
+
+}
 
 //Scale receiver inputs
 void receiver_scale(receiver_inputs_t * receiver) {

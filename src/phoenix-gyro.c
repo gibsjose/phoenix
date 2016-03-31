@@ -148,12 +148,13 @@ uint8_t gyro_read(gyro_t * gyro) {
 
 //Print the gyro data
 void gyro_print(gyro_t * gyro) {
-    uart_puts("P: ");
-    uart_putd(gyro->pitch_filtered);
-    uart_puts(" --- ");
 
     uart_puts(" R: ");
     uart_putd(gyro->roll_filtered);
+    uart_puts(" --- ");
+    
+    uart_puts("P: ");
+    uart_putd(gyro->pitch_filtered);
     uart_puts(" --- ");
 
     uart_puts(" Y: ");

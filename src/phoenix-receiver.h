@@ -92,5 +92,6 @@ typedef struct setpoints_t{
 void receiver_read(receiver_inputs_t *);
 void receiver_scale(receiver_inputs_t *);
 void calculate_setpoints(receiver_inputs_t *, setpoints_t *);
+void receiver_print(receiver_inputs_t *);
 
 #endif//PHOENIX_RECEIVER_H
