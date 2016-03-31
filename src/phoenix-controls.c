@@ -109,13 +109,16 @@ void init_esc_pins(){
   //B (digital pin 8 to 13), C (analog input pins), D (digital pins 0 to 7)
   DDRB |= PIN_9 | PIN_10  | PIN_11;
   DDRD |= PIN_3 ;
+  //Reset timer counters, so the PWM signals will be in phase
+  TCNT1 = 0;
+  TCNT2 = 0; 
 
   //Configure Timer 1: Pins 9 & 10
   // CS12, CS11, CS10 = 100 (prescaler = 256)
   // WGM13, WGM12, WGM11, WGM10 = 0101 (Mode 5)
-  TCCR1A |= (1<<COM1A1) | (1<<COM1A0) | (1<<COM1B1) | (1<<COM1B0) | (1<<WGM11) | (1<<WGM10);
+  TCCR1A = (1<<COM1A1) | (1<<COM1B1) | (1<<WGM10);
   //TCCR1A |= (1<<WGM11) | (1<<WGM10);
-  TCCR1B |= (1<<WGM13) | (1<<WGM12) | (1<<CS12) | (1<<CS11) | (1<<CS10);
+  TCCR1B = (1<<WGM12) | (1<<CS12);
 
   //Configure Timer 2: Pins 11 & 3
   // CS22, CS21, CS20 = 110 (prescaler = 256)
