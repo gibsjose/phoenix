@@ -111,7 +111,7 @@ void init_esc_pins(){
   DDRD |= PIN_3 ;
   //Reset timer counters, so the PWM signals will be in phase
   TCNT1 = 0;
-  TCNT2 = 0; 
+  TCNT2 = 0;
 
   //Configure Timer 1: Pins 9 & 10
   // CS12, CS11, CS10 = 100 (prescaler = 256)
@@ -136,11 +136,18 @@ void init_esc_pins(){
 
 void calculate_esc_pulses_duration(receiver_inputs_t *receiver, PID_roll_t * roll, PID_pitch_t * pitch, PID_yaw_t * yaw, ESC_outputs_t *esc){
 
-  if (receiver->gas_scaled > 1800) receiver->gas_scaled = 1800;                            //We need some room to keep full control at full throttle.
+  if (receiver->gas_scaled > 1800) receiver->gas_scaled = 1800;                            //We need some room to keep control at full throttle.
   esc->esc_1 = receiver->gas_scaled + roll->output.ut - pitch->output.ut + yaw->output.ut; //Calculate the pulse for esc 1 (front-left - CCW)
   esc->esc_2 = receiver->gas_scaled - roll->output.ut - pitch->output.ut - yaw->output.ut; //Calculate the pulse for esc 2 (front-right - CW)
-  esc->esc_3 = receiver->gas_scaled + roll->output.ut + pitch->output.ut + yaw->output.ut; //Calculate the pulse for esc 3 (rear-right - CCW)
-  esc->esc_4 = receiver->gas_scaled - roll->output.ut + pitch->output.ut - yaw->output.ut; //Calculate the pulse for esc 4 (rear-left - CW)
+  esc->esc_3 = receiver->gas_scaled - roll->output.ut + pitch->output.ut + yaw->output.ut; //Calculate the pulse for esc 3 (rear-right - CCW)
+  esc->esc_4 = receiver->gas_scaled + roll->output.ut + pitch->output.ut - yaw->output.ut; //Calculate the pulse for esc 4 (rear-left - CW)
+
+/* Can go away soon...
+  esc_4 = throttle - pid_output_roll + pid_output_pitch  - pid_output_yaw; //Calculate the pulse for esc 4 (front-left - CW)
+  esc_1 = throttle  + pid_output_roll + pid_output_pitch + pid_output_yaw; //Calculate the pulse for esc 1 (front-right - CCW)
+  esc_2 = throttle + pid_output_roll - pid_output_pitch - pid_output_yaw; //Calculate the pulse for esc 2 (rear-right - CW)
+  esc_3 = throttle - pid_output_roll - pid_output_pitch  + pid_output_yaw; //Calculate the pulse for esc 3 (rear-left - CCW)*/
+
 
   /*   @TODO compensate for voltage drop if (battery_voltage < 1240 && battery_voltage > 800){                   //Is the battery connected?
   esc_1 += esc_1 * ((1240 - battery_voltage)/(float)3500);              //Compensate the esc-1 pulse for voltage drop.
