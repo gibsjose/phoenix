@@ -44,25 +44,25 @@
 //These values are used to fit the reciever inputs into a range from 1000 to 2000.
 //The pilot should set these values on a startup calibration procedure
 #define SCALE_CENTER_ROLL  1500
-#define SCALE_MAX_ROLL  2000
-#define SCALE_MIN_ROLL  1000
+#define SCALE_MAX_ROLL  1915
+#define SCALE_MIN_ROLL  1090
 
 #define SCALE_CENTER_PITCH  1500
-#define SCALE_MAX_PITCH  2000
-#define SCALE_MIN_PITCH  1000
+#define SCALE_MAX_PITCH  1910
+#define SCALE_MIN_PITCH  1090
 
-#define SCALE_CENTER_GAS  1500
-#define SCALE_MAX_GAS  2000
-#define SCALE_MIN_GAS  1000
+#define SCALE_CENTER_GAS  1548
+#define SCALE_MAX_GAS  1991
+#define SCALE_MIN_GAS  1116
 
-#define SCALE_CENTER_YAW  1500
-#define SCALE_MAX_YAW  2000
-#define SCALE_MIN_YAW  1000
+#define SCALE_CENTER_YAW  1501
+#define SCALE_MAX_YAW  1912
+#define SCALE_MIN_YAW  1085
 
 // Some remotes have the receiver inputs are reversed
 #define REVERSE_ROLL  1 //1 channel not reversed, -1 channel reversed
-#define REVERSE_PITCH  1
-#define REVERSE_GAS  1
+#define REVERSE_PITCH  -1
+#define REVERSE_GAS  -1
 #define REVERSE_YAW  1
 
 //Remote controller receiver inputs for the Futaba 7C transmitter and Futaba R617FS receiver.
