@@ -134,7 +134,7 @@ void init_esc_pins(){
   OCR1B = 61;
 }
 
-void calculate_esc_pulses_duration(receiver_inputs_t *receiver, PID_roll_t * roll, PID_pitch_t * pitch, PID_yaw_t * yaw, ESC_outputs_t *esc){
+void calculate_esc_pulses_duration(volatile receiver_inputs_t *receiver, PID_roll_t * roll, PID_pitch_t * pitch, PID_yaw_t * yaw, ESC_outputs_t *esc){
 
   if (receiver->gas_scaled > 1800) receiver->gas_scaled = 1800;                            //We need some room to keep control at full throttle.
   esc->esc_1 = receiver->gas_scaled + roll->output.ut - pitch->output.ut + yaw->output.ut; //Calculate the pulse for esc 1 (front-left - CCW)

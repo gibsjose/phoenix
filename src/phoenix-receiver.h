@@ -89,9 +89,10 @@ typedef struct setpoints_t{
 }setpoints_t;
 
 //Function declarations
-void receiver_read(receiver_inputs_t *);
-void receiver_scale(receiver_inputs_t *);
-void calculate_setpoints(receiver_inputs_t *, setpoints_t *);
-void receiver_print(receiver_inputs_t *);
+//void receiver_read(receiver_inputs_t *);
+void receiver_scale(volatile receiver_inputs_t *);
+void calculate_setpoints(volatile receiver_inputs_t *, setpoints_t *);
+void receiver_print(volatile receiver_inputs_t *);
+void init_receiver_pins();
 
 #endif//PHOENIX_RECEIVER_H

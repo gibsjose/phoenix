@@ -14,15 +14,24 @@
 #include "phoenix-receiver.h"
 
 //JVila: This should actually be on a interrput subroutine retrieving the length of the PWM pulses on the receiver pins...
-void receiver_read(receiver_inputs_t * receiver) {
- /*receiver->roll = ...
+/*void receiver_read(receiver_inputs_t * receiver) {
+ receiver->roll = ...
  receiver->pitch = ...
  receiver->gas = ...
  receiver->yaw = ...
- receiver_scale(receiver)*/
+ receiver_scale(receiver)
+}*/
+
+void init_receiver_pins(){
+  PCICR |= (1 << PCIE2);    // set PCIE2 to enable PCMSK2 scan
+  PCMSK2 |= (1 << PCINT18);  // set PCINT18 (digital input 2) to trigger an interrupt on state change
+  PCMSK2 |= (1 << PCINT20);  // set PCINT20 (digital input 4) to trigger an interrupt on state change
+  PCMSK2 |= (1 << PCINT22);  // set PCINT22 (digital input 6) to trigger an interrupt on state change
+  PCMSK2 |= (1 << PCINT23);  // set PCINT23 (digital input 7) to trigger an interrupt on state change
 }
+
 //Print the receiver and scaled receiver data
-void receiver_print(receiver_inputs_t * receiver) {
+void receiver_print(volatile receiver_inputs_t * receiver) {
     uart_puts("-------- Receiver Inputs --------");
     uart_puts("Roll: ");
     uart_putd(receiver->roll);
@@ -52,7 +61,7 @@ void receiver_print(receiver_inputs_t * receiver) {
 }
 
 //Scale receiver inputs
-void receiver_scale(receiver_inputs_t * receiver) {
+void receiver_scale(volatile receiver_inputs_t * receiver) {
     //Scale ROLL
     if(receiver->roll < SCALE_CENTER_ROLL){                 //The actual receiver value is lower than the center value
         if(receiver->roll < SCALE_MIN_ROLL){                  //The actual receiver value is lower than the minimum value
@@ -148,7 +157,7 @@ void receiver_scale(receiver_inputs_t * receiver) {
 
 //Calculate the setpoints (divide by the MODE)
 //@TODO Optimizations on this division (power of two optimization)
-void calculate_setpoints(receiver_inputs_t * receiver, setpoints_t * setpoints) {
+void calculate_setpoints(volatile receiver_inputs_t * receiver, setpoints_t * setpoints) {
     //Roll Setpoints
     //We need a little dead band of 16us for better results.
     if(receiver->roll > 1508){
