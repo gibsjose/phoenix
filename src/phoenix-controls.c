@@ -103,6 +103,28 @@ void calculate_pids(gyro_t * gyro, setpoints_t * setpoints, PID_roll_t * roll, P
   pid_controller(&(yaw->input), &(yaw->settings), &(yaw->output));
 }
 
+void init_analog_input_pins(){
+  // Select Vref=AVcc
+ADMUX |= (1<<REFS0);
+//set prescaller to 128 and enable ADC
+ADCSRA |= (1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0)|(1<<ADEN);
+
+}
+double readBatteryVoltage(){
+    //select ADC channel with safety mask
+    ADMUX = (ADMUX & 0xF0) | (0x00 & 0x0F); //A0
+    //single conversion mode
+    ADCSRA |= (1<<ADSC);
+    // wait until ADC conversion is complete
+    while( ADCSRA & (1<<ADSC) );
+    //65 is the voltage compensation for the diode.
+     //12.6V equals ~5V @ Analog 0.
+     //12.6V equals 1023 analogRead(0).
+     //1260 / 1023 = 1.2317.
+     //The variable battery_voltage holds 1050 if the battery voltage is 10.5V.
+     return ((ADC + 65) * 1.2317);
+}
+
 void init_esc_pins(){
   //Registers setup for ESC output
   //OC1A = Pin 9, OC1B = Pin 10, OC2A = Pin 11, OC2B = Pin 3
@@ -178,13 +200,13 @@ void calculate_esc_pulses_to_stop_motors(ESC_outputs_t *esc){
 void commandPWMSignals(ESC_outputs_t *esc){
   double temp;
   temp = (256*esc->esc_1)/4096 -1;
-  OCR1A = (int) temp;                                                           //OCR1A = Pin 9
+  OCR1A = round (temp);                                                           //OCR1A = Pin 9
   temp = (256*esc->esc_2)/4096 -1;
-  OCR1B = (int) temp;                                                           //OCR1B = Pin 10
+  OCR1B = round (temp);                                                           //OCR1B = Pin 10
   temp = (256*esc->esc_3)/4096 -1;
-  OCR2A = (int) temp;                                                           //OCR2A = Pin 11
+  OCR2A = round (temp);                                                            //OCR2A = Pin 11
   temp = (256*esc->esc_4)/4096 -1;
-  OCR2B = (int) temp;                                                           //OCR2B = Pin 3
+  OCR2B = round (temp);                                                            //OCR2B = Pin 3
 }
 
 void PWM_loop(int *sign){

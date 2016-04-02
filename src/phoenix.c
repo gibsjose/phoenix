@@ -75,8 +75,9 @@ int main(void) {
 	uart_puts("Initializing ESC pins and configuring timing registers \r\n");
 	init_esc_pins();
 	init_receiver_pins();
+	init_analog_input_pins();
 
-
+	//double voltage = readBatteryVoltage();
 	// Read initial batt voltage //The variable battery_voltage holds 1050 if the battery voltage is 10.5V.
 	//battery_voltage = (analogRead(0) + 65) * 1.2317;
 	//Main Loop
@@ -118,7 +119,7 @@ int main(void) {
 //This routine is called every time input 8, 9, 10 or 11 changed state
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ISR(PCINT2_vect){
-	current_time = micros();
+//	current_time = micros();
 	//Channel 1, ROLL =========================================
 	if(PIND & (1 << 3) ){                                       //Is input 4 high?
 		if(last_channel_1 == 0){                                   //Input 4 changed from 0 to 1
