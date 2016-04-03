@@ -25,7 +25,7 @@ volatile int timer_1, timer_2, timer_3, timer_4;
 volatile int fDebug_receiver = 0 ;
 volatile int fDebug_escs = 1 ;
 volatile int fDebug_battery = 0;
-volatile int fDebug_gyro = 0;
+volatile int fDebug_gyro = 1;
 
 //Timer 1 Compare Interrupt Vector (1s CTC Timer)
 ISR(TIMER1_COMPA_vect) {
