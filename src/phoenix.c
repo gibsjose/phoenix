@@ -24,7 +24,7 @@ volatile int timer_1, timer_2, timer_3, timer_4;
 
 volatile int fDebug_receiver = 0 ;
 volatile int fDebug_escs = 0 ;
-volatile int fDebug_battery = 1;
+volatile int fDebug_battery = 0;
 
 //Timer 1 Compare Interrupt Vector (1s CTC Timer)
 ISR(TIMER1_COMPA_vect) {
@@ -37,13 +37,21 @@ ISR(TIMER1_COMPA_vect) {
 int main(void) {
 	//malloc data structures
 	gyro_t *gyro = (gyro_t *)malloc(sizeof(gyro_t));
+	memset(gyro, 0, sizeof(gyro_t));
+
 	//receiver_inputs_t *receiver = (receiver_inputs_t*)malloc(sizeof(receiver_inputs_t));
 	setpoints_t *setpoints = (setpoints_t*)malloc(sizeof(setpoints_t));
+	memset(setpoints, 0, sizeof(setpoints_t));
 
-	PID_pitch_t *pid_pitch = (PID_pitch_t *)malloc(sizeof(PID_pitch_t));
 	PID_roll_t *pid_roll = (PID_roll_t *)malloc(sizeof(PID_roll_t));
+	memset(pid_roll, 0, sizeof(PID_roll_t));
+	PID_pitch_t *pid_pitch = (PID_pitch_t *)malloc(sizeof(PID_pitch_t));
+	memset(pid_pitch, 0, sizeof(PID_pitch_t));
 	PID_yaw_t *pid_yaw = (PID_yaw_t *)malloc(sizeof(PID_yaw_t));
+	memset(pid_yaw, 0, sizeof(PID_yaw_t));
 	ESC_outputs_t *esc= (ESC_outputs_t*)malloc(sizeof(ESC_outputs_t));
+	memset(esc, 0, sizeof(ESC_outputs_t));
+
 	int sign = 0;
 	int ret = 0;
 	int start = 0;
@@ -61,12 +69,12 @@ int main(void) {
 	} else {
 		uart_puts("Initialization successful\r\n");
 	}
-	/*
+
 	//Initialize gyroscope
 	gyro_init(gyro);
 
-	//Calibrate gyroscope
-	gyro_calibrate(gyro);*/
+	//Calibrate gyroscope. BE careful
+	gyro_calibrate(gyro);
 
 	//Initialize PID settings for roll, pitch, yaw
 	uart_puts("Initializing PID Settings \r\n");
@@ -85,7 +93,7 @@ int main(void) {
 		// @TODO set start status
 
 		//Read and print the gyro data
-		//		gyro_loop(gyro);
+		gyro_loop(gyro);
 
 		//Calculate the PID output to feed into the ESCs
 		//		calculate_pids(gyro, setpoints, pid_roll, pid_pitch, pid_yaw);
@@ -93,12 +101,12 @@ int main(void) {
 		battery_voltage = readBatteryVoltage();
 		if(fDebug_battery == 1){
 
-		uart_puts("Battery Voltage = ");
-		uart_putd(battery_voltage);
-		uart_puts("\r\n");
-		delay_us(100);
-	}
-	//	battery_voltage = battery_voltage * 0.92 + (analogRead(0) + 65) * 0.09853;
+			uart_puts("Battery Voltage = ");
+			uart_putd(battery_voltage);
+			uart_puts("\r\n");
+			delay_us(100);
+		}
+		//	battery_voltage = battery_voltage * 0.92 + (analogRead(0) + 65) * 0.09853;
 
 		if (start == 2){ //The motors are started
 			//Read battery voltage()
@@ -114,8 +122,8 @@ int main(void) {
 		//uart_puts("Commanding PWM signals \r\n");
 		//commandPWMSignals(esc);
 		if(fDebug_escs == 1){
-		PWM_loop(&sign);
-	}
+			PWM_loop(&sign);
+		}
 
 
 	}
@@ -128,7 +136,7 @@ int main(void) {
 //This routine is called every time input 8, 9, 10 or 11 changed state
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ISR(PCINT2_vect){
-//	current_time = micros();
+	//	current_time = micros();
 	//Channel 1, ROLL =========================================
 	if(PIND & (1 << 3) ){                                       //Is input 4 high?
 		if(last_channel_1 == 0){                                   //Input 4 changed from 0 to 1

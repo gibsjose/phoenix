@@ -83,7 +83,7 @@ uint8_t gyro_init(gyro_t * gyro) {
 
 //Calibrate gyroscope
 uint8_t gyro_calibrate(gyro_t * gyro) {
-    uart_puts("Starting gyroscope calibration tes\r\n");
+    uart_puts("Starting gyroscope calibration test\r\n");
 
     if(gyro == NULL) {
         uart_puts("NULL\r\n");
@@ -97,20 +97,27 @@ uint8_t gyro_calibrate(gyro_t * gyro) {
         gyro->pitch_offset += gyro->pitch;
         gyro->yaw_offset += gyro->yaw;
 
-        //Print a '.' every 100 readings
-        if(!(i % 100)) {
+        //Print a '.' every 10 readings
+        if(!(i % 10)) {
             uart_puts(".");
         }
 
-        //Delay 4ms
-        delay_us(4000);
+        //Delay 10ms
+        delay_us(1000);
     }
+    gyro->roll_offset = (gyro->roll_offset / GYRO_CALIBRATION_STEPS);
+    gyro->pitch_offset = (gyro->pitch_offset / GYRO_CALIBRATION_STEPS);
+    gyro->yaw_offset = (gyro->yaw_offset / GYRO_CALIBRATION_STEPS);
+    gyro_scale_offset(gyro);
+    gyro_print_offsets(gyro);
+
 
     return OK;
 }
 
 //Read pitch, roll, and yaw from gyroscope and
 // apply calibration offsets
+
 uint8_t gyro_read(gyro_t * gyro) {
     char msb = 0;
     char lsb = 0;
@@ -129,17 +136,17 @@ uint8_t gyro_read(gyro_t * gyro) {
     //Roll
     lsb = i2c_readAck();
     msb = i2c_readAck();
-    gyro->roll = ROLL_COEFFICIENT * ((msb << 8) | lsb) - gyro->roll_offset;
+    gyro->roll = ROLL_COEFFICIENT * ((msb << 8) | lsb);
 
     //Pitch
     lsb = i2c_readAck();
     msb = i2c_readAck();
-    gyro->pitch = PITCH_COEFFICIENT * ((msb << 8) | lsb) - gyro->pitch_offset;
+    gyro->pitch = PITCH_COEFFICIENT * ((msb << 8) | lsb);
 
     //Yaw
     lsb = i2c_readAck();
     msb = i2c_readNak();
-    gyro->yaw = YAW_COEFFICIENT * ((msb << 8) | lsb) - gyro->yaw_offset;
+    gyro->yaw = YAW_COEFFICIENT * ((msb << 8) | lsb);
 
     i2c_stop();
 
@@ -152,7 +159,7 @@ void gyro_print(gyro_t * gyro) {
     uart_puts(" R: ");
     uart_putd(gyro->roll_filtered);
     uart_puts(" --- ");
-    
+
     uart_puts("P: ");
     uart_putd(gyro->pitch_filtered);
     uart_puts(" --- ");
@@ -163,18 +170,36 @@ void gyro_print(gyro_t * gyro) {
 }
 
 
+void gyro_print_offsets(gyro_t * gyro) {
+  uart_puts(" ---\r\n");
+  uart_puts("Roll Offset = ");
+  uart_putd(gyro->roll_offset);
+  uart_puts("\tPitch Offset = ");
+  uart_putd(gyro->pitch_offset);
+  uart_puts("\tYaw Offset = ");
+  uart_putd(gyro->yaw_offset);
+  uart_puts(" ---\r\n");
+
+}
+
 //Scale the gyro data
 void gyro_scale(gyro_t * gyro) {
-   gyro->pitch = gyro->pitch * SCALE_COEFFICIENT ;
-   gyro->roll = gyro->roll * SCALE_COEFFICIENT ;
-   gyro->yaw = gyro->yaw * SCALE_COEFFICIENT ;
+   gyro->roll = gyro->roll * SCALE_COEFFICIENT - gyro->roll_offset;     // The offsets are already scaled on the calibration function
+   gyro->pitch = gyro->pitch * SCALE_COEFFICIENT - gyro->pitch_offset ; // The offsets are already scaled on the calibration function
+   gyro->yaw = gyro->yaw * SCALE_COEFFICIENT - gyro->yaw_offset ;       // The offsets are already scaled on the calibration function
+}
+//Scale the gyro data
+void gyro_scale_offset(gyro_t * gyro) {
+   gyro->roll_offset = (gyro->roll_offset * SCALE_COEFFICIENT) ;
+   gyro->pitch_offset = (gyro->pitch_offset * SCALE_COEFFICIENT) ;
+   gyro->yaw_offset = (gyro->yaw_offset * SCALE_COEFFICIENT) ;
 }
 
 //Low pass filter the velocity
 void gyro_filter(gyro_t * gyro) {
-   gyro->pitch_filtered = gyro->pitch_filtered * (1 - FILTER_COEFFICIENT) + gyro->pitch * FILTER_COEFFICIENT;
-   gyro->roll_filtered = gyro->roll_filtered * (1 - FILTER_COEFFICIENT) + gyro->roll * FILTER_COEFFICIENT;
-   gyro->yaw = gyro->yaw_filtered * (1 - FILTER_COEFFICIENT) + gyro->yaw * FILTER_COEFFICIENT;
+   gyro->roll_filtered = ((gyro->roll_filtered * (1 - FILTER_COEFFICIENT)) + (gyro->roll * FILTER_COEFFICIENT));
+   gyro->pitch_filtered = ((gyro->pitch_filtered * (1 - FILTER_COEFFICIENT)) + (gyro->pitch * FILTER_COEFFICIENT));
+   gyro->yaw_filtered = ((gyro->yaw_filtered * (1 - FILTER_COEFFICIENT)) + (gyro->yaw * FILTER_COEFFICIENT));
 }
 
 //Gyro test loop
