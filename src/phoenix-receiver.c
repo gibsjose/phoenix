@@ -24,9 +24,9 @@
 
 void init_receiver_pins(){
   PCICR |= (1 << PCIE2);    // set PCIE2 to enable PCMSK2 scan
-  PCMSK2 |= (1 << PCINT18);  // set PCINT18 (digital input 2) to trigger an interrupt on state change
+  PCMSK2 = (1 << PCINT18);  // set PCINT18 (digital input 2) to trigger an interrupt on state change
   PCMSK2 |= (1 << PCINT20);  // set PCINT20 (digital input 4) to trigger an interrupt on state change
-  PCMSK2 |= (1 << PCINT22);  // set PCINT22 (digital input 6) to trigger an interrupt on state change
+  PCMSK2 |= (1 << PCINT19);  // set PCINT22 (digital input 3) to trigger an interrupt on state change
   PCMSK2 |= (1 << PCINT23);  // set PCINT23 (digital input 7) to trigger an interrupt on state change
 }
 

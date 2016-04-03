@@ -142,7 +142,7 @@ int main(void) {
 ISR(PCINT2_vect){
 	//	current_time = micros();
 	//Channel 1, ROLL =========================================
-	if(PIND & (1 << 3) ){                                       //Is input 4 high?
+	if(PIND & (1 << 4) ){                                       //Is input 4 high?
 		if(last_channel_1 == 0){                                   //Input 4 changed from 0 to 1
 			last_channel_1 = 1;                                      //Remember current input state
 			timer_1 = current_time;                                  //Set timer_1 to current_time
@@ -153,8 +153,8 @@ ISR(PCINT2_vect){
 		receiver->roll = current_time - timer_1;                //Channel 1 is current_time - timer_1
 	}
 	//Channel 2, PITCH =========================================
-	if(PIND & (1 << 6)  ){                                       //Is input 6 high?
-		if(last_channel_2 == 0){                                   //Input 6 changed from 0 to 1
+	if(PIND & (1 << 3)  ){                                       //Is input 3 high?
+		if(last_channel_2 == 0){                                   //Input 3 changed from 0 to 1
 			last_channel_2 = 1;                                      //Remember current input state
 			timer_2 = current_time;                                  //Set timer_2 to current_time
 		}
