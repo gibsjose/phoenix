@@ -112,17 +112,15 @@ ADCSRA |= (1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0)|(1<<ADEN);
 }
 double readBatteryVoltage(){
     //select ADC channel with safety mask
-    ADMUX = (ADMUX & 0xF0) | (0x00 & 0x0F); //A0
+    ADMUX = 0x41; //4 because we use Vcc as a reference for the DAC, 0x01 beause we read the voltage at A1
     //single conversion mode
     ADCSRA |= (1<<ADSC);
     // wait until ADC conversion is complete
     while( ADCSRA & (1<<ADSC) );
-    //65 is the voltage compensation for the diode.
-     //12.6V equals ~5V @ Analog 0.
-     //12.6V equals 1023 analogRead(0).
-     //1260 / 1023 = 1.2317.
-     //The variable battery_voltage holds 1050 if the battery voltage is 10.5V.
-     return ((ADC + 65) * 1.2317);
+    // Vx = (ADC / 1023) * 5
+    //Vbatt = 2.5 · Vx + VDiode ( x2.5 because of R3 = 1.5K and R2 = 1K)
+    // VDiode = 0.65 V
+     return (((double)ADC/1023) * 5 * 2.5 + 0.65);
 }
 
 void init_esc_pins(){

@@ -22,8 +22,9 @@ volatile int last_channel_3 = 0;
 volatile int last_channel_4 = 0;
 volatile int timer_1, timer_2, timer_3, timer_4;
 
-volatile int fDebug_receiver = 1 ;
+volatile int fDebug_receiver = 0 ;
 volatile int fDebug_escs = 0 ;
+volatile int fDebug_battery = 1;
 
 //Timer 1 Compare Interrupt Vector (1s CTC Timer)
 ISR(TIMER1_COMPA_vect) {
@@ -46,6 +47,7 @@ int main(void) {
 	int sign = 0;
 	int ret = 0;
 	int start = 0;
+	double battery_voltage;
 
 	//Initialize UART at 9600 baud
 	uart_init(UART_BAUD_SELECT(BAUD, F_CPU));
@@ -77,9 +79,7 @@ int main(void) {
 	init_receiver_pins();
 	init_analog_input_pins();
 
-	//double voltage = readBatteryVoltage();
 	// Read initial batt voltage //The variable battery_voltage holds 1050 if the battery voltage is 10.5V.
-	//battery_voltage = (analogRead(0) + 65) * 1.2317;
 	//Main Loop
 	while(true) {
 		// @TODO set start status
@@ -89,9 +89,18 @@ int main(void) {
 
 		//Calculate the PID output to feed into the ESCs
 		//		calculate_pids(gyro, setpoints, pid_roll, pid_pitch, pid_yaw);
+		// //1260 / 1023 = 1.2317.
+		battery_voltage = readBatteryVoltage();
+		if(fDebug_battery == 1){
+
+		uart_puts("Battery Voltage = ");
+		uart_putd(battery_voltage);
+		uart_puts("\r\n");
+		delay_us(100);
+	}
+	//	battery_voltage = battery_voltage * 0.92 + (analogRead(0) + 65) * 0.09853;
 
 		if (start == 2){ //The motors are started
-			//battery_voltage = battery_voltage * 0.92 + (analogRead(0) + 65) * 0.09853;
 			//Read battery voltage()
 			uart_puts("Calculating ESC pulses duration \r\n");
 			calculate_esc_pulses_duration(receiver, pid_roll, pid_pitch, pid_yaw, esc);
@@ -103,7 +112,7 @@ int main(void) {
 		}
 
 		//uart_puts("Commanding PWM signals \r\n");
-		commandPWMSignals(esc);
+		//commandPWMSignals(esc);
 		if(fDebug_escs == 1){
 		PWM_loop(&sign);
 	}
