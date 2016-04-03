@@ -125,31 +125,30 @@ double readBatteryVoltage(){
 
 void init_esc_pins(){
   //Registers setup for ESC output
-  //OC1A = Pin 9, OC1B = Pin 10, OC2A = Pin 11, OC2B = Pin 3
+  //OC1A = Pin 9, OC1B = Pin 10, OC0A = Pin 6, OC0B = Pin 5
   //B (digital pin 8 to 13), C (analog input pins), D (digital pins 0 to 7)
-  DDRB |= PIN_9 | PIN_10  | PIN_11;
-  DDRD |= PIN_3 ;
+  DDRB |= PIN_9 | PIN_10;
+  DDRD |= PIN_5 | PIN_6;
   //Reset timer counters, so the PWM signals will be in phase
   TCNT1 = 0;
-  TCNT2 = 0;
+  TCNT0 = 0;
 
   //Configure Timer 1: Pins 9 & 10
   // CS12, CS11, CS10 = 100 (prescaler = 256)
   // WGM13, WGM12, WGM11, WGM10 = 0101 (Mode 5)
   TCCR1A = (1<<COM1A1) | (1<<COM1B1) | (1<<WGM10);
-  //TCCR1A |= (1<<WGM11) | (1<<WGM10);
   TCCR1B = (1<<WGM12) | (1<<CS12);
 
-  //Configure Timer 2: Pins 11 & 3
-  // CS22, CS21, CS20 = 110 (prescaler = 256)
-  // WGM22, WGM21, WGM20 = 011 (Mode 3)
+  //Configure Timer 0: Pins 5 & 6
+  // CS02, CS01, CS00 = 100 (prescaler = 256)
+  // WGM02, WGM01, WGM00 = 011 (Mode 3)
 
-  TCCR2A |= (1<<COM2A1) | (1<<COM2B1) | (1<<WGM21) | (1<<WGM20); //Fast PWM
-  TCCR2B |= (1<<CS22) | (1<<CS21); //64 preescaler
+  TCCR0A = (1<<COM0A1) | (1<<COM0B1) | (1<<WGM01) | (1<<WGM00); //Fast PWM
+  TCCR0B = (1<<CS02); //256 preescaler
 
   //Initial values under 1000 us, motors stopped
-  OCR2A = 61;
-  OCR2B = 61;
+  OCR0A = 61;
+  OCR0B = 61;
   OCR1A = 61;
   OCR1B = 61;
 }
@@ -202,9 +201,9 @@ void commandPWMSignals(ESC_outputs_t *esc){
   temp = (256*esc->esc_2)/4096 -1;
   OCR1B = round (temp);                                                           //OCR1B = Pin 10
   temp = (256*esc->esc_3)/4096 -1;
-  OCR2A = round (temp);                                                            //OCR2A = Pin 11
+  OCR0A = round (temp);                                                            //OCR2A = Pin 11
   temp = (256*esc->esc_4)/4096 -1;
-  OCR2B = round (temp);                                                            //OCR2B = Pin 3
+  OCR0B = round (temp);                                                            //OCR2B = Pin 3
 }
 
 void PWM_loop(int *sign){

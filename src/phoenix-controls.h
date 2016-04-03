@@ -51,6 +51,8 @@
 #define PIN_10           (1 << 2)    //Bit to configure Pin 10 as output on PORTB
 #define PIN_11           (1 << 3)    //Bit to configure Pin 11 as output on PORTB
 #define PIN_3           (1 << 3)    //Bit to configure Pin 3 as output on PORTD
+#define PIN_5           (1 << 5)    //Bit to configure Pin 5 as output on PORTD
+#define PIN_6           (1 << 6)    //Bit to configure Pin 6 as output on PORTD
 /* Apparently they are defined on the arduino library already..
 #define COM2A1          (1<<7)
 #define COM2B1          (1<<5)

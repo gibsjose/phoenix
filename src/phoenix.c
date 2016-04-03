@@ -23,8 +23,9 @@ volatile int last_channel_4 = 0;
 volatile int timer_1, timer_2, timer_3, timer_4;
 
 volatile int fDebug_receiver = 0 ;
-volatile int fDebug_escs = 0 ;
+volatile int fDebug_escs = 1 ;
 volatile int fDebug_battery = 0;
+volatile int fDebug_gyro = 0;
 
 //Timer 1 Compare Interrupt Vector (1s CTC Timer)
 ISR(TIMER1_COMPA_vect) {
@@ -52,7 +53,7 @@ int main(void) {
 	ESC_outputs_t *esc= (ESC_outputs_t*)malloc(sizeof(ESC_outputs_t));
 	memset(esc, 0, sizeof(ESC_outputs_t));
 
-	int sign = 0;
+	int sign = 1;
 	int ret = 0;
 	int start = 0;
 	double battery_voltage;
@@ -70,11 +71,13 @@ int main(void) {
 		uart_puts("Initialization successful\r\n");
 	}
 
-	//Initialize gyroscope
-	gyro_init(gyro);
+	if(fDebug_gyro == 1){
+		//Initialize gyroscope
+		gyro_init(gyro);
 
-	//Calibrate gyroscope. BE careful
-	gyro_calibrate(gyro);
+		//Calibrate gyroscope. BE careful
+		gyro_calibrate(gyro);
+	}
 
 	//Initialize PID settings for roll, pitch, yaw
 	uart_puts("Initializing PID Settings \r\n");
@@ -84,7 +87,7 @@ int main(void) {
 	//Initialize esc pins as outputs and timer registers
 	uart_puts("Initializing ESC pins and configuring timing registers \r\n");
 	init_esc_pins();
-	init_receiver_pins();
+	//init_receiver_pins();
 	init_analog_input_pins();
 
 	// Read initial batt voltage //The variable battery_voltage holds 1050 if the battery voltage is 10.5V.
@@ -93,14 +96,15 @@ int main(void) {
 		// @TODO set start status
 
 		//Read and print the gyro data
-		gyro_loop(gyro);
+		if (fDebug_gyro == 1){
+			gyro_loop(gyro);
+		}
 
 		//Calculate the PID output to feed into the ESCs
 		//		calculate_pids(gyro, setpoints, pid_roll, pid_pitch, pid_yaw);
 		// //1260 / 1023 = 1.2317.
 		battery_voltage = readBatteryVoltage();
 		if(fDebug_battery == 1){
-
 			uart_puts("Battery Voltage = ");
 			uart_putd(battery_voltage);
 			uart_puts("\r\n");
