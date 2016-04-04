@@ -37,6 +37,7 @@ ISR(TIMER1_COMPA_vect) {
 
 int main(void) {
 	//malloc data structures
+	LED_ON();
 	gyro_t *gyro = (gyro_t *)malloc(sizeof(gyro_t));
 	memset(gyro, 0, sizeof(gyro_t));
 
@@ -57,6 +58,10 @@ int main(void) {
 	int ret = 0;
 	int start = 0;
 	double battery_voltage;
+	DDRB |= PIN_12; //Configure Red LED as output
+	init_esc_pins();
+	//init_receiver_pins();
+	init_analog_input_pins();
 
 	//Initialize UART at 9600 baud
 	uart_init(UART_BAUD_SELECT(BAUD, F_CPU));
@@ -86,9 +91,7 @@ int main(void) {
 
 	//Initialize esc pins as outputs and timer registers
 	uart_puts("Initializing ESC pins and configuring timing registers \r\n");
-	init_esc_pins();
-	//init_receiver_pins();
-	init_analog_input_pins();
+
 
 	// Read initial batt voltage //The variable battery_voltage holds 1050 if the battery voltage is 10.5V.
 	//Main Loop

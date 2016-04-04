@@ -1,5 +1,5 @@
 /**********************************************************
-*   Phoenix FSW - Gyroscope
+*   Phoenix FSW - Controls
 *
 *   25 Jan 2016
 *
@@ -124,6 +124,4 @@ void calculate_esc_pulses_duration(volatile receiver_inputs_t*, PID_roll_t*, PID
 void calculate_esc_pulses_to_stop_motors(ESC_outputs_t*);
 void commandPWMSignals(ESC_outputs_t*);
 void PWM_loop(int*);
-void init_analog_input_pins(void);
-double readBatteryVoltage(void);
 #endif//PHOENIX_CONTROLS_H

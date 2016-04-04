@@ -97,9 +97,13 @@ uint8_t gyro_calibrate(gyro_t * gyro) {
         gyro->pitch_offset += gyro->pitch;
         gyro->yaw_offset += gyro->yaw;
 
+        if(!(i % 50)) {
+          LED_OFF();
+        }
         //Print a '.' every 10 readings
-        if(!(i % 10)) {
+        if(!(i % 100)) {
             uart_puts(".");
+            LED_ON();
         }
 
         //Delay 10ms

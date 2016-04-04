@@ -26,6 +26,8 @@
 #include "phoenix-gyro.h"
 #include "phoenix-receiver.h"
 #include "phoenix-controls.h"
+#include "phoenix-util.h"
+
 
 #include "delay/delay.h"
 #include "uart/uart.h"
@@ -40,13 +42,16 @@
 
 //Pin Definitions
 #define LED_PIN     PB5     //PB2 is the board LED, PB5 is the Arduino LED
-#define LED_DD      DDB5
+#define LED_RED      DDB5
 
+#define PIN_13      (1 << 5)    //Bit to configure Pin 13 as output on PORTB
+#define PIN_12      (1 << 4)    //Bit to configure Pin 13 as output on PORTB
 
 int init(void);
 int port_init(void);
 int timer1_init(void);
 int peripheral_init(void);
 int device_init(void);
+
 
 #endif//PHOENIX_H
