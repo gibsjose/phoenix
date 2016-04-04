@@ -13,14 +13,14 @@
 
 #include "phoenix-util.h"
 
-extern void init_analog_input_pins(){
+void init_analog_input_pins(){
   // Select Vref=AVcc
 ADMUX |= (1<<REFS0);
 //set prescaller to 128 and enable ADC
 ADCSRA |= (1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0)|(1<<ADEN);
 
 }
-extern double readBatteryVoltage(){
+double readBatteryVoltage(){
     //select ADC channel with safety mask
     ADMUX = 0x41; //4 because we use Vcc as a reference for the DAC, 0x01 beause we read the voltage at A1
     //single conversion mode
@@ -33,10 +33,10 @@ extern double readBatteryVoltage(){
      return (((double)ADC/1023) * 5 * 2.5 + 0.65);
 }
 
-extern void LED_ON(){
+void LED_ON(){
 	PORTB |= PIN_12;
 
 }
-extern void LED_OFF(){
+void LED_OFF(){
 	PORTB &= !PIN_12;
 }
