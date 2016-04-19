@@ -1,5 +1,5 @@
 #include "delay.h"
-/* It meses up the UART?
+/* It messes up the UART if I use timer0 instead of timer2 ?
 int delay_us(unsigned long int microseconds) {
 	volatile unsigned cycles = microseconds/64;
 	TCCR0A	= 0x00;
@@ -20,7 +20,6 @@ int delay_us(unsigned long int microseconds) {
 	}
 }
 */
-
 
 /*////////////////////////////ORIGINAL FUNCTION////////////////////////////*/
 int delay_us(unsigned long int microseconds) {

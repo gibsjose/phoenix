@@ -162,7 +162,7 @@ ISR(PCINT2_vect){
 			timer_2 = current_time;                                  //Set timer_2 to current_time
 		}
 	}
-	else if(last_channel_2 == 1){                                //Input 6 is not high and changed from 1 to 0
+	else if(last_channel_2 == 1){                                //Input 3 is not high and changed from 1 to 0
 		last_channel_2 = 0;                                        //Remember current input state
 		receiver->pitch = current_time - timer_2;                //Channel 2 is current_time - timer_2
 
