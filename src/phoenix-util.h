@@ -18,9 +18,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define PIN_13      (1 << 5)    //Bit to configure Pin 13 as output on PORTB
+/*#define PIN_13      (1 << 5)    //Bit to configure Pin 13 as output on PORTB
 #define PIN_12      (1 << 4)    //Bit to configure Pin 13 as output on PORTB
-
+*/
 void init_analog_input_pins(void);
 double readBatteryVoltage(void);
 void LED_ON(void);

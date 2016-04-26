@@ -34,9 +34,9 @@ double readBatteryVoltage(){
 }
 
 void LED_ON(){
-	PORTB |= PIN_12;
+	//PORTB |= PIN_12;
 
 }
 void LED_OFF(){
-	PORTB &= !PIN_12;
+	//PORTB &= !PIN_12;
 }

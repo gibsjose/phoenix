@@ -44,8 +44,8 @@
 #define LED_PIN     PB5     //PB2 is the board LED, PB5 is the Arduino LED
 #define LED_RED      DDB5
 
-#define PIN_13      (1 << 5)    //Bit to configure Pin 13 as output on PORTB
-#define PIN_12      (1 << 4)    //Bit to configure Pin 13 as output on PORTB
+/*#define PIN_13      (1 << 5)    //Bit to configure Pin 13 as output on PORTB
+#define PIN_12      (1 << 4)    //Bit to configure Pin 13 as output on PORTB*/
 
 int init(void);
 int port_init(void);

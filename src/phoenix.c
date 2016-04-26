@@ -25,7 +25,7 @@ volatile int timer_1, timer_2, timer_3, timer_4;
 volatile int fDebug_receiver = 0 ;
 volatile int fDebug_escs = 1 ;
 volatile int fDebug_battery = 0;
-volatile int fDebug_gyro = 1;
+volatile int fDebug_gyro = 0;
 
 //Timer 1 Compare Interrupt Vector (1s CTC Timer)
 ISR(TIMER1_COMPA_vect) {
@@ -58,23 +58,24 @@ int main(void) {
 	int ret = 0;
 	int start = 0;
 	double battery_voltage;
-	DDRB |= PIN_12; //Configure Red LED as output
-	init_esc_pins();
+	PWM_resetRegisters();
+
+	//Enable interrupts, default value of SREG is 0
+	sei();
+
+
 	//init_receiver_pins();
 	init_analog_input_pins();
 
 	//Initialize UART at 9600 baud
 	uart_init(UART_BAUD_SELECT(BAUD, F_CPU));
 
+
 	//Initialization
 	uart_puts("Initializing ...\r\n");
+	//DDRB |= PIN_12; //Configure Red LED as output
+	init_esc_pins();
 
-	ret = init();
-	if(ret) {
-		uart_puts("<-- ERROR: Initialization failed -->\r\n");
-	} else {
-		uart_puts("Initialization successful\r\n");
-	}
 
 	if(fDebug_gyro == 1){
 		//Initialize gyroscope
@@ -91,6 +92,7 @@ int main(void) {
 
 	//Initialize esc pins as outputs and timer registers
 	uart_puts("Initializing ESC pins and configuring timing registers \r\n");
+
 
 
 	// Read initial batt voltage //The variable battery_voltage holds 1050 if the battery voltage is 10.5V.
@@ -129,12 +131,11 @@ int main(void) {
 		//uart_puts("Commanding PWM signals \r\n");
 		//commandPWMSignals(esc);
 		if(fDebug_escs == 1){
+			uart_puts("PWM_LOOP entering \r\n");
+
 			PWM_loop(&sign);
 		}
-
-
 	}
-
 	return 0;
 }
 
@@ -205,13 +206,13 @@ int init(void) {
 	cli();
 
 	//Initialize ports
-	port_init();
+/*	port_init();
 
 	//Initialize peripherals
 	peripheral_init();
 
 	//Initialize devices
-	ret = device_init();
+	ret = device_init();*/
 
 	//Enable interrupts
 	sei();
@@ -252,10 +253,10 @@ int timer1_init(void) {
 
 int peripheral_init(void) {
 	//Initialize Timer 1
-	timer1_init();
+	//timer1_init();
 
 	//Initialize I2C (TWI) peripheral as a whole
-	i2c_init();
+	//i2c_init();
 
 	return 0;
 }

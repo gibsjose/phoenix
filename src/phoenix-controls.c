@@ -104,22 +104,41 @@ void calculate_pids(gyro_t * gyro, setpoints_t * setpoints, PID_roll_t * roll, P
 }
 
 void init_esc_pins(){
-  //Registers setup for ESC output
+  /***************************************************
+  SETUP pin direction registers for the PWM
+  ***************************************************/
+
+  //OC0A: chip Pin PB7, arduino pin 13, ESC 3
+  DDRB |= PIN_13;
+
+  //OC0B: chip Pin PG7, arduino pin 4, ESC 4
+  DDRG |= PIN_4;
+
+  //OC1A: chip Pin PB5, arduino pin 11, ESC 1
+  DDRB |= PIN_11;
+
+  //OC1B: chip Pin PB6, arduino pin 12, ESC 2
+  DDRB |= PIN_12;
+
+
+/********************
+Used for atmega328p
+********************
   //OC1A = Pin 9, OC1B = Pin 10, OC0A = Pin 6, OC0B = Pin 5
   //B (digital pin 8 to 13), C (analog input pins), D (digital pins 0 to 7)
   DDRB |= PIN_9 | PIN_10;
-  DDRD |= PIN_5 | PIN_6;
+  DDRD |= PIN_5 | PIN_6;*/
   //Reset timer counters, so the PWM signals will be in phase
   TCNT1 = 0;
   TCNT0 = 0;
 
-  //Configure Timer 1: Pins 9 & 10
+  //Configure Timer 1: Pins 11 & 12
   // CS12, CS11, CS10 = 100 (prescaler = 256)
   // WGM13, WGM12, WGM11, WGM10 = 0101 (Mode 5)
   TCCR1A = (1<<COM1A1) | (1<<COM1B1) | (1<<WGM10);
   TCCR1B = (1<<WGM12) | (1<<CS12);
 
-  //Configure Timer 0: Pins 5 & 6
+  //Configure Timer 0: Pins 13 & 6
   // CS02, CS01, CS00 = 100 (prescaler = 256)
   // WGM02, WGM01, WGM00 = 011 (Mode 3)
 
@@ -184,6 +203,15 @@ void commandPWMSignals(ESC_outputs_t *esc){
   OCR0A = round (temp);                                                            //OCR2A = Pin 11
   temp = (256*esc->esc_4)/4096 -1;
   OCR0B = round (temp);                                                            //OCR2B = Pin 3
+}
+
+void PWM_resetRegisters(){
+  DDRB = 0;
+  DDRG = 0;
+  TCCR0A = 0;
+  TCCR0B = 0;
+  TCCR1A = 0;
+  TCCR1B = 0;
 }
 
 void PWM_loop(int *sign){

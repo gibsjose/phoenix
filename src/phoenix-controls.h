@@ -44,15 +44,20 @@
 #define LOWER_LIMIT -400
 
 //Registers setup for ESC output
-//OCR1A = Pin 9, OCR1B = Pin 10, OCR2A = Pin 11, OCR2B = Pin 3
-//B (digital pin 8 to 13), C (analog input pins), D (digital pins 0 to 7)
 
+#define PIN_13            (1 << 7)    //DDB7: Bit to configure Pin 13 as output on PORTB on atmega2560
+#define PIN_4             (1 << 5)    //DDG5: Bit to configure Pin 4 as output on PORTG on atmega2560
+#define PIN_11            (1 << 5)    //DDB5: Bit to configure Pin 11 as output on PORTB on atmega2560
+#define PIN_12            (1 << 6)    //DDB6: Bit to configure Pin 12 as output on PORTB on atmega2560
+
+/*USED for atmega328p
 #define PIN_9            (1 << 1)    //Bit to configure Pin 9 as output on PORTB
 #define PIN_10           (1 << 2)    //Bit to configure Pin 10 as output on PORTB
 #define PIN_11           (1 << 3)    //Bit to configure Pin 11 as output on PORTB
 #define PIN_3           (1 << 3)    //Bit to configure Pin 3 as output on PORTD
 #define PIN_5           (1 << 5)    //Bit to configure Pin 5 as output on PORTD
-#define PIN_6           (1 << 6)    //Bit to configure Pin 6 as output on PORTD
+#define PIN_6           (1 << 6)    //Bit to configure Pin 6 as output on PORTD*/
+
 /* Apparently they are defined on the arduino library already..
 #define COM2A1          (1<<7)
 #define COM2B1          (1<<5)
@@ -123,5 +128,6 @@ void init_esc_pins(void);
 void calculate_esc_pulses_duration(volatile receiver_inputs_t*, PID_roll_t*, PID_pitch_t*,PID_yaw_t*, ESC_outputs_t*);
 void calculate_esc_pulses_to_stop_motors(ESC_outputs_t*);
 void commandPWMSignals(ESC_outputs_t*);
+void PWM_resetRegisters(void);
 void PWM_loop(int*);
 #endif//PHOENIX_CONTROLS_H

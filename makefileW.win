@@ -28,10 +28,10 @@
 MCU = atmega2560
 
 # Programming Interface ('arduino' for Arduino, 'avrispmkII' for the AVRISP mkII, or `usbtiny` for the Sparkfun AVR Pocket Programmer)
-PHOENIX_PROGRAMMER ?= arduino
+PHOENIX_PROGRAMMER ?= wiring -D
 
 # Programmer Serial port (ex: usb, com5, ttyACM0)
-PHOENIX_PORT ?= com18
+PHOENIX_PORT ?= com4
 
 
 # Output format. (can be srec, ihex, binary)
@@ -61,7 +61,8 @@ ASRC =
 
 # List any extra directories to look for include files here.
 #     Each directory must be seperated by a space.
-EXTRAINCDIRS = $(SRC_DIR)/delay $(SRC_DIR)/i2cmaster $(SRC_DIR)/uart "C:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include"
+EXTRAINCDIRS = $(SRC_DIR)/delay $(SRC_DIR)/i2cmaster $(SRC_DIR)/uart "C:\Users\jvilaher\Downloads\arduino-1.6.6-windows\arduino-1.6.6\hardware\tools\avr\avr\include"
+
 
 # Optional compiler flags.
 #  -g:        generate debugging information (for GDB, or for COFF conversion)
