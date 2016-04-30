@@ -103,7 +103,7 @@ void calculate_pids(gyro_t * gyro, setpoints_t * setpoints, PID_roll_t * roll, P
   pid_controller(&(yaw->input), &(yaw->settings), &(yaw->output));
 }
 
-void init_esc_pins(){
+void init_esc_registers(){
   /***************************************************
   SETUP pin direction registers for the PWM
   ***************************************************/
@@ -212,6 +212,7 @@ void PWM_resetRegisters(){
   TCCR0B = 0;
   TCCR1A = 0;
   TCCR1B = 0;
+  
 }
 
 void PWM_loop(int *sign){

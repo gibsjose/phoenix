@@ -124,7 +124,7 @@ typedef struct ESC_outputs_t{
 void init_pid_settings(PID_roll_t *, PID_pitch_t *, PID_yaw_t *);
 void calculate_pids(gyro_t *, setpoints_t *, PID_roll_t *, PID_pitch_t *, PID_yaw_t *);
 void pid_controller(PID_input_t *, PID_settings_t *, PID_output_t *);
-void init_esc_pins(void);
+void init_esc_registers(void);
 void calculate_esc_pulses_duration(volatile receiver_inputs_t*, PID_roll_t*, PID_pitch_t*,PID_yaw_t*, ESC_outputs_t*);
 void calculate_esc_pulses_to_stop_motors(ESC_outputs_t*);
 void commandPWMSignals(ESC_outputs_t*);

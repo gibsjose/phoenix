@@ -13,21 +13,39 @@
 
 #include "phoenix-receiver.h"
 
-//JVila: This should actually be on a interrput subroutine retrieving the length of the PWM pulses on the receiver pins...
-/*void receiver_read(receiver_inputs_t * receiver) {
- receiver->roll = ...
- receiver->pitch = ...
- receiver->gas = ...
- receiver->yaw = ...
- receiver_scale(receiver)
-}*/
+void init_receiver_registers(){
+  /**************************************************
+ * PWM INPUT Capture *
+ **************************************************/
+ /**************************************************
+* Setup PCINT10, Pin 14  *
+* Setup PCINT9, Pin 15   *
+* Setup PCINT3, Pin 50   *
+* Setup PCINT1, Pin 52   *
+**************************************************/
+uart_puts("Configuring receiver registers\r\n");
 
-void init_receiver_pins(){
-  PCICR |= (1 << PCIE2);    // set PCIE2 to enable PCMSK2 scan
-  PCMSK2 = (1 << PCINT18);  // set PCINT18 (digital input 2) to trigger an interrupt on state change
-  PCMSK2 |= (1 << PCINT20);  // set PCINT20 (digital input 4) to trigger an interrupt on state change
-  PCMSK2 |= (1 << PCINT19);  // set PCINT19 (digital input 3) to trigger an interrupt on state change
-  PCMSK2 |= (1 << PCINT23);  // set PCINT23 (digital input 7) to trigger an interrupt on state change
+TCCR5B = 0;
+TCCR5A = 0;
+TCCR5B =  (1<<CS51)| (1<<CS50);
+TCCR5C = 0;
+
+//Arduino (Atmega) pins default to inputs, so they don't need to be explicitly declared as inputs
+PCICR |= (1 << PCIE1);    // set PCIE0 to enable PCMSK1 scan
+PCMSK1 |= (1 << PCINT9);  // set PCINT9 (digital input 15) to trigger an interrupt on state change
+PCMSK1 |= (1 << PCINT10); // set PCINT10 (digital input 14)to trigger an interrupt on state change
+PCICR |= (1 << PCIE0);    // set PCIE0 to enable PCMSK1 scan
+PCMSK0 |= (1 << PCINT3);  // set PCINT3 (digital input 50) to trigger an interrupt on state change
+PCMSK0|= (1 << PCINT1);  // set PCINT1 (digital input 52)to trigger an interrupt on state change
+
+  //chip Pin PJ1, arduino pin 14, channel Pitch
+  DDRJ &= !PIN_14;
+  //chip Pin PJ0, arduino pin 15, channel Yaw
+  DDRJ &= !PIN_15;
+  //chip Pin PB3, arduino pin 50, channel Pitch
+  DDRB &= !PIN_50;
+  //chip Pin PB1, arduino pin 52, channel Pitch
+  DDRB &= !PIN_52;
 }
 
 //Print the receiver and scaled receiver data

@@ -52,6 +52,7 @@ int port_init(void);
 int timer1_init(void);
 int peripheral_init(void);
 int device_init(void);
+void check_value(int);
 
 
 #endif//PHOENIX_H

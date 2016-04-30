@@ -28,10 +28,10 @@
 MCU = atmega2560
 
 # Programming Interface ('arduino' for Arduino, 'avrispmkII' for the AVRISP mkII, or `usbtiny` for the Sparkfun AVR Pocket Programmer)
-PHOENIX_PROGRAMMER ?= arduino
+PHOENIX_PROGRAMMER ?= wiring -D
 
 # Programmer Serial port (ex: usb, com5, ttyACM0)
-PHOENIX_PORT ?= com18
+PHOENIX_PORT ?= com13
 
 
 # Output format. (can be srec, ihex, binary)

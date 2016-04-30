@@ -37,6 +37,23 @@
 
 #define MODE SPORT
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Define pins used for the PWM receiver signals
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#define PIN_14            (1 << 1)    //DDJ1: Bit to configure Pin 14 as output on PORTJ on atmega2560
+#define PIN_15            (1 << 0)    //DDJ0: Bit to configure Pin 15 as output on PORTJ on atmega2560
+#define PIN_50            (1 << 3)    //DDB3: Bit to configure Pin 49 as output on PORTB on atmega2560
+#define PIN_52            (1 << 1)    //DDB1: Bit to configure Pin 49 as output on PORTB on atmega2560
+
+/* Previously used for the Input Capture Registers */
+//#define PIN_48            (1 << 1)    //DDL1: Bit to configure Pin 48 as output on PORTL on atmega2560
+//#define PIN_49            (1 << 0)    //DDL0: Bit to configure Pin 49 as output on PORTL on atmega2560
+
+
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Radio receiver adjustment values
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,20 +61,20 @@
 //These values are used to fit the reciever inputs into a range from 1000 to 2000.
 //The pilot should set these values on a startup calibration procedure
 #define SCALE_CENTER_ROLL  1500
-#define SCALE_MAX_ROLL  1915
-#define SCALE_MIN_ROLL  1090
+#define SCALE_MAX_ROLL  1912
+#define SCALE_MIN_ROLL  1088
 
 #define SCALE_CENTER_PITCH  1500
-#define SCALE_MAX_PITCH  1910
-#define SCALE_MIN_PITCH  1090
+#define SCALE_MAX_PITCH  1912
+#define SCALE_MIN_PITCH  1092
 
-#define SCALE_CENTER_GAS  1548
-#define SCALE_MAX_GAS  1991
-#define SCALE_MIN_GAS  1116
+#define SCALE_CENTER_GAS  1520
+#define SCALE_MAX_GAS  1920
+#define SCALE_MIN_GAS  1108
 
-#define SCALE_CENTER_YAW  1501
-#define SCALE_MAX_YAW  1912
-#define SCALE_MIN_YAW  1085
+#define SCALE_CENTER_YAW  1504
+#define SCALE_MAX_YAW  1916
+#define SCALE_MIN_YAW  1088
 
 // Some remotes have the receiver inputs are reversed
 #define REVERSE_ROLL  1 //1 channel not reversed, -1 channel reversed
@@ -93,6 +110,6 @@ typedef struct setpoints_t{
 void receiver_scale(volatile receiver_inputs_t *);
 void calculate_setpoints(volatile receiver_inputs_t *, setpoints_t *);
 void receiver_print(volatile receiver_inputs_t *);
-void init_receiver_pins(void);
+void init_receiver_registers(void);
 
 #endif//PHOENIX_RECEIVER_H

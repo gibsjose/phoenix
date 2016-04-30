@@ -15,17 +15,21 @@
 
 //Don't forget `volatile`!
 volatile receiver_inputs_t *receiver;
-volatile int current_time = 0 ; //Used for the interrupt subroutine of the Receiver Inputs
-volatile int last_channel_1 = 0;
-volatile int last_channel_2 = 0;
-volatile int last_channel_3 = 0;
-volatile int last_channel_4 = 0;
-volatile int timer_1, timer_2, timer_3, timer_4;
+
 
 volatile int fDebug_receiver = 0 ;
-volatile int fDebug_escs = 1 ;
+volatile int fDebug_escs = 0 ;
 volatile int fDebug_battery = 0;
 volatile int fDebug_gyro = 0;
+
+/**************************************************
+* Variables used for the receiver inputs *
+**************************************************/
+volatile int last_channel_1, last_channel_2,last_channel_3, last_channel_4;
+volatile int receiver_input_channel_1, receiver_input_channel_2, receiver_input_channel_3, receiver_input_channel_4, current_time1, current_time0;
+volatile unsigned long timer_1, timer_2, timer_3, timer_4;
+volatile int pin14Counter, pin15Counter, pin50Counter, pin52Counter;
+
 
 //Timer 1 Compare Interrupt Vector (1s CTC Timer)
 ISR(TIMER1_COMPA_vect) {
@@ -37,6 +41,7 @@ ISR(TIMER1_COMPA_vect) {
 
 int main(void) {
 	//malloc data structures
+	sei();
 	LED_ON();
 	gyro_t *gyro = (gyro_t *)malloc(sizeof(gyro_t));
 	memset(gyro, 0, sizeof(gyro_t));
@@ -61,7 +66,8 @@ int main(void) {
 	PWM_resetRegisters();
 
 	//Enable interrupts, default value of SREG is 0
-	sei();
+
+	init();
 
 
 	//init_receiver_pins();
@@ -70,12 +76,11 @@ int main(void) {
 	//Initialize UART at 9600 baud
 	uart_init(UART_BAUD_SELECT(BAUD, F_CPU));
 
-
 	//Initialization
 	uart_puts("Initializing ...\r\n");
 	//DDRB |= PIN_12; //Configure Red LED as output
-	init_esc_pins();
-
+	uart_puts("Initializing ESC & Receiver registers \r\n");
+	delay_us(250000);
 
 	if(fDebug_gyro == 1){
 		//Initialize gyroscope
@@ -89,17 +94,12 @@ int main(void) {
 	uart_puts("Initializing PID Settings \r\n");
 
 	init_pid_settings(pid_roll, pid_pitch, pid_yaw);
-
-	//Initialize esc pins as outputs and timer registers
-	uart_puts("Initializing ESC pins and configuring timing registers \r\n");
-
-
-
+	init_receiver_registers();
+	init_esc_registers();
 	// Read initial batt voltage //The variable battery_voltage holds 1050 if the battery voltage is 10.5V.
 	//Main Loop
 	while(true) {
 		// @TODO set start status
-
 		//Read and print the gyro data
 		if (fDebug_gyro == 1){
 			gyro_loop(gyro);
@@ -140,64 +140,107 @@ int main(void) {
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//This routine is called every time input 8, 9, 10 or 11 changed state
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-ISR(PCINT2_vect){
-	//	current_time = micros();
-	//Channel 1, ROLL =========================================
-	if(PIND & (1 << 4) ){                                       //Is input 4 high?
-		if(last_channel_1 == 0){                                   //Input 4 changed from 0 to 1
-			last_channel_1 = 1;                                      //Remember current input state
-			timer_1 = current_time;                                  //Set timer_1 to current_time
-		}
-	}
-	else if(last_channel_1 == 1){                                //Input 4 is not high and changed from 1 to 0
-		last_channel_1 = 0;                                        //Remember current input state
-		receiver->roll = current_time - timer_1;                //Channel 1 is current_time - timer_1
-	}
-	//Channel 2, PITCH =========================================
-	if(PIND & (1 << 3)  ){                                       //Is input 3 high?
-		if(last_channel_2 == 0){                                   //Input 3 changed from 0 to 1
-			last_channel_2 = 1;                                      //Remember current input state
-			timer_2 = current_time;                                  //Set timer_2 to current_time
-		}
-	}
-	else if(last_channel_2 == 1){                                //Input 3 is not high and changed from 1 to 0
-		last_channel_2 = 0;                                        //Remember current input state
-		receiver->pitch = current_time - timer_2;                //Channel 2 is current_time - timer_2
-
-	}
-	//Channel 3, GAS =========================================
-	if(PIND & (1 << 2) ){                                        //Is input 2 high?
-		if(last_channel_3 == 0){                                   //Input 2 changed from 0 to 1
+////////////////////////////////////////////////////////////////////
+//This routine is called every time input 50, 52 change state
+////////////////////////////////////////////////////////////////////
+ISR(PCINT0_vect){
+	uart_puts("Entering PCINT0_vect");
+	current_time0 = TCNT5L | (((int)(TCNT5H))<<8);
+	//Arduino Input 50, Channel 3 GAS =========================================
+	if(PINB & (1<<3)){                                        //Is input 50 high?
+		if(last_channel_3 == 0){                                   //Input 50 changed from 0 to 1
 			last_channel_3 = 1;                                      //Remember current input state
-			timer_3 = current_time;                                  //Set timer_3 to current_time
+			timer_3 = current_time0;                                  //Set timer_3 to current_time0
 		}
 	}
-	else if(last_channel_3 == 1){                                //Input 2 is not high and changed from 1 to 0
+	else if(last_channel_3 == 1){                                //Input 50 is not high and changed from 1 to 0
 		last_channel_3 = 0;                                        //Remember current input state
-		receiver->gas = current_time - timer_3;                //Channel 3 is current_time - timer_3
+		receiver_input_channel_3= 4*(current_time0 - timer_3);     //Channel 3 is current_time0 - timer_3
+		receiver->gas = receiver_input_channel_3;
+		pin50Counter++;
+		/* Serial.print(pin50Counter);
+		Serial.print(". Pin 50 = ");
+		Serial.println(receiver_input_channel_3);*/
+		check_value(receiver_input_channel_3);
+
+
+		receiver_scale(receiver);
+
+		if(fDebug_receiver == 1){
+			receiver_print(receiver);
+			if(receiver_input_channel_3<=0) {  uart_puts("*********** NEGATIVE VALUE Channel 3! ***********");}
+		}
+
 	}
-	//Channel 4, YAW =========================================
-	if(PIND & (1 << 7)  ){                                       //Is input 7 high?
-		if(last_channel_4 == 0){                                   //Input 11 changed from 0 to 1
-			last_channel_4 = 1;                                      //Remember current input state
-			timer_4 = current_time;                                  //Set timer_4 to current_time
+	//Arduino Input 52, Channel 1 ROLL =========================================
+	if(PINB & (1<<1)){                                       //Is input 52 high?
+		if(last_channel_1 == 0){                                   //Input 52 changed from 0 to 1
+			last_channel_1 = 1;                                      //Remember current input state
+			timer_1 = current_time0;                                  //Set timer_1 to current_time0
 		}
 	}
-	else if(last_channel_4 == 1){                                //Input 7 is not high and changed from 1 to 0
-		last_channel_4 = 0;                                        //Remember current input state
-		receiver->yaw = current_time - timer_4;                //Channel 4 is current_time - timer_4
-	}
-
-	receiver_scale(receiver);
-
-	if(fDebug_receiver == 1){
-		receiver_print(receiver);
+	else if(last_channel_1 == 1){                                //Input 14 is not high and changed from 1 to 0
+		last_channel_1 = 0;                                        //Remember current input state
+		receiver_input_channel_1 = 4*(current_time0 - timer_1);    //Channel 1 is current_time0 - timer_1
+		receiver->roll = receiver_input_channel_1;
+		pin52Counter++;
+		/* Serial.print(pin52Counter);
+		Serial.print(". Pin 52 = ");
+		Serial.println(receiver_input_channel_1);*/
+		check_value(receiver_input_channel_1);
 	}
 }
 
+
+
+////////////////////////////////////////////////////////////////////
+//This routine is called every time input 14, 15 change state
+////////////////////////////////////////////////////////////////////
+ISR(PCINT1_vect){
+	uart_puts("Entering PCINT1_vect");
+	current_time1 = TCNT5L | (((int)(TCNT5H))<<8);
+	//Arduino Input 15, Channel 4 YAW =========================================
+	if(PINJ & (1<<0)){                                        //Is input 15 high?
+		if(last_channel_4 == 0){                                   //Input 15 changed from 0 to 1
+			last_channel_4 = 1;                                      //Remember current input state
+			timer_4 = current_time1;                                  //Set timer_1 to current_time1
+		}
+	}
+	else if(last_channel_4 == 1){                                //Input 15 is not high and changed from 1 to 0
+		last_channel_4 = 0;                                        //Remember current input state
+		receiver_input_channel_4= 4*(current_time1 - timer_4);      //Channel 4 is current_time1 - timer_1
+		receiver->yaw = receiver_input_channel_4;
+		pin15Counter++;
+		/*Serial.print(pin15Counter);
+		Serial.print(". Pin 15 = ");
+		Serial.println(receiver_input_channel_4);*/
+		check_value(receiver_input_channel_4);
+		if(receiver_input_channel_4<=0) {    uart_puts("*********** NEGATIVE VALUE Channel 4 ! ***********");}
+	}
+	//Arduino Input 14, Channel 2 PITCH =========================================
+	if(PINJ & (1<<1) ){                                       //Is input 14 high?
+		if(last_channel_2 == 0){                                   //Input 14 changed from 0 to 1
+			last_channel_2 = 1;                                      //Remember current input state
+			timer_2 = current_time1;                                  //Set timer_2 to current_time1
+		}
+	}
+	else if(last_channel_2 == 1){                                //Input 14 is not high and changed from 1 to 0
+		last_channel_2 = 0;                                        //Remember current input state
+		receiver_input_channel_2 = 4*(current_time1 - timer_2);     //Channel 2 is current_time1 - timer_2
+		receiver->pitch = receiver_input_channel_2;
+		pin14Counter++;
+		/*Serial.print(pin14Counter);
+		Serial.print(". Pin 14 = ");
+		Serial.println(receiver_input_channel_2);*/
+		check_value(receiver_input_channel_2);
+	}
+}
+
+void check_value(int value){
+	if((value > 1900) || (value < 1100)){
+		uart_putd(value);
+	}
+}
 
 int init(void) {
 	int ret = 0;
@@ -206,14 +249,13 @@ int init(void) {
 	cli();
 
 	//Initialize ports
-/*	port_init();
+	port_init();
 
 	//Initialize peripherals
 	peripheral_init();
 
 	//Initialize devices
-	ret = device_init();*/
-
+	ret = device_init();
 	//Enable interrupts
 	sei();
 
@@ -256,7 +298,7 @@ int peripheral_init(void) {
 	//timer1_init();
 
 	//Initialize I2C (TWI) peripheral as a whole
-	//i2c_init();
+	i2c_init();
 
 	return 0;
 }
