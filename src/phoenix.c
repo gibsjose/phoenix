@@ -17,7 +17,7 @@
 volatile receiver_inputs_t *receiver;
 
 
-volatile int fDebug_receiver = 0 ;
+volatile int fDebug_receiver = 1 ;
 volatile int fDebug_escs = 0 ;
 volatile int fDebug_battery = 0;
 volatile int fDebug_gyro = 0;
@@ -104,7 +104,10 @@ int main(void) {
 		if (fDebug_gyro == 1){
 			gyro_loop(gyro);
 		}
-
+		if(fDebug_receiver == 1){
+			receiver_scale(receiver);
+			receiver_print(receiver);
+		}
 		//Calculate the PID output to feed into the ESCs
 		//		calculate_pids(gyro, setpoints, pid_roll, pid_pitch, pid_yaw);
 		// //1260 / 1023 = 1.2317.
@@ -144,7 +147,7 @@ int main(void) {
 //This routine is called every time input 50, 52 change state
 ////////////////////////////////////////////////////////////////////
 ISR(PCINT0_vect){
-	uart_puts("Entering PCINT0_vect");
+	//uart_puts("Entering PCINT0_vect");
 	current_time0 = TCNT5L | (((int)(TCNT5H))<<8);
 	//Arduino Input 50, Channel 3 GAS =========================================
 	if(PINB & (1<<3)){                                        //Is input 50 high?
@@ -162,15 +165,6 @@ ISR(PCINT0_vect){
 		Serial.print(". Pin 50 = ");
 		Serial.println(receiver_input_channel_3);*/
 		check_value(receiver_input_channel_3);
-
-
-		receiver_scale(receiver);
-
-		if(fDebug_receiver == 1){
-			receiver_print(receiver);
-			if(receiver_input_channel_3<=0) {  uart_puts("*********** NEGATIVE VALUE Channel 3! ***********");}
-		}
-
 	}
 	//Arduino Input 52, Channel 1 ROLL =========================================
 	if(PINB & (1<<1)){                                       //Is input 52 high?
@@ -197,7 +191,7 @@ ISR(PCINT0_vect){
 //This routine is called every time input 14, 15 change state
 ////////////////////////////////////////////////////////////////////
 ISR(PCINT1_vect){
-	uart_puts("Entering PCINT1_vect");
+	//uart_puts("Entering PCINT1_vect");
 	current_time1 = TCNT5L | (((int)(TCNT5H))<<8);
 	//Arduino Input 15, Channel 4 YAW =========================================
 	if(PINJ & (1<<0)){                                        //Is input 15 high?
@@ -215,7 +209,6 @@ ISR(PCINT1_vect){
 		Serial.print(". Pin 15 = ");
 		Serial.println(receiver_input_channel_4);*/
 		check_value(receiver_input_channel_4);
-		if(receiver_input_channel_4<=0) {    uart_puts("*********** NEGATIVE VALUE Channel 4 ! ***********");}
 	}
 	//Arduino Input 14, Channel 2 PITCH =========================================
 	if(PINJ & (1<<1) ){                                       //Is input 14 high?
@@ -238,7 +231,7 @@ ISR(PCINT1_vect){
 
 void check_value(int value){
 	if((value > 1900) || (value < 1100)){
-		uart_putd(value);
+		//uart_putd(value);
 	}
 }
 
