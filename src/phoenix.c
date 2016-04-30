@@ -13,6 +13,8 @@
 
 #include "phoenix.h"
 
+
+
 //Don't forget `volatile`!
 volatile receiver_inputs_t *receiver;
 
@@ -29,24 +31,27 @@ volatile int last_channel_1, last_channel_2,last_channel_3, last_channel_4;
 volatile int receiver_input_channel_1, receiver_input_channel_2, receiver_input_channel_3, receiver_input_channel_4, current_time1, current_time0;
 volatile unsigned long timer_1, timer_2, timer_3, timer_4;
 volatile int pin14Counter, pin15Counter, pin50Counter, pin52Counter;
-
+volatile bool receiver_gas_received = false;
+volatile bool receiver_roll_received = false;
+volatile bool receiver_pitch_received = false;
+volatile bool receiver_yaw_received = false;
 
 //Timer 1 Compare Interrupt Vector (1s CTC Timer)
 ISR(TIMER1_COMPA_vect) {
 	//Blink LED
 	//PORTB ^= _BV(LED_PIN);
-
 	//Set flag to indicate that we should read the receivers
 }
 
 int main(void) {
 	//malloc data structures
-	sei();
 	LED_ON();
 	gyro_t *gyro = (gyro_t *)malloc(sizeof(gyro_t));
 	memset(gyro, 0, sizeof(gyro_t));
 
-	//receiver_inputs_t *receiver = (receiver_inputs_t*)malloc(sizeof(receiver_inputs_t));
+	/*receiver_inputs_t *receiver = (receiver_inputs_t*)malloc(sizeof(receiver_inputs_t));
+	receiver_memset(receiver);*/
+
 	setpoints_t *setpoints = (setpoints_t*)malloc(sizeof(setpoints_t));
 	memset(setpoints, 0, sizeof(setpoints_t));
 
@@ -68,7 +73,6 @@ int main(void) {
 	//Enable interrupts, default value of SREG is 0
 
 	init();
-
 
 	//init_receiver_pins();
 	init_analog_input_pins();
@@ -105,8 +109,14 @@ int main(void) {
 			gyro_loop(gyro);
 		}
 		if(fDebug_receiver == 1){
+			if(receiver_gas_received && receiver_roll_received && receiver_pitch_received && receiver_yaw_received){
 			receiver_scale(receiver);
-			receiver_print(receiver);
+	  //	receiver_print(receiver);
+			receiver_gas_received = false;
+			receiver_roll_received = false;
+			receiver_pitch_received = false;
+			receiver_yaw_received = false;
+		}
 		}
 		//Calculate the PID output to feed into the ESCs
 		//		calculate_pids(gyro, setpoints, pid_roll, pid_pitch, pid_yaw);
@@ -142,7 +152,6 @@ int main(void) {
 	return 0;
 }
 
-
 ////////////////////////////////////////////////////////////////////
 //This routine is called every time input 50, 52 change state
 ////////////////////////////////////////////////////////////////////
@@ -161,6 +170,7 @@ ISR(PCINT0_vect){
 		receiver_input_channel_3= 4*(current_time0 - timer_3);     //Channel 3 is current_time0 - timer_3
 		receiver->gas = receiver_input_channel_3;
 		pin50Counter++;
+		receiver_gas_received = true;
 		/* Serial.print(pin50Counter);
 		Serial.print(". Pin 50 = ");
 		Serial.println(receiver_input_channel_3);*/
@@ -178,14 +188,14 @@ ISR(PCINT0_vect){
 		receiver_input_channel_1 = 4*(current_time0 - timer_1);    //Channel 1 is current_time0 - timer_1
 		receiver->roll = receiver_input_channel_1;
 		pin52Counter++;
+		receiver_roll_received = true;
+
 		/* Serial.print(pin52Counter);
 		Serial.print(". Pin 52 = ");
 		Serial.println(receiver_input_channel_1);*/
 		check_value(receiver_input_channel_1);
 	}
 }
-
-
 
 ////////////////////////////////////////////////////////////////////
 //This routine is called every time input 14, 15 change state
@@ -205,6 +215,7 @@ ISR(PCINT1_vect){
 		receiver_input_channel_4= 4*(current_time1 - timer_4);      //Channel 4 is current_time1 - timer_1
 		receiver->yaw = receiver_input_channel_4;
 		pin15Counter++;
+		receiver_yaw_received = true;
 		/*Serial.print(pin15Counter);
 		Serial.print(". Pin 15 = ");
 		Serial.println(receiver_input_channel_4);*/
@@ -222,6 +233,7 @@ ISR(PCINT1_vect){
 		receiver_input_channel_2 = 4*(current_time1 - timer_2);     //Channel 2 is current_time1 - timer_2
 		receiver->pitch = receiver_input_channel_2;
 		pin14Counter++;
+		receiver_pitch_received = true;
 		/*Serial.print(pin14Counter);
 		Serial.print(". Pin 14 = ");
 		Serial.println(receiver_input_channel_2);*/

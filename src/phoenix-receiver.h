@@ -111,5 +111,7 @@ void receiver_scale(volatile receiver_inputs_t *);
 void calculate_setpoints(volatile receiver_inputs_t *, setpoints_t *);
 void receiver_print(volatile receiver_inputs_t *);
 void init_receiver_registers(void);
+void receiver_memset(volatile receiver_inputs_t *);
+
 
 #endif//PHOENIX_RECEIVER_H

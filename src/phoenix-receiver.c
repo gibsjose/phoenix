@@ -50,7 +50,7 @@ PCMSK0|= (1 << PCINT1);  // set PCINT1 (digital input 52)to trigger an interrupt
 
 //Print the receiver and scaled receiver data
 void receiver_print(volatile receiver_inputs_t * receiver) {
-    uart_puts("-------- Receiver Inputs --------");
+    uart_puts("-------- Receiver Inputs --------\r\n");
     uart_puts("Roll: ");
     uart_putd(receiver->roll);
     uart_puts("\t");
@@ -78,6 +78,17 @@ void receiver_print(volatile receiver_inputs_t * receiver) {
 
 }
 
+void receiver_memset(volatile receiver_inputs_t * receiver){
+  receiver->roll = 0;
+  receiver->roll_scaled = 0;
+  receiver->pitch = 0;
+  receiver->pitch_scaled = 0;
+  receiver->gas = 0;
+  receiver->gas_scaled = 0;
+  receiver->yaw = 0;
+  receiver->yaw_scaled = 0;
+}
+
 //Scale receiver inputs
 void receiver_scale(volatile receiver_inputs_t * receiver) {
     //Scale ROLL
@@ -86,8 +97,10 @@ void receiver_scale(volatile receiver_inputs_t * receiver) {
             receiver->roll_scaled = SCALE_MIN_ROLL;             //Limit the lowest value to the value that was detected during setup
         }
         else{                                                 //Calculate and scale the actual value to a 1000 - 2000us value
-            double difference = ((SCALE_CENTER_ROLL - receiver->roll) * 500) / (SCALE_CENTER_ROLL - SCALE_MIN_ROLL);
-            receiver->roll_scaled = 1500 - difference * REVERSE_ROLL;
+            double difference = ((SCALE_CENTER_ROLL - receiver->roll) * (double)500.00) / (SCALE_CENTER_ROLL - SCALE_MIN_ROLL);
+            receiver->roll_scaled = 1500 - (double) (difference * REVERSE_ROLL);
+            double test = 1500 - (double) (difference * REVERSE_ROLL);
+            if( (test > 1550) || (test< 1450)){uart_putd(difference);}      
         }
     }
     else if(receiver->roll > SCALE_CENTER_ROLL){            //The actual receiver value is higher than the center value
@@ -98,10 +111,10 @@ void receiver_scale(volatile receiver_inputs_t * receiver) {
             double difference = ((receiver->roll - SCALE_CENTER_ROLL) * 500) / (SCALE_MAX_ROLL - SCALE_CENTER_ROLL);
             receiver->roll_scaled = 1500 + difference * REVERSE_ROLL;
         }
-    }
+      }
     else{
         receiver->roll_scaled = 1500;
-    }
+        }
 
     //Scale PITCH
     if(receiver->pitch < SCALE_CENTER_PITCH){                //The actual receiver value is lower than the center value
