@@ -61,20 +61,20 @@
 //These values are used to fit the reciever inputs into a range from 1000 to 2000.
 //The pilot should set these values on a startup calibration procedure
 #define SCALE_CENTER_ROLL  1500
-#define SCALE_MAX_ROLL  1912
-#define SCALE_MIN_ROLL  1088
+#define SCALE_MAX_ROLL  1908
+#define SCALE_MIN_ROLL  1092
 
 #define SCALE_CENTER_PITCH  1500
-#define SCALE_MAX_PITCH  1912
-#define SCALE_MIN_PITCH  1092
+#define SCALE_MAX_PITCH  1908
+#define SCALE_MIN_PITCH  1098
 
 #define SCALE_CENTER_GAS  1520
-#define SCALE_MAX_GAS  1920
-#define SCALE_MIN_GAS  1108
+#define SCALE_MAX_GAS  1916
+#define SCALE_MIN_GAS  1116
 
 #define SCALE_CENTER_YAW  1504
-#define SCALE_MAX_YAW  1916
-#define SCALE_MIN_YAW  1088
+#define SCALE_MAX_YAW  1908
+#define SCALE_MIN_YAW  1096
 
 // Some remotes have the receiver inputs are reversed
 #define REVERSE_ROLL  1 //1 channel not reversed, -1 channel reversed

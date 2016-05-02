@@ -94,18 +94,18 @@ void receiver_scale(volatile receiver_inputs_t * receiver) {
     //Scale ROLL
     if(receiver->roll < SCALE_CENTER_ROLL){                 //The actual receiver value is lower than the center value
         if(receiver->roll < SCALE_MIN_ROLL){                  //The actual receiver value is lower than the minimum value
-            receiver->roll_scaled = SCALE_MIN_ROLL;             //Limit the lowest value to the value that was detected during setup
+            receiver->roll_scaled = 1000;             //Limit the lowest value to the value that was detected during setup
         }
         else{                                                 //Calculate and scale the actual value to a 1000 - 2000us value
             double difference = ((SCALE_CENTER_ROLL - receiver->roll) * (double)500.00) / (SCALE_CENTER_ROLL - SCALE_MIN_ROLL);
             receiver->roll_scaled = 1500 - (double) (difference * REVERSE_ROLL);
             double test = 1500 - (double) (difference * REVERSE_ROLL);
-            if( (test > 1550) || (test< 1450)){uart_putd(difference);}      
+            if( (test > 1550) || (test< 1450)){uart_putd(difference);}
         }
     }
     else if(receiver->roll > SCALE_CENTER_ROLL){            //The actual receiver value is higher than the center value
         if(receiver->roll > SCALE_MAX_ROLL){                  //The actual receiver value is higher than the maximum value
-            receiver->roll_scaled = SCALE_MAX_ROLL;             //Limit the highest value to the value that was detected during setup
+            receiver->roll_scaled = 2000;             //Limit the highest value to the value that was detected during setup
         }
         else{                                                 //Calculate and scale the actual value to a 1000 - 2000us value
             double difference = ((receiver->roll - SCALE_CENTER_ROLL) * 500) / (SCALE_MAX_ROLL - SCALE_CENTER_ROLL);
@@ -119,8 +119,13 @@ void receiver_scale(volatile receiver_inputs_t * receiver) {
     //Scale PITCH
     if(receiver->pitch < SCALE_CENTER_PITCH){                //The actual receiver value is lower than the center value
         if(receiver->pitch < SCALE_MIN_PITCH){                  //The actual receiver value is lower than the minimum value
-            receiver->pitch_scaled = SCALE_MIN_PITCH;             //Limit the lowest value to the value that was detected during setup
+          if(REVERSE_PITCH == 1){
+            receiver->pitch_scaled = 1000;             //Limit the lowest value to the value that was detected during setup
         }
+        else{
+              receiver->pitch_scaled = 2000;
+        }
+      }
         else{                                                 //Calculate and scale the actual value to a 1000 - 2000us value
             double difference = ((SCALE_CENTER_PITCH - receiver->pitch) * 500) / (SCALE_CENTER_PITCH - SCALE_MIN_PITCH);
             receiver->pitch_scaled = 1500 - difference * REVERSE_PITCH;
@@ -128,8 +133,13 @@ void receiver_scale(volatile receiver_inputs_t * receiver) {
     }
     else if(receiver->pitch > SCALE_CENTER_PITCH){            //The actual receiver value is higher than the center value
         if(receiver->pitch > SCALE_MAX_PITCH){                  //The actual receiver value is higher than the maximum value
-            receiver->pitch_scaled = SCALE_MAX_PITCH;             //Limit the highest value to the value that was detected during setup
+          if(REVERSE_PITCH == 1){
+            receiver->pitch_scaled = 2000;             //Limit the highest value to the value that was detected during setup
         }
+          else{
+            receiver->pitch_scaled = 1000;             //Limit the highest value to the value that was detected during setup
+          }
+      }
         else{                                                 //Calculate and scale the actual value to a 1000 - 2000us value
             double difference = ((receiver->pitch - SCALE_CENTER_PITCH) * 500) / (SCALE_MAX_PITCH - SCALE_CENTER_PITCH);
             receiver->pitch_scaled = 1500 + difference * REVERSE_PITCH;
@@ -141,9 +151,14 @@ void receiver_scale(volatile receiver_inputs_t * receiver) {
 
     //Scale GAS
     if(receiver->gas < SCALE_CENTER_GAS){                 //The actual receiver value is lower than the center value
-        if(receiver->gas < SCALE_MIN_GAS){                  //The actual receiver value is lower than the minimum value
-            receiver->gas_scaled = SCALE_MIN_GAS;             //Limit the lowest value to the value that was detected during setup
+        if(receiver->gas < SCALE_MIN_GAS){
+          if(REVERSE_GAS == 1) {                  //The actual receiver value is lower than the minimum value
+            receiver->gas_scaled = 1000;             //Limit the lowest value to the value that was detected during setup
         }
+        else{
+            receiver->gas_scaled = 2000;
+        }
+      }
         else{                                                 //Calculate and scale the actual value to a 1000 - 2000us value
             double difference = ((SCALE_CENTER_GAS - receiver->gas) * 500) / (SCALE_CENTER_GAS - SCALE_MIN_GAS);
             receiver->gas_scaled = 1500 - difference * REVERSE_GAS;
@@ -151,8 +166,13 @@ void receiver_scale(volatile receiver_inputs_t * receiver) {
     }
     else if(receiver->gas > SCALE_CENTER_GAS){            //The actual receiver value is higher than the center value
         if(receiver->gas > SCALE_MAX_GAS){                  //The actual receiver value is higher than the maximum value
-            receiver->gas_scaled = SCALE_MAX_GAS;             //Limit the highest value to the value that was detected during setup
+          if(REVERSE_GAS == 1){
+            receiver->gas_scaled = 2000;             //Limit the highest value to the value that was detected during setup
         }
+        else{
+          receiver->gas_scaled = 1000;
+        }
+      }
         else{                                                 //Calculate and scale the actual value to a 1000 - 2000us value
             double difference = ((receiver->gas - SCALE_CENTER_GAS) * 500) / (SCALE_MAX_GAS - SCALE_CENTER_GAS);
             receiver->gas_scaled = 1500 + difference * REVERSE_GAS;
@@ -165,7 +185,7 @@ void receiver_scale(volatile receiver_inputs_t * receiver) {
     //Scale YAW
     if(receiver->yaw < SCALE_CENTER_YAW){                 //The actual receiver value is lower than the center value
         if(receiver->yaw < SCALE_MIN_YAW){                  //The actual receiver value is lower than the minimum value
-            receiver->yaw_scaled = SCALE_MIN_YAW;             //Limit the lowest value to the value that was detected during setup
+            receiver->yaw_scaled = 1000;             //Limit the lowest value to the value that was detected during setup
         }
         else{                                                 //Calculate and scale the actual value to a 1000 - 2000us value
             double difference = ((SCALE_CENTER_YAW - receiver->yaw) * 500) / (SCALE_CENTER_YAW - SCALE_MIN_YAW);
@@ -174,7 +194,7 @@ void receiver_scale(volatile receiver_inputs_t * receiver) {
     }
     else if(receiver->yaw > SCALE_CENTER_YAW){            //The actual receiver value is higher than the center value
         if(receiver->yaw > SCALE_MAX_YAW){                  //The actual receiver value is higher than the maximum value
-            receiver->yaw_scaled = SCALE_MAX_YAW;             //Limit the highest value to the value that was detected during setup
+            receiver->yaw_scaled = 2000;             //Limit the highest value to the value that was detected during setup
         }
         else{                                                 //Calculate and scale the actual value to a 1000 - 2000us value
             double difference = ((receiver->yaw - SCALE_CENTER_YAW) * 500) / (SCALE_MAX_YAW - SCALE_CENTER_YAW);
@@ -184,6 +204,9 @@ void receiver_scale(volatile receiver_inputs_t * receiver) {
     else{
         receiver->yaw_scaled = 1500;
     }
+
+
+
 }
 
 //Calculate the setpoints (divide by the MODE)

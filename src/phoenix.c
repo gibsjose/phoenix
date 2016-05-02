@@ -16,9 +16,6 @@
 
 
 //Don't forget `volatile`!
-volatile receiver_inputs_t *receiver;
-
-
 volatile int fDebug_receiver = 1 ;
 volatile int fDebug_escs = 0 ;
 volatile int fDebug_battery = 0;
@@ -28,8 +25,9 @@ volatile int fDebug_gyro = 0;
 * Variables used for the receiver inputs *
 **************************************************/
 volatile int last_channel_1, last_channel_2,last_channel_3, last_channel_4;
-volatile int receiver_input_channel_1, receiver_input_channel_2, receiver_input_channel_3, receiver_input_channel_4, current_time1, current_time0;
-volatile unsigned long timer_1, timer_2, timer_3, timer_4;
+volatile int receiver_input_channel_1, receiver_input_channel_2, receiver_input_channel_3, receiver_input_channel_4;
+volatile int current_time1, current_time0;
+volatile unsigned int timer_1, timer_2, timer_3, timer_4;
 volatile int pin14Counter, pin15Counter, pin50Counter, pin52Counter;
 volatile bool receiver_gas_received = false;
 volatile bool receiver_roll_received = false;
@@ -49,8 +47,8 @@ int main(void) {
 	gyro_t *gyro = (gyro_t *)malloc(sizeof(gyro_t));
 	memset(gyro, 0, sizeof(gyro_t));
 
-	/*receiver_inputs_t *receiver = (receiver_inputs_t*)malloc(sizeof(receiver_inputs_t));
-	receiver_memset(receiver);*/
+	receiver_inputs_t *receiver = (receiver_inputs_t*)malloc(sizeof(receiver_inputs_t));
+	receiver_memset(receiver);
 
 	setpoints_t *setpoints = (setpoints_t*)malloc(sizeof(setpoints_t));
 	memset(setpoints, 0, sizeof(setpoints_t));
@@ -110,12 +108,19 @@ int main(void) {
 		}
 		if(fDebug_receiver == 1){
 			if(receiver_gas_received && receiver_roll_received && receiver_pitch_received && receiver_yaw_received){
+
+			receiver->gas = 4*receiver_input_channel_3;
+			receiver->roll = 4*receiver_input_channel_1;
+			receiver->yaw = 4*receiver_input_channel_4;
+			receiver->pitch = 4*receiver_input_channel_2;
 			receiver_scale(receiver);
-	  //	receiver_print(receiver);
+	  	receiver_print(receiver);
+			delay_us(1000000);
 			receiver_gas_received = false;
 			receiver_roll_received = false;
 			receiver_pitch_received = false;
 			receiver_yaw_received = false;
+
 		}
 		}
 		//Calculate the PID output to feed into the ESCs
@@ -138,7 +143,7 @@ int main(void) {
 
 		else{
 			//uart_puts("Calculating ESC pulses duration to stop motors \r\n");
-			calculate_esc_pulses_to_stop_motors(esc);
+		//	calculate_esc_pulses_to_stop_motors(esc);
 		}
 
 		//uart_puts("Commanding PWM signals \r\n");
@@ -167,14 +172,14 @@ ISR(PCINT0_vect){
 	}
 	else if(last_channel_3 == 1){                                //Input 50 is not high and changed from 1 to 0
 		last_channel_3 = 0;                                        //Remember current input state
-		receiver_input_channel_3= 4*(current_time0 - timer_3);     //Channel 3 is current_time0 - timer_3
-		receiver->gas = receiver_input_channel_3;
+		receiver_input_channel_3= (current_time0 - timer_3);     //Channel 3 is current_time0 - timer_3
+		if(	receiver_input_channel_3<0){receiver_input_channel_3 = receiver_input_channel_3 + 65535; }
 		pin50Counter++;
 		receiver_gas_received = true;
 		/* Serial.print(pin50Counter);
 		Serial.print(". Pin 50 = ");
 		Serial.println(receiver_input_channel_3);*/
-		check_value(receiver_input_channel_3);
+	//	check_value(receiver_input_channel_3);
 	}
 	//Arduino Input 52, Channel 1 ROLL =========================================
 	if(PINB & (1<<1)){                                       //Is input 52 high?
@@ -185,15 +190,15 @@ ISR(PCINT0_vect){
 	}
 	else if(last_channel_1 == 1){                                //Input 14 is not high and changed from 1 to 0
 		last_channel_1 = 0;                                        //Remember current input state
-		receiver_input_channel_1 = 4*(current_time0 - timer_1);    //Channel 1 is current_time0 - timer_1
-		receiver->roll = receiver_input_channel_1;
+		receiver_input_channel_1 = (current_time0 - timer_1);    //Channel 1 is current_time0 - timer_1
+		if(	receiver_input_channel_1<0){receiver_input_channel_1 = receiver_input_channel_1 + 65535; }
 		pin52Counter++;
 		receiver_roll_received = true;
 
 		/* Serial.print(pin52Counter);
 		Serial.print(". Pin 52 = ");
 		Serial.println(receiver_input_channel_1);*/
-		check_value(receiver_input_channel_1);
+	//	check_value(receiver_input_channel_1);
 	}
 }
 
@@ -212,14 +217,14 @@ ISR(PCINT1_vect){
 	}
 	else if(last_channel_4 == 1){                                //Input 15 is not high and changed from 1 to 0
 		last_channel_4 = 0;                                        //Remember current input state
-		receiver_input_channel_4= 4*(current_time1 - timer_4);      //Channel 4 is current_time1 - timer_1
-		receiver->yaw = receiver_input_channel_4;
+		receiver_input_channel_4= (current_time1 - timer_4);      //Channel 4 is current_time1 - timer_1
+		if(	receiver_input_channel_4<0){receiver_input_channel_4 = receiver_input_channel_4 + 65535; }
 		pin15Counter++;
 		receiver_yaw_received = true;
 		/*Serial.print(pin15Counter);
 		Serial.print(". Pin 15 = ");
 		Serial.println(receiver_input_channel_4);*/
-		check_value(receiver_input_channel_4);
+	//	check_value(receiver_input_channel_4);
 	}
 	//Arduino Input 14, Channel 2 PITCH =========================================
 	if(PINJ & (1<<1) ){                                       //Is input 14 high?
@@ -230,14 +235,14 @@ ISR(PCINT1_vect){
 	}
 	else if(last_channel_2 == 1){                                //Input 14 is not high and changed from 1 to 0
 		last_channel_2 = 0;                                        //Remember current input state
-		receiver_input_channel_2 = 4*(current_time1 - timer_2);     //Channel 2 is current_time1 - timer_2
-		receiver->pitch = receiver_input_channel_2;
+		receiver_input_channel_2 = (current_time1 - timer_2);     //Channel 2 is current_time1 - timer_2
+		if(	receiver_input_channel_2<0){receiver_input_channel_2 = receiver_input_channel_2 + 65535; }
 		pin14Counter++;
 		receiver_pitch_received = true;
 		/*Serial.print(pin14Counter);
 		Serial.print(". Pin 14 = ");
 		Serial.println(receiver_input_channel_2);*/
-		check_value(receiver_input_channel_2);
+		//check_value(receiver_input_channel_2);
 	}
 }
 
