@@ -48,37 +48,8 @@ PCMSK0|= (1 << PCINT1);  // set PCINT1 (digital input 52)to trigger an interrupt
   DDRB &= !PIN_52;
 }
 
-//Print the receiver and scaled receiver data
-void receiver_print(volatile receiver_inputs_t * receiver) {
-    uart_puts("-------- Receiver Inputs --------\r\n");
-    uart_puts("Roll: ");
-    uart_putd(receiver->roll);
-    uart_puts("\t");
-    uart_putd(receiver->roll_scaled);
-    uart_puts(" ---\r\n");
 
-
-    uart_puts("Pitch: ");
-    uart_putd(receiver->pitch);
-    uart_puts("\t");
-    uart_putd(receiver->pitch_scaled);
-    uart_puts(" ---\r\n");
-
-    uart_puts("Yaw: ");
-    uart_putd(receiver->yaw);
-    uart_puts("\t");
-    uart_putd(receiver->yaw_scaled);
-    uart_puts(" ---\r\n");
-
-    uart_puts("Gas: ");
-    uart_putd(receiver->gas);
-    uart_puts("\t");
-    uart_putd(receiver->gas_scaled);
-    uart_puts(" ---\r\n");
-
-}
-
-void receiver_memset(volatile receiver_inputs_t * receiver){
+void receiver_memset(receiver_inputs_t * receiver){
   receiver->roll = 0;
   receiver->roll_scaled = 0;
   receiver->pitch = 0;
@@ -90,7 +61,7 @@ void receiver_memset(volatile receiver_inputs_t * receiver){
 }
 
 //Scale receiver inputs
-void receiver_scale(volatile receiver_inputs_t * receiver) {
+void receiver_scale(receiver_inputs_t * receiver) {
     //Scale ROLL
     if(receiver->roll < SCALE_CENTER_ROLL){                 //The actual receiver value is lower than the center value
         if(receiver->roll < SCALE_MIN_ROLL){                  //The actual receiver value is lower than the minimum value
@@ -211,13 +182,13 @@ void receiver_scale(volatile receiver_inputs_t * receiver) {
 
 //Calculate the setpoints (divide by the MODE)
 //@TODO Optimizations on this division (power of two optimization)
-void calculate_setpoints(volatile receiver_inputs_t * receiver, setpoints_t * setpoints) {
+void calculate_setpoints(receiver_inputs_t * receiver, setpoints_t * setpoints) {
     //Roll Setpoints
     //We need a little dead band of 16us for better results.
-    if(receiver->roll > 1508){
+    if(receiver->roll_scaled > 1508){
         setpoints->roll = (receiver->roll_scaled - 1508)/MODE;
     }
-    else if(receiver->roll < 1492){
+    else if(receiver->roll_scaled < 1492){
         setpoints->roll = (receiver->roll_scaled - 1492)/MODE;
     }
     else{
@@ -226,10 +197,10 @@ void calculate_setpoints(volatile receiver_inputs_t * receiver, setpoints_t * se
 
     //Pitch Setpoints
     //We need a little dead band of 16us for better results.
-    if(receiver->pitch > 1508){
+    if(receiver->pitch_scaled > 1508){
         setpoints->pitch = (receiver->pitch_scaled - 1508)/MODE;
     }
-    else if(receiver->roll < 1492){
+    else if(receiver->roll_scaled < 1492){
         setpoints->pitch = (receiver->pitch_scaled - 1492)/MODE;
     }
     else{
@@ -238,13 +209,58 @@ void calculate_setpoints(volatile receiver_inputs_t * receiver, setpoints_t * se
 
     //Yaw Setpoints
     //We need a little dead band of 16us for better results.
-    if(receiver->yaw > 1508){
+    if(receiver->yaw_scaled > 1508){
         setpoints->yaw = (receiver->yaw_scaled - 1508)/MODE;
     }
-    else if(receiver->yaw < 1492){
+    else if(receiver->yaw_scaled < 1492){
         setpoints->yaw = (receiver->yaw_scaled - 1492)/MODE;
     }
     else{
         setpoints->yaw = 0;
     }
+}
+
+//Print the receiver and scaled receiver data
+void receiver_print(receiver_inputs_t * receiver) {
+    uart_puts("-------- Receiver Inputs --------\r\n");
+    uart_puts("Roll: ");
+    uart_putd(receiver->roll);
+    uart_puts("\t");
+    uart_putd(receiver->roll_scaled);
+    uart_puts(" ---\r\n");
+
+
+    uart_puts("Pitch: ");
+    uart_putd(receiver->pitch);
+    uart_puts("\t");
+    uart_putd(receiver->pitch_scaled);
+    uart_puts(" ---\r\n");
+
+    uart_puts("Yaw: ");
+    uart_putd(receiver->yaw);
+    uart_puts("\t");
+    uart_putd(receiver->yaw_scaled);
+    uart_puts(" ---\r\n");
+
+    uart_puts("Gas: ");
+    uart_putd(receiver->gas);
+    uart_puts("\t");
+    uart_putd(receiver->gas_scaled);
+    uart_puts(" ---\r\n");
+
+}
+
+void setpoints_print(setpoints_t * setpoints) {
+  uart_puts("-------- Setpoints --------\r\n");
+  uart_puts("Roll: ");
+  uart_putd(setpoints->roll);
+  uart_puts(" ---\t");
+
+  uart_puts("Pitch: ");
+  uart_putd(setpoints->pitch);
+  uart_puts(" ---\t");
+
+  uart_puts("Yaw: ");
+  uart_putd(setpoints->yaw);
+  uart_puts(" ---\r\n");
 }

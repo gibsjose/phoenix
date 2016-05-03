@@ -152,27 +152,13 @@ Used for atmega328p
   OCR1B = 61;
 }
 
-void calculate_esc_pulses_duration(volatile receiver_inputs_t *receiver, PID_roll_t * roll, PID_pitch_t * pitch, PID_yaw_t * yaw, ESC_outputs_t *esc){
+void calculate_esc_pulses_duration(receiver_inputs_t *receiver, PID_roll_t * roll, PID_pitch_t * pitch, PID_yaw_t * yaw, ESC_outputs_t *esc){
 
   if (receiver->gas_scaled > 1800) receiver->gas_scaled = 1800;                            //We need some room to keep control at full throttle.
   esc->esc_1 = receiver->gas_scaled + roll->output.ut - pitch->output.ut + yaw->output.ut; //Calculate the pulse for esc 1 (front-left - CCW)
   esc->esc_2 = receiver->gas_scaled - roll->output.ut - pitch->output.ut - yaw->output.ut; //Calculate the pulse for esc 2 (front-right - CW)
   esc->esc_3 = receiver->gas_scaled - roll->output.ut + pitch->output.ut + yaw->output.ut; //Calculate the pulse for esc 3 (rear-right - CCW)
   esc->esc_4 = receiver->gas_scaled + roll->output.ut + pitch->output.ut - yaw->output.ut; //Calculate the pulse for esc 4 (rear-left - CW)
-
-/* Can go away soon...
-  esc_4 = throttle - pid_output_roll + pid_output_pitch  - pid_output_yaw; //Calculate the pulse for esc 4 (front-left - CW)
-  esc_1 = throttle  + pid_output_roll + pid_output_pitch + pid_output_yaw; //Calculate the pulse for esc 1 (front-right - CCW)
-  esc_2 = throttle + pid_output_roll - pid_output_pitch - pid_output_yaw; //Calculate the pulse for esc 2 (rear-right - CW)
-  esc_3 = throttle - pid_output_roll - pid_output_pitch  + pid_output_yaw; //Calculate the pulse for esc 3 (rear-left - CCW)*/
-
-
-  /*   @TODO compensate for voltage drop if (battery_voltage < 1240 && battery_voltage > 800){                   //Is the battery connected?
-  esc_1 += esc_1 * ((1240 - battery_voltage)/(float)3500);              //Compensate the esc-1 pulse for voltage drop.
-  esc_2 += esc_2 * ((1240 - battery_voltage)/(float)3500);              //Compensate the esc-2 pulse for voltage drop.
-  esc_3 += esc_3 * ((1240 - battery_voltage)/(float)3500);              //Compensate the esc-3 pulse for voltage drop.
-  esc_4 += esc_4 * ((1240 - battery_voltage)/(float)3500);              //Compensate the esc-4 pulse for voltage drop.
-}*/
 
 if (esc->esc_1 < 1200) esc->esc_1 = 1200;                                         //Keep the motors running.
 if (esc->esc_2 < 1200) esc->esc_2 = 1200;                                         //Keep the motors running.
@@ -212,7 +198,7 @@ void PWM_resetRegisters(){
   TCCR0B = 0;
   TCCR1A = 0;
   TCCR1B = 0;
-  
+
 }
 
 void PWM_loop(int *sign){
@@ -226,4 +212,20 @@ void PWM_loop(int *sign){
   }
 
 
+  }
+
+
+
+  void debug_calculate_esc_pulses_duration(receiver_inputs_t *receiver, ESC_outputs_t *esc){
+
+    if (receiver->gas_scaled > 1800) receiver->gas_scaled = 1800;                            //We need some room to keep control at full throttle.
+    esc->esc_1 = receiver->gas_scaled;
+    esc->esc_2 = receiver->gas_scaled;
+    esc->esc_3 = receiver->gas_scaled;
+    esc->esc_4 = receiver->gas_scaled;
+
+  if(esc->esc_1 > 2000)esc->esc_1 = 2000;                                           //Limit the esc-1 pulse to 2000us.
+  if(esc->esc_2 > 2000)esc->esc_2 = 2000;                                           //Limit the esc-2 pulse to 2000us.
+  if(esc->esc_3 > 2000)esc->esc_3 = 2000;                                           //Limit the esc-3 pulse to 2000us.
+  if(esc->esc_4 > 2000)esc->esc_4 = 2000;                                           //Limit the esc-4 pulse to 2000us.
   }

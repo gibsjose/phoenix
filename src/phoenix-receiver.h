@@ -72,7 +72,7 @@
 #define SCALE_MAX_GAS  1916
 #define SCALE_MIN_GAS  1116
 
-#define SCALE_CENTER_YAW  1504
+#define SCALE_CENTER_YAW  1496
 #define SCALE_MAX_YAW  1908
 #define SCALE_MIN_YAW  1096
 
@@ -107,11 +107,12 @@ typedef struct setpoints_t{
 
 //Function declarations
 //void receiver_read(receiver_inputs_t *);
-void receiver_scale(volatile receiver_inputs_t *);
-void calculate_setpoints(volatile receiver_inputs_t *, setpoints_t *);
-void receiver_print(volatile receiver_inputs_t *);
+void receiver_scale(receiver_inputs_t *);
+void calculate_setpoints(receiver_inputs_t *, setpoints_t *);
+void receiver_print(receiver_inputs_t *);
 void init_receiver_registers(void);
-void receiver_memset(volatile receiver_inputs_t *);
+void setpoints_print(setpoints_t *);
+void receiver_memset(receiver_inputs_t *);
 
 
 #endif//PHOENIX_RECEIVER_H

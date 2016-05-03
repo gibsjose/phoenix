@@ -29,6 +29,7 @@ volatile int receiver_input_channel_1, receiver_input_channel_2, receiver_input_
 volatile int current_time1, current_time0;
 volatile unsigned int timer_1, timer_2, timer_3, timer_4;
 volatile int pin14Counter, pin15Counter, pin50Counter, pin52Counter;
+int debug_pin14Counter, debug_pin15Counter, debug_pin50Counter, debug_pin52Counter;
 volatile bool receiver_gas_received = false;
 volatile bool receiver_roll_received = false;
 volatile bool receiver_pitch_received = false;
@@ -44,6 +45,7 @@ ISR(TIMER1_COMPA_vect) {
 int main(void) {
 	//malloc data structures
 	LED_ON();
+	int masterLoopIndex = 0 ;
 	gyro_t *gyro = (gyro_t *)malloc(sizeof(gyro_t));
 	memset(gyro, 0, sizeof(gyro_t));
 
@@ -115,6 +117,23 @@ int main(void) {
 			receiver->pitch = 4*receiver_input_channel_2;
 			receiver_scale(receiver);
 	  	receiver_print(receiver);
+			calculate_setpoints(receiver,setpoints);
+			setpoints_print(setpoints);
+			debug_calculate_esc_pulses_duration(receiver,esc);
+			commandPWMSignals(esc);
+
+///////****************************************//////////////
+//***** Used to check that we do not miss PWM inputs *****//
+/*			debug_pin14Counter =  pin14Counter;
+			debug_pin15Counter = pin15Counter;
+			debug_pin50Counter = pin50Counter;
+			debug_pin52Counter = pin52Counter;
+			uart_puts("\r\n Pin counters : 14,15,50,52\r\n");
+			uart_putd(debug_pin14Counter);
+			uart_putd(debug_pin15Counter);
+			uart_putd(debug_pin50Counter);
+			uart_putd(debug_pin52Counter);*/
+///////****************************************//////////////
 			delay_us(1000000);
 			receiver_gas_received = false;
 			receiver_roll_received = false;
@@ -153,6 +172,7 @@ int main(void) {
 
 			PWM_loop(&sign);
 		}
+		masterLoopIndex ++ ;
 	}
 	return 0;
 }
