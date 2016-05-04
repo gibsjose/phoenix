@@ -33,10 +33,18 @@ double readBatteryVoltage(){
      return (((double)ADC/1023) * 5 * 2.5 + 0.65);
 }
 
-void LED_ON(){
-	//PORTB |= PIN_12;
+void LED_RED_ON(){
+	PORTB |= PIN_53;
 
 }
-void LED_OFF(){
-	//PORTB &= !PIN_12;
+void LED_RED_OFF(){
+	PORTB &= !PIN_53;
+}
+
+void LED_GREEN_ON(){
+	PORTB |= PIN_51;
+
+}
+void LED_GREEN_OFF(){
+	PORTB &= !PIN_51;
 }

@@ -220,9 +220,9 @@ void PWM_loop(int *sign){
 
     if (receiver->gas_scaled > 1800) receiver->gas_scaled = 1800;                            //We need some room to keep control at full throttle.
     esc->esc_1 = receiver->gas_scaled;
-    esc->esc_2 = receiver->gas_scaled;
-    esc->esc_3 = receiver->gas_scaled;
-    esc->esc_4 = receiver->gas_scaled;
+    esc->esc_2 = receiver->roll_scaled;
+    esc->esc_3 = receiver->pitch_scaled;
+    esc->esc_4 = receiver->yaw_scaled;
 
   if(esc->esc_1 > 2000)esc->esc_1 = 2000;                                           //Limit the esc-1 pulse to 2000us.
   if(esc->esc_2 > 2000)esc->esc_2 = 2000;                                           //Limit the esc-2 pulse to 2000us.

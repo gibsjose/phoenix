@@ -18,11 +18,13 @@
 #include <string.h>
 #include <stdlib.h>
 
-/*#define PIN_13      (1 << 5)    //Bit to configure Pin 13 as output on PORTB
-#define PIN_12      (1 << 4)    //Bit to configure Pin 13 as output on PORTB
-*/
+#define PIN_51      (1 << 2)    //Bit to configure Pin 13 as output on PORTB
+#define PIN_53      (1 << 0)    //Bit to configure Pin 53 as output on PORTB
+
 void init_analog_input_pins(void);
 double readBatteryVoltage(void);
-void LED_ON(void);
-void LED_OFF(void);
+void LED_RED_ON(void);
+void LED_RED_OFF(void);
+void LED_GREEN_ON(void);
+void LED_GREEN_OFF(void);
 #endif//PHOENIX_UTIL_H

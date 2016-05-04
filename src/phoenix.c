@@ -18,8 +18,8 @@
 //Don't forget `volatile`!
 volatile int fDebug_receiver = 1 ;
 volatile int fDebug_escs = 0 ;
-volatile int fDebug_battery = 0;
-volatile int fDebug_gyro = 0;
+volatile int fDebug_battery = 1;
+volatile int fDebug_gyro = 1;
 
 /**************************************************
 * Variables used for the receiver inputs *
@@ -44,7 +44,7 @@ ISR(TIMER1_COMPA_vect) {
 
 int main(void) {
 	//malloc data structures
-	LED_ON();
+	LED_RED_ON();
 	int masterLoopIndex = 0 ;
 	gyro_t *gyro = (gyro_t *)malloc(sizeof(gyro_t));
 	memset(gyro, 0, sizeof(gyro_t));
@@ -102,6 +102,9 @@ int main(void) {
 	init_esc_registers();
 	// Read initial batt voltage //The variable battery_voltage holds 1050 if the battery voltage is 10.5V.
 	//Main Loop
+
+		LED_RED_ON();
+		LED_GREEN_ON();
 	while(true) {
 		// @TODO set start status
 		//Read and print the gyro data
@@ -116,9 +119,9 @@ int main(void) {
 			receiver->yaw = 4*receiver_input_channel_4;
 			receiver->pitch = 4*receiver_input_channel_2;
 			receiver_scale(receiver);
-	  	receiver_print(receiver);
-			calculate_setpoints(receiver,setpoints);
-			setpoints_print(setpoints);
+	  //	receiver_print(receiver);
+		//	calculate_setpoints(receiver,setpoints);
+		//	setpoints_print(setpoints);
 			debug_calculate_esc_pulses_duration(receiver,esc);
 			commandPWMSignals(esc);
 
@@ -134,7 +137,7 @@ int main(void) {
 			uart_putd(debug_pin50Counter);
 			uart_putd(debug_pin52Counter);*/
 ///////****************************************//////////////
-			delay_us(1000000);
+			//delay_us(1000000);
 			receiver_gas_received = false;
 			receiver_roll_received = false;
 			receiver_pitch_received = false;
@@ -165,13 +168,6 @@ int main(void) {
 		//	calculate_esc_pulses_to_stop_motors(esc);
 		}
 
-		//uart_puts("Commanding PWM signals \r\n");
-		//commandPWMSignals(esc);
-		if(fDebug_escs == 1){
-			uart_puts("PWM_LOOP entering \r\n");
-
-			PWM_loop(&sign);
-		}
 		masterLoopIndex ++ ;
 	}
 	return 0;
