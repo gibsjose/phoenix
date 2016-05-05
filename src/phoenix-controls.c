@@ -46,7 +46,7 @@ void init_pid_settings(PID_roll_t *roll, PID_pitch_t *pitch, PID_yaw_t *yaw) {
 //Calculates the PID output from the input and settings
 void pid_controller(PID_input_t * PID_input, PID_settings_t * PID_settings, PID_output_t * PID_output){
 
-  PID_output->error = PID_input->target - PID_input->measurement;               //Calculate error signal
+  PID_output->error = PID_input->desired - PID_input->measured;               //Calculate error signal
 
   // Proportional contribution
   PID_output->P_contribution = PID_settings->KP * PID_output->error;
@@ -82,22 +82,22 @@ void pid_controller(PID_input_t * PID_input, PID_settings_t * PID_settings, PID_
 //Performs calculation of PID outputs from gyro and setpoints
 void calculate_pids(gyro_t * gyro, setpoints_t * setpoints, PID_roll_t * roll, PID_pitch_t * pitch, PID_yaw_t * yaw) {
   // ROLL Set inputs
-  roll->input.target = setpoints->roll;
-  roll->input.measurement = gyro->roll_filtered;
+  roll->input.desired = setpoints->roll;
+  roll->input.measured = gyro->roll_filtered;
 
   //Populate the PID output for the ROLL axis
   pid_controller(&(roll->input), &(roll->settings), &(roll->output));
 
   // PITCH set inputs
-  pitch->input.target = setpoints->pitch;
-  pitch->input.measurement = gyro->pitch_filtered;
+  pitch->input.desired = setpoints->pitch;
+  pitch->input.measured = gyro->pitch_filtered;
 
   //Populate the PID output for the PITCH axis
   pid_controller(&(pitch->input), &(pitch->settings), &(pitch->output));
 
   // YAW set inputs
-  yaw->input.target = setpoints->yaw;
-  yaw->input.measurement = gyro->yaw_filtered;
+  yaw->input.desired = setpoints->yaw;
+  yaw->input.measured = gyro->yaw_filtered;
 
   //Populate the PID output for the YAW axis
   pid_controller(&(yaw->input), &(yaw->settings), &(yaw->output));
@@ -229,3 +229,120 @@ void PWM_loop(int *sign){
   if(esc->esc_3 > 2000)esc->esc_3 = 2000;                                           //Limit the esc-3 pulse to 2000us.
   if(esc->esc_4 > 2000)esc->esc_4 = 2000;                                           //Limit the esc-4 pulse to 2000us.
   }
+
+
+  void print_pid_settings(PID_settings_t *settings_roll, PID_settings_t *settings_pitch, PID_settings_t *settings_yaw) {
+
+    uart_puts("-------- PID Settings --------");
+    uart_puts("\r\n******** Roll Settings ******** : ");
+    uart_puts(" ---\r\n KP = ");
+    uart_putd(settings_roll->KP);
+    uart_puts(" ---\r\n KI = ");
+    uart_putd(settings_roll->KI);
+    uart_puts(" ---\r\n KD = ");
+    uart_putd(settings_roll->KD);
+    uart_puts(" ---\r\n upper_limit = ");
+    uart_putd(settings_roll->upper_limit);
+    uart_puts(" ---\r\n lower_limit = ");
+    uart_putd(settings_roll->lower_limit);
+
+    uart_puts("\r\n******** Pitch Settings ******** : ");
+    uart_puts(" ---\r\n KP = ");
+    uart_putd(settings_pitch->KP);
+    uart_puts(" ---\r\n KI = ");
+    uart_putd(settings_pitch->KI);
+    uart_puts(" ---\r\n KD = ");
+    uart_putd(settings_pitch->KD);
+    uart_puts(" ---\r\n upper_limit = ");
+    uart_putd(settings_pitch->upper_limit);
+    uart_puts(" ---\r\n lower_limit = ");
+    uart_putd(settings_pitch->lower_limit);
+
+    uart_puts("\r\n******** Yaw Settings ******** : ");
+    uart_puts(" ---\r\n KP = ");
+    uart_putd(settings_pitch->KP);
+    uart_puts(" ---\r\n KI = ");
+    uart_putd(settings_pitch->KI);
+    uart_puts(" ---\r\n KD = ");
+    uart_putd(settings_pitch->KD);
+    uart_puts(" ---\r\n upper_limit = ");
+    uart_putd(settings_roll->upper_limit);
+    uart_puts(" ---\r\n lower_limit = ");
+    uart_putd(settings_roll->lower_limit);
+  }
+
+
+  void print_pid_outputs(PID_output_t *output_roll,PID_output_t *output_pitch,PID_output_t *output_yaw){
+
+    uart_puts("-------- PID Output --------");
+    uart_puts("\r\n******** Roll Output ******** : ");
+    uart_puts(" ---\r\n u(t) = ");
+    uart_putd(output_roll->ut);
+    uart_puts(" ---\r\n e(t) = ");
+    uart_putd(output_roll->error);
+    uart_puts(" ---\r\n Proportional = ");
+    uart_putd(output_roll->P_contribution);
+    uart_puts(" ---\r\n Integral = ");
+    uart_putd(output_roll->I_contribution);
+    uart_puts(" ---\r\n Derivative = ");
+    uart_putd(output_roll->D_contribution);
+
+    uart_puts("\r\n******** Pitch Output ******** : ");
+    uart_puts(" ---\r\n u(t) = ");
+    uart_putd(output_pitch->ut);
+    uart_puts(" ---\r\n e(t) = ");
+    uart_putd(output_pitch->error);
+    uart_puts(" ---\r\n Proportional = ");
+    uart_putd(output_pitch->P_contribution);
+    uart_puts(" ---\r\n Integral = ");
+    uart_putd(output_pitch->I_contribution);
+    uart_puts(" ---\r\n Derivative = ");
+    uart_putd(output_pitch->D_contribution);
+
+    uart_puts("\r\n******** Yaw Output ******** : ");
+    uart_puts(" ---\r\n u(t) = ");
+    uart_putd(output_yaw->ut);
+    uart_puts(" ---\r\n e(t) = ");
+    uart_putd(output_yaw->error);
+    uart_puts(" ---\r\n Proportional = ");
+    uart_putd(output_yaw->P_contribution);
+    uart_puts(" ---\r\n Integral = ");
+    uart_putd(output_yaw->I_contribution);
+    uart_puts(" ---\r\n Derivative = ");
+    uart_putd(output_yaw->D_contribution);
+
+  }
+
+    void print_pid_inputs(PID_input_t *input_roll,PID_input_t *input_pitch,PID_input_t *input_yaw){
+
+      uart_puts("-------- PID Input --------");
+      uart_puts("\r\n******** Roll Input ******** : ");
+      uart_puts(" ---\r\n desired = ");
+      uart_putd(input_roll->desired);
+      uart_puts(" ---\r\n measured = ");
+      uart_putd(input_roll->measured);
+      uart_puts(" ---\r\n last_error = ");
+      uart_putd(input_roll->last_error);
+      uart_puts(" ---\r\n accomulated_error = ");
+      uart_putd(input_roll->accomulated_error);
+
+      uart_puts("\r\n******** Pitch Input ******** : ");
+      uart_puts(" ---\r\n desired = ");
+      uart_putd(input_pitch->desired);
+      uart_puts(" ---\r\n measured = ");
+      uart_putd(input_pitch->measured);
+      uart_puts(" ---\r\n last_error = ");
+      uart_putd(input_pitch->last_error);
+      uart_puts(" ---\r\n accomulated_error = ");
+      uart_putd(input_pitch->accomulated_error);
+
+      uart_puts("\r\n******** Yaw Input ******** : ");
+      uart_puts(" ---\r\n desired = ");
+      uart_putd(input_yaw->desired);
+      uart_puts(" ---\r\n measured = ");
+      uart_putd(input_yaw->measured);
+      uart_puts(" ---\r\n last_error = ");
+      uart_putd(input_yaw->last_error);
+      uart_puts(" ---\r\n accomulated_error = ");
+      uart_putd(input_yaw->accomulated_error);
+    }

@@ -20,6 +20,7 @@ volatile int fDebug_receiver = 1 ;
 volatile int fDebug_escs = 0 ;
 volatile int fDebug_battery = 1;
 volatile int fDebug_gyro = 1;
+volatile int fDebug_pid_settings = 1;
 
 /**************************************************
 * Variables used for the receiver inputs *
@@ -35,12 +36,7 @@ volatile bool receiver_roll_received = false;
 volatile bool receiver_pitch_received = false;
 volatile bool receiver_yaw_received = false;
 
-//Timer 1 Compare Interrupt Vector (1s CTC Timer)
-ISR(TIMER1_COMPA_vect) {
-	//Blink LED
-	//PORTB ^= _BV(LED_PIN);
-	//Set flag to indicate that we should read the receivers
-}
+
 
 int main(void) {
 	//malloc data structures
@@ -48,13 +44,10 @@ int main(void) {
 	int masterLoopIndex = 0 ;
 	gyro_t *gyro = (gyro_t *)malloc(sizeof(gyro_t));
 	memset(gyro, 0, sizeof(gyro_t));
-
 	receiver_inputs_t *receiver = (receiver_inputs_t*)malloc(sizeof(receiver_inputs_t));
 	receiver_memset(receiver);
-
 	setpoints_t *setpoints = (setpoints_t*)malloc(sizeof(setpoints_t));
 	memset(setpoints, 0, sizeof(setpoints_t));
-
 	PID_roll_t *pid_roll = (PID_roll_t *)malloc(sizeof(PID_roll_t));
 	memset(pid_roll, 0, sizeof(PID_roll_t));
 	PID_pitch_t *pid_pitch = (PID_pitch_t *)malloc(sizeof(PID_pitch_t));
@@ -98,6 +91,10 @@ int main(void) {
 	uart_puts("Initializing PID Settings \r\n");
 
 	init_pid_settings(pid_roll, pid_pitch, pid_yaw);
+  if(fDebug_pid_settings == 1){
+    print_pid_settings(pid_roll->settings,pid_pitch->settings,pid_yaw->settings,);
+  }
+
 	init_receiver_registers();
 	init_esc_registers();
 	// Read initial batt voltage //The variable battery_voltage holds 1050 if the battery voltage is 10.5V.

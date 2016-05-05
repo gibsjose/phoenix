@@ -80,7 +80,7 @@ typedef struct PID_settings_t {
 } PID_settings_t;
 
 typedef struct PID_input_t{
-  double target;                   // Velocity target , that is going to be the setpoint
+  double desired;                   // Velocity desired , that is going to be the setpoint
   double measurement;              // Velocity measurement, that is going to be the gyroscope readout
   double last_error;               // Used internally for the PID_controller calculations
   double accomulated_error;        // Used internally for the PID_controller calculations
@@ -122,6 +122,8 @@ typedef struct ESC_outputs_t{
 
 //Function declarations
 void init_pid_settings(PID_roll_t *, PID_pitch_t *, PID_yaw_t *);
+void print_pid_settings(PID_settings_t *, PID_settings_t *, PID_settings_t *);
+void print_pid_outputs(PID_output_t *,PID_output_t *,PID_output_t *);
 void calculate_pids(gyro_t *, setpoints_t *, PID_roll_t *, PID_pitch_t *, PID_yaw_t *);
 void pid_controller(PID_input_t *, PID_settings_t *, PID_output_t *);
 void init_esc_registers(void);
