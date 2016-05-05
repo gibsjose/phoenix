@@ -180,16 +180,16 @@ void receiver_scale(receiver_inputs_t * receiver) {
 
 }
 
-//Calculate the setpoints (divide by the MODE)
+//Calculate the setpoints (divide by the PILOTING_MODE)
 //@TODO Optimizations on this division (power of two optimization)
 void calculate_setpoints(receiver_inputs_t * receiver, setpoints_t * setpoints) {
     //Roll Setpoints
     //We need a little dead band of 16us for better results.
     if(receiver->roll_scaled > 1508){
-        setpoints->roll = (receiver->roll_scaled - 1508)/MODE;
+        setpoints->roll = (receiver->roll_scaled - 1508)/PILOTING_MODE;
     }
     else if(receiver->roll_scaled < 1492){
-        setpoints->roll = (receiver->roll_scaled - 1492)/MODE;
+        setpoints->roll = (receiver->roll_scaled - 1492)/PILOTING_MODE;
     }
     else{
         setpoints->roll = 0;
@@ -198,10 +198,10 @@ void calculate_setpoints(receiver_inputs_t * receiver, setpoints_t * setpoints) 
     //Pitch Setpoints
     //We need a little dead band of 16us for better results.
     if(receiver->pitch_scaled > 1508){
-        setpoints->pitch = (receiver->pitch_scaled - 1508)/MODE;
+        setpoints->pitch = (receiver->pitch_scaled - 1508)/PILOTING_MODE;
     }
     else if(receiver->roll_scaled < 1492){
-        setpoints->pitch = (receiver->pitch_scaled - 1492)/MODE;
+        setpoints->pitch = (receiver->pitch_scaled - 1492)/PILOTING_MODE;
     }
     else{
         setpoints->pitch = 0;
@@ -210,10 +210,10 @@ void calculate_setpoints(receiver_inputs_t * receiver, setpoints_t * setpoints) 
     //Yaw Setpoints
     //We need a little dead band of 16us for better results.
     if(receiver->yaw_scaled > 1508){
-        setpoints->yaw = (receiver->yaw_scaled - 1508)/MODE;
+        setpoints->yaw = (receiver->yaw_scaled - 1508)/PILOTING_MODE;
     }
     else if(receiver->yaw_scaled < 1492){
-        setpoints->yaw = (receiver->yaw_scaled - 1492)/MODE;
+        setpoints->yaw = (receiver->yaw_scaled - 1492)/PILOTING_MODE;
     }
     else{
         setpoints->yaw = 0;

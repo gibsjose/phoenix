@@ -44,6 +44,16 @@
 #define LED_PIN     PB5     //PB2 is the board LED, PB5 is the Arduino LED
 #define LED_RED      DDB5
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Phoenix MODE
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+#define FLY  1           //Normal Opeartion of Phoenix
+#define CALIBRATE  2   //Just used on startup
+#define IDLE 3           //Waiting for the appropiate receiver input signals to start the motors
+#define STOP_MOTORS 4           //Waiting for the appropiate receiver input signals to start the motors
+
 /*#define PIN_13      (1 << 5)    //Bit to configure Pin 13 as output on PORTB
 #define PIN_12      (1 << 4)    //Bit to configure Pin 13 as output on PORTB*/
 

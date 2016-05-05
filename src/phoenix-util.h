@@ -23,8 +23,14 @@
 
 void init_analog_input_pins(void);
 double readBatteryVoltage(void);
+
+void init_LEDs_as_outputs(void);
+
 void LED_RED_ON(void);
 void LED_RED_OFF(void);
+void LED_RED_CHANGE_STATUS(void);
+
 void LED_GREEN_ON(void);
 void LED_GREEN_OFF(void);
+void LED_GREEN_CHANGE_STATUS(void);
 #endif//PHOENIX_UTIL_H

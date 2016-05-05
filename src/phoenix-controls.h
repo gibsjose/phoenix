@@ -81,7 +81,7 @@ typedef struct PID_settings_t {
 
 typedef struct PID_input_t{
   double desired;                   // Velocity desired , that is going to be the setpoint
-  double measurement;              // Velocity measurement, that is going to be the gyroscope readout
+  double measured;              // Velocity measured, that is going to be the gyroscope readout
   double last_error;               // Used internally for the PID_controller calculations
   double accomulated_error;        // Used internally for the PID_controller calculations
 }PID_input_t;
