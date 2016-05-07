@@ -16,10 +16,10 @@
 
 
 //Don't forget `volatile`!
-volatile int fDebug_receiver = 1 ;
+volatile int fDebug_receiver = 0 ;
 volatile int fDebug_escs = 0 ;
-volatile int fDebug_battery = 1;
-volatile int fDebug_gyro = 1;
+volatile int fDebug_battery = 0;
+volatile int fDebug_gyro = 0;
 volatile int fDebug_pid_settings_input_output = 1;
 
 /**************************************************
@@ -83,32 +83,41 @@ int main(void) {
   uart_puts("Initializing ESC & Receiver registers \r\n");
   delay_us(250000);
 
+  //Initialize gyroscope
+  gyro_init(gyro);
+
+  //Calibrate gyroscope. BE careful
+  gyro_calibrate(gyro);
   if(fDebug_gyro == 1){
-    //Initialize gyroscope
-    gyro_init(gyro);
+    gyro_print(gyro);
+    }
 
-    //Calibrate gyroscope. BE careful
-    gyro_calibrate(gyro);
-  }
+    //Initialize PID settings for roll, pitch, yaw
+    uart_puts("Initializing PID Settings \r\n");
 
-  //Initialize PID settings for roll, pitch, yaw
-  uart_puts("Initializing PID Settings \r\n");
+    //Initialize the gains for the PIDs
+    init_pid_settings(pid_roll, pid_pitch, pid_yaw);
 
-  //Initialize the gains for the PIDs
-  init_pid_settings(pid_roll, pid_pitch, pid_yaw);
+    init_receiver_registers();
+    init_esc_registers();
+    // Read initial batt voltage //The variable battery_voltage holds 1050 if the battery voltage is 10.5V.
 
-  init_receiver_registers();
-  init_esc_registers();
-  // Read initial batt voltage //The variable battery_voltage holds 1050 if the battery voltage is 10.5V.
-
-  MODE = IDLE;
-  //////**********//////
-  while (MODE == IDLE) {
+    MODE = IDLE;
+    //////**********//////
+    while (MODE == IDLE) {
       // Starting the motors: GAS low and YAW left.
       if(receiver_gas_received && receiver_roll_received && receiver_pitch_received && receiver_yaw_received){
+        receiver->gas = 4*receiver_input_channel_3; //4 is the relation between the timer frequency and the pwm frequency
+        receiver->roll = 4*receiver_input_channel_1;
+        receiver->yaw = 4*receiver_input_channel_4;
+        receiver->pitch = 4*receiver_input_channel_2;
+        //Initialize PID settings for roll, pitch, yaw
+        uart_puts("Receiver received \r\n");
         receiver_scale(receiver);
+        receiver_print(receiver);
         if( (receiver->gas_scaled <= 1020) && (receiver->gas_scaled >= 990) &&  (receiver->yaw_scaled <= 1020) && (receiver->yaw_scaled >= 990) ){
           MODE = FLY;
+          reset_accoumulated_error_PID_input(pid_roll, pid_pitch, pid_yaw);
         }
         else{
           if((idle_loop_counter%125) == 0){
@@ -122,282 +131,286 @@ int main(void) {
         receiver_yaw_received = false;
         idle_loop_counter++;
       }
-  }
-
-  LED_GREEN_ON();
-
-//Main Loop
-  while(true) {
-    masterLoopIndex ++ ;
-    //Read the gyroscope
-    gyro_read_scaleOffset_filter(gyro);
-    //print the gyro data
-    if (fDebug_gyro == 1){
-      //Print gyro filtered data
-      gyro_print(gyro);
     }
 
-    if(fDebug_receiver == 1){
+    LED_GREEN_ON();
+
+    //Main Loop
+    while(true) {
+      masterLoopIndex ++ ;
+      //Read the gyroscope
+      gyro_read_scaleOffset_filter(gyro);
+      //print the gyro data
+      if (fDebug_gyro == 1){
+        //Print gyro filtered data
+        gyro_print(gyro);
+      }
+
+
       if(receiver_gas_received && receiver_roll_received && receiver_pitch_received && receiver_yaw_received){
         receiver->gas = 4*receiver_input_channel_3; //4 is the relation between the timer frequency and the pwm frequency
         receiver->roll = 4*receiver_input_channel_1;
         receiver->yaw = 4*receiver_input_channel_4;
         receiver->pitch = 4*receiver_input_channel_2;
         receiver_scale(receiver);
-        //	receiver_print(receiver);
         calculate_setpoints(receiver,setpoints);
-        //	setpoints_print(setpoints);
-        //debug_calculate_esc_pulses_duration(receiver,esc);
-        //commandPWMSignals(esc);
 
-        ///////****************************************//////////////
-        //***** Used to check that we do not miss PWM inputs *****//
-        /*			debug_pin14Counter =  pin14Counter;
-        debug_pin15Counter = pin15Counter;
-        debug_pin50Counter = pin50Counter;
-        debug_pin52Counter = pin52Counter;
-        uart_puts("\r\n Pin counters : 14,15,50,52\r\n");
-        uart_putd(debug_pin14Counter);
-        uart_putd(debug_pin15Counter);
-        uart_putd(debug_pin50Counter);
-        uart_putd(debug_pin52Counter);*/
-        ///////****************************************//////////////
-        //delay_us(1000000);
+
+        if(fDebug_receiver == 1){
+          receiver_print(receiver);
+          setpoints_print(setpoints);
+          //debug_calculate_esc_pulses_duration(receiver,esc);
+          //commandPWMSignals(esc);
+
+          ///////****************************************//////////////
+          //***** Used to check that we do not miss PWM inputs *****//
+          /*debug_pin14Counter =  pin14Counter;
+          debug_pin15Counter = pin15Counter;
+          debug_pin50Counter = pin50Counter;
+          debug_pin52Counter = pin52Counter;
+          uart_puts("\r\n Pin counters : 14,15,50,52\r\n");
+          uart_putd(debug_pin14Counter);
+          uart_putd(debug_pin15Counter);
+          uart_putd(debug_pin50Counter);
+          uart_putd(debug_pin52Counter);*/
+          ///////****************************************//////////////
+
+        }
         receiver_gas_received = false;
         receiver_roll_received = false;
         receiver_pitch_received = false;
         receiver_yaw_received = false;
       }
-        //Stopping the motors: GAS low and YAW right.
+      //Stopping the motors: GAS low and YAW right.
       if((MODE == FLY) && (receiver->gas_scaled <= 1020) && (receiver->gas_scaled >= 990) &&  (receiver->yaw_scaled >= 1950) && (receiver->yaw_scaled <= 2000) ){
         MODE = STOP_MOTORS;
       }
-       // Starting the motors: GAS low and YAW left.
+      // Starting the motors: GAS low and YAW left.
       if( (MODE == STOP_MOTORS) && (receiver->gas_scaled <= 1020) && (receiver->gas_scaled >= 990) &&  (receiver->yaw_scaled <= 1020) && (receiver->yaw_scaled >= 990) ){
         MODE = FLY;
+        reset_accoumulated_error_PID_input(pid_roll, pid_pitch, pid_yaw);
       }
-    }
 
-    battery_voltage = readBatteryVoltage();
-    if(battery_voltage < 11 ){LED_RED_ON();}
-    if(fDebug_battery == 1){
-      uart_puts("\r\n --- Battery Voltage ---\r\n");
-      uart_putd(battery_voltage);
-      uart_puts(" volts\r\n");
-      delay_us(100);
-    }
-    //	battery_voltage = battery_voltage * 0.92 + (analogRead(0) + 65) * 0.09853;
 
-    if (MODE == FLY){ //The motors are started
-      uart_puts("Calculating ESC pulses duration \r\n");
-      //Calculate the PID output to feed into the ESCs
-      calculate_pids(gyro, setpoints, pid_roll, pid_pitch, pid_yaw);
-      //Calculate the length of the PWM signal to feed to each motor. receiver used for gas only
-      calculate_esc_pulses_duration(receiver, pid_roll, pid_pitch, pid_yaw, esc);
-      //Change the registers to spin each motor
-      commandPWMSignals(esc);
-      if(fDebug_pid_settings_input_output == 1){
-        print_pid_settings(&(pid_roll->settings),&(pid_pitch->settings),&(pid_yaw->settings));
-        print_pid_outputs(&(pid_roll->output),&(pid_pitch->output),&(pid_yaw->output));
-        print_pid_inputs(&(pid_roll->input),&(pid_pitch->input),&(pid_yaw->input));
+      battery_voltage = readBatteryVoltage();
+      if(battery_voltage < 11 ){LED_RED_ON();}
+      if(fDebug_battery == 1){
+        uart_puts("\r\n --- Battery Voltage ---\r\n");
+        uart_putd(battery_voltage);
+        uart_puts(" volts \r\n");
+        delay_us(100);
       }
-    }
+      //	battery_voltage = battery_voltage * 0.92 + (analogRead(0) + 65) * 0.09853;
 
-    if(MODE == STOP_MOTORS){
-      //uart_puts("Calculating ESC pulses duration to stop motors \r\n");
-      	calculate_esc_pulses_to_stop_motors(esc);
+      if (MODE == FLY){ //The motors are started
+        //Calculate the PID output to feed into the ESCs
+        calculate_pids(gyro, setpoints, pid_roll, pid_pitch, pid_yaw);
+        //Calculate the length of the PWM signal to feed to each motor. receiver used for gas only
+        calculate_esc_pulses_duration(receiver, pid_roll, pid_pitch, pid_yaw, esc);
+        //Change the registers to spin each motor
         commandPWMSignals(esc);
+        if(fDebug_pid_settings_input_output == 1){
+          //print_pid_settings(&(pid_roll->settings),&(pid_pitch->settings),&(pid_yaw->settings));
+          print_pid_outputs(&(pid_roll->output),&(pid_pitch->output),&(pid_yaw->output));
+          print_pid_inputs(&(pid_roll->input),&(pid_pitch->input),&(pid_yaw->input));
+        }
+      }
+
+      if(MODE == STOP_MOTORS){
+        //uart_puts("Calculating ESC pulses duration to stop motors \r\n");
+        calculate_esc_pulses_to_stop_motors(esc);
+        commandPWMSignals(esc);
+      }
+
+
     }
-
-
+    return 0;
   }
-  return 0;
-}
 
-////////////////////////////////////////////////////////////////////
-//This routine is called every time input 50, 52 change state
-////////////////////////////////////////////////////////////////////
-ISR(PCINT0_vect){
-  //uart_puts("Entering PCINT0_vect");
-  current_time0 = TCNT5L | (((int)(TCNT5H))<<8);
-  //Arduino Input 50, Channel 3 GAS =========================================
-  if(PINB & (1<<3)){                                        //Is input 50 high?
-    if(last_channel_3 == 0){                                   //Input 50 changed from 0 to 1
-      last_channel_3 = 1;                                      //Remember current input state
-      timer_3 = current_time0;                                  //Set timer_3 to current_time0
+  ////////////////////////////////////////////////////////////////////
+  //This routine is called every time input 50, 52 change state
+  ////////////////////////////////////////////////////////////////////
+  ISR(PCINT0_vect){
+    //uart_puts("Entering PCINT0_vect");
+    current_time0 = TCNT5L | (((int)(TCNT5H))<<8);
+    //Arduino Input 50, Channel 3 GAS =========================================
+    if(PINB & (1<<3)){                                        //Is input 50 high?
+      if(last_channel_3 == 0){                                   //Input 50 changed from 0 to 1
+        last_channel_3 = 1;                                      //Remember current input state
+        timer_3 = current_time0;                                  //Set timer_3 to current_time0
+      }
     }
-  }
-  else if(last_channel_3 == 1){                                //Input 50 is not high and changed from 1 to 0
-    last_channel_3 = 0;                                        //Remember current input state
-    receiver_input_channel_3= (current_time0 - timer_3);     //Channel 3 is current_time0 - timer_3
-    if(	receiver_input_channel_3<0){receiver_input_channel_3 = receiver_input_channel_3 + 65535; }
-    pin50Counter++;
-    receiver_gas_received = true;
-    /* Serial.print(pin50Counter);
-    Serial.print(". Pin 50 = ");
-    Serial.println(receiver_input_channel_3);*/
-    //	check_value(receiver_input_channel_3);
-  }
-  //Arduino Input 52, Channel 1 ROLL =========================================
-  if(PINB & (1<<1)){                                       //Is input 52 high?
-    if(last_channel_1 == 0){                                   //Input 52 changed from 0 to 1
-      last_channel_1 = 1;                                      //Remember current input state
-      timer_1 = current_time0;                                  //Set timer_1 to current_time0
+    else if(last_channel_3 == 1){                                //Input 50 is not high and changed from 1 to 0
+      last_channel_3 = 0;                                        //Remember current input state
+      receiver_input_channel_3= (current_time0 - timer_3);     //Channel 3 is current_time0 - timer_3
+      if(	receiver_input_channel_3<0){receiver_input_channel_3 = receiver_input_channel_3 + 65535; }
+      pin50Counter++;
+      receiver_gas_received = true;
+      /* Serial.print(pin50Counter);
+      Serial.print(". Pin 50 = ");
+      Serial.println(receiver_input_channel_3);*/
+      //	check_value(receiver_input_channel_3);
     }
-  }
-  else if(last_channel_1 == 1){                                //Input 14 is not high and changed from 1 to 0
-    last_channel_1 = 0;                                        //Remember current input state
-    receiver_input_channel_1 = (current_time0 - timer_1);    //Channel 1 is current_time0 - timer_1
-    if(	receiver_input_channel_1<0){receiver_input_channel_1 = receiver_input_channel_1 + 65535; }
-    pin52Counter++;
-    receiver_roll_received = true;
+    //Arduino Input 52, Channel 1 ROLL =========================================
+    if(PINB & (1<<1)){                                       //Is input 52 high?
+      if(last_channel_1 == 0){                                   //Input 52 changed from 0 to 1
+        last_channel_1 = 1;                                      //Remember current input state
+        timer_1 = current_time0;                                  //Set timer_1 to current_time0
+      }
+    }
+    else if(last_channel_1 == 1){                                //Input 14 is not high and changed from 1 to 0
+      last_channel_1 = 0;                                        //Remember current input state
+      receiver_input_channel_1 = (current_time0 - timer_1);    //Channel 1 is current_time0 - timer_1
+      if(	receiver_input_channel_1<0){receiver_input_channel_1 = receiver_input_channel_1 + 65535; }
+      pin52Counter++;
+      receiver_roll_received = true;
 
-    /* Serial.print(pin52Counter);
-    Serial.print(". Pin 52 = ");
-    Serial.println(receiver_input_channel_1);*/
-    //	check_value(receiver_input_channel_1);
-  }
-}
-
-////////////////////////////////////////////////////////////////////
-//This routine is called every time input 14, 15 change state
-////////////////////////////////////////////////////////////////////
-ISR(PCINT1_vect){
-  //uart_puts("Entering PCINT1_vect");
-  current_time1 = TCNT5L | (((int)(TCNT5H))<<8);
-  //Arduino Input 15, Channel 4 YAW =========================================
-  if(PINJ & (1<<0)){                                        //Is input 15 high?
-    if(last_channel_4 == 0){                                   //Input 15 changed from 0 to 1
-      last_channel_4 = 1;                                      //Remember current input state
-      timer_4 = current_time1;                                  //Set timer_1 to current_time1
+      /* Serial.print(pin52Counter);
+      Serial.print(". Pin 52 = ");
+      Serial.println(receiver_input_channel_1);*/
+      //	check_value(receiver_input_channel_1);
     }
   }
-  else if(last_channel_4 == 1){                                //Input 15 is not high and changed from 1 to 0
-    last_channel_4 = 0;                                        //Remember current input state
-    receiver_input_channel_4= (current_time1 - timer_4);      //Channel 4 is current_time1 - timer_1
-    if(	receiver_input_channel_4<0){receiver_input_channel_4 = receiver_input_channel_4 + 65535; }
-    pin15Counter++;
-    receiver_yaw_received = true;
-    /*Serial.print(pin15Counter);
-    Serial.print(". Pin 15 = ");
-    Serial.println(receiver_input_channel_4);*/
-    //	check_value(receiver_input_channel_4);
-  }
-  //Arduino Input 14, Channel 2 PITCH =========================================
-  if(PINJ & (1<<1) ){                                       //Is input 14 high?
-    if(last_channel_2 == 0){                                   //Input 14 changed from 0 to 1
-      last_channel_2 = 1;                                      //Remember current input state
-      timer_2 = current_time1;                                  //Set timer_2 to current_time1
+
+  ////////////////////////////////////////////////////////////////////
+  //This routine is called every time input 14, 15 change state
+  ////////////////////////////////////////////////////////////////////
+  ISR(PCINT1_vect){
+    //uart_puts("Entering PCINT1_vect");
+    current_time1 = TCNT5L | (((int)(TCNT5H))<<8);
+    //Arduino Input 15, Channel 4 YAW =========================================
+    if(PINJ & (1<<0)){                                        //Is input 15 high?
+      if(last_channel_4 == 0){                                   //Input 15 changed from 0 to 1
+        last_channel_4 = 1;                                      //Remember current input state
+        timer_4 = current_time1;                                  //Set timer_1 to current_time1
+      }
+    }
+    else if(last_channel_4 == 1){                                //Input 15 is not high and changed from 1 to 0
+      last_channel_4 = 0;                                        //Remember current input state
+      receiver_input_channel_4= (current_time1 - timer_4);      //Channel 4 is current_time1 - timer_1
+      if(	receiver_input_channel_4<0){receiver_input_channel_4 = receiver_input_channel_4 + 65535; }
+      pin15Counter++;
+      receiver_yaw_received = true;
+      /*Serial.print(pin15Counter);
+      Serial.print(". Pin 15 = ");
+      Serial.println(receiver_input_channel_4);*/
+      //	check_value(receiver_input_channel_4);
+    }
+    //Arduino Input 14, Channel 2 PITCH =========================================
+    if(PINJ & (1<<1) ){                                       //Is input 14 high?
+      if(last_channel_2 == 0){                                   //Input 14 changed from 0 to 1
+        last_channel_2 = 1;                                      //Remember current input state
+        timer_2 = current_time1;                                  //Set timer_2 to current_time1
+      }
+    }
+    else if(last_channel_2 == 1){                                //Input 14 is not high and changed from 1 to 0
+      last_channel_2 = 0;                                        //Remember current input state
+      receiver_input_channel_2 = (current_time1 - timer_2);     //Channel 2 is current_time1 - timer_2
+      if(	receiver_input_channel_2<0){receiver_input_channel_2 = receiver_input_channel_2 + 65535; }
+      pin14Counter++;
+      receiver_pitch_received = true;
+      /*Serial.print(pin14Counter);
+      Serial.print(". Pin 14 = ");
+      Serial.println(receiver_input_channel_2);*/
+      //check_value(receiver_input_channel_2);
     }
   }
-  else if(last_channel_2 == 1){                                //Input 14 is not high and changed from 1 to 0
-    last_channel_2 = 0;                                        //Remember current input state
-    receiver_input_channel_2 = (current_time1 - timer_2);     //Channel 2 is current_time1 - timer_2
-    if(	receiver_input_channel_2<0){receiver_input_channel_2 = receiver_input_channel_2 + 65535; }
-    pin14Counter++;
-    receiver_pitch_received = true;
-    /*Serial.print(pin14Counter);
-    Serial.print(". Pin 14 = ");
-    Serial.println(receiver_input_channel_2);*/
-    //check_value(receiver_input_channel_2);
+
+  void check_value(int value){
+    if((value > 1900) || (value < 1100)){
+      //uart_putd(value);
+    }
   }
-}
 
-void check_value(int value){
-  if((value > 1900) || (value < 1100)){
-    //uart_putd(value);
+  int init(void) {
+    int ret = 0;
+
+    //Clear interrupts
+    cli();
+
+    //Initialize ports
+    port_init();
+
+    //Initialize peripherals
+    peripheral_init();
+
+    //Initialize devices
+    ret = device_init();
+    //Enable interrupts
+    sei();
+
+    return ret;
   }
-}
 
-int init(void) {
-  int ret = 0;
+  int port_init(void) {
+    //Initialize LED as output
+    //DDRB |= _BV(LED_DD);
 
-  //Clear interrupts
-  cli();
+    //Initialize battery inputs/outputs
+    // rfcx_batteries_init();
 
-  //Initialize ports
-  port_init();
+    return 0;
+  }
 
-  //Initialize peripherals
-  peripheral_init();
+  int timer1_init(void) {
+    //Initialize Timer 1
+    TCCR1A = 0;
+    TCCR1B = 0;
 
-  //Initialize devices
-  ret = device_init();
-  //Enable interrupts
-  sei();
+    //Set CTC compare value (1 second)
+    OCR1A = TIMER1_COUNT;
 
-  return ret;
-}
+    //Enable CTC mode
+    TCCR1B |= (1 << WGM12);
 
-int port_init(void) {
-  //Initialize LED as output
-  //DDRB |= _BV(LED_DD);
+    //Enable 1024 prescaler
+    TCCR1B |= (1 << CS10);
+    TCCR1B |= (1 << CS12);
 
-  //Initialize battery inputs/outputs
-  // rfcx_batteries_init();
+    //Enable Timer 1 output compare interrupt
+    TIMSK1 |= (1 << OCIE1A);
 
-  return 0;
-}
+    return 0;
+  }
 
-int timer1_init(void) {
-  //Initialize Timer 1
-  TCCR1A = 0;
-  TCCR1B = 0;
+  int peripheral_init(void) {
+    //Initialize Timer 1
+    //timer1_init();
 
-  //Set CTC compare value (1 second)
-  OCR1A = TIMER1_COUNT;
+    //Initialize I2C (TWI) peripheral as a whole
+    i2c_init();
 
-  //Enable CTC mode
-  TCCR1B |= (1 << WGM12);
+    return 0;
+  }
 
-  //Enable 1024 prescaler
-  TCCR1B |= (1 << CS10);
-  TCCR1B |= (1 << CS12);
+  int device_init(void) {
+    int ret = 0;
 
-  //Enable Timer 1 output compare interrupt
-  TIMSK1 |= (1 << OCIE1A);
+    //Initialize external I2C temp sensor (LM75BD)
+    // ret = rfcx_temp_init();
+    // if(ret) {
+    // 	uart_puts("<-- ERROR: Error initializing temp sensor -->\r\n");
+    // 	return ret;
+    // } else {
+    // 	uart_puts("Successfully initialized temp sensor\r\n");
+    // }
 
-  return 0;
-}
+    //Initialize external I2C ADC (ADS1015)
+    // ret = rfcx_adc_init();
+    // if(ret) {
+    // 	 uart_puts("<-- ERROR: Error initializing ADC -->\r\n");
+    // } else {
+    // 	 uart_puts("Successfully initialized ADC\r\n");
+    // }
 
-int peripheral_init(void) {
-  //Initialize Timer 1
-  //timer1_init();
+    // //Initialize external I2C humidity sensor (HIH6130)
+    // ret = rfcx_humid_init();
+    // if(ret) {
+    // 	uart_puts("<-- ERROR: Error initializing humidity sensor -->\r\n");
+    // 	return ret;
+    // } else {
+    // 	uart_puts("Successfully initialized humidity sensor\r\n");
+    // }
 
-  //Initialize I2C (TWI) peripheral as a whole
-  i2c_init();
-
-  return 0;
-}
-
-int device_init(void) {
-  int ret = 0;
-
-  //Initialize external I2C temp sensor (LM75BD)
-  // ret = rfcx_temp_init();
-  // if(ret) {
-  // 	uart_puts("<-- ERROR: Error initializing temp sensor -->\r\n");
-  // 	return ret;
-  // } else {
-  // 	uart_puts("Successfully initialized temp sensor\r\n");
-  // }
-
-  //Initialize external I2C ADC (ADS1015)
-  // ret = rfcx_adc_init();
-  // if(ret) {
-  // 	 uart_puts("<-- ERROR: Error initializing ADC -->\r\n");
-  // } else {
-  // 	 uart_puts("Successfully initialized ADC\r\n");
-  // }
-
-  // //Initialize external I2C humidity sensor (HIH6130)
-  // ret = rfcx_humid_init();
-  // if(ret) {
-  // 	uart_puts("<-- ERROR: Error initializing humidity sensor -->\r\n");
-  // 	return ret;
-  // } else {
-  // 	uart_puts("Successfully initialized humidity sensor\r\n");
-  // }
-
-  return ret;
-}
+    return ret;
+  }

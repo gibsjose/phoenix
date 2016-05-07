@@ -134,4 +134,5 @@ void calculate_esc_pulses_to_stop_motors(ESC_outputs_t*);
 void commandPWMSignals(ESC_outputs_t*);
 void PWM_resetRegisters(void);
 void PWM_loop(int*);
+void reset_accoumulated_error_PID_input(PID_roll_t *, PID_pitch_t *, PID_yaw_t *);
 #endif//PHOENIX_CONTROLS_H

@@ -42,6 +42,11 @@ void init_pid_settings(PID_roll_t *roll, PID_pitch_t *pitch, PID_yaw_t *yaw) {
   settings->upper_limit = UPPER_LIMIT;
   settings->lower_limit = LOWER_LIMIT;
 }
+void reset_accoumulated_error_PID_input(PID_roll_t *roll, PID_pitch_t *pitch, PID_yaw_t *yaw){
+  roll->input.accomulated_error = 0;
+  pitch->input.accomulated_error = 0;
+  yaw->input.accomulated_error = 0;
+}
 
 //Calculates the PID output from the input and settings
 void pid_controller(PID_input_t * PID_input, PID_settings_t * PID_settings, PID_output_t * PID_output){
@@ -160,11 +165,12 @@ void calculate_esc_pulses_duration(receiver_inputs_t *receiver, PID_roll_t * rol
   esc->esc_3 = receiver->gas_scaled - roll->output.ut + pitch->output.ut + yaw->output.ut; //Calculate the pulse for esc 3 (rear-right - CCW)
   esc->esc_4 = receiver->gas_scaled + roll->output.ut + pitch->output.ut - yaw->output.ut; //Calculate the pulse for esc 4 (rear-left - CW)
 
+/*
 if (esc->esc_1 < 1200) esc->esc_1 = 1200;                                         //Keep the motors running.
 if (esc->esc_2 < 1200) esc->esc_2 = 1200;                                         //Keep the motors running.
 if (esc->esc_3 < 1200) esc->esc_3 = 1200;                                         //Keep the motors running.
 if (esc->esc_4 < 1200) esc->esc_4 = 1200;                                         //Keep the motors running.
-
+*/
 if(esc->esc_1 > 2000)esc->esc_1 = 2000;                                           //Limit the esc-1 pulse to 2000us.
 if(esc->esc_2 > 2000)esc->esc_2 = 2000;                                           //Limit the esc-2 pulse to 2000us.
 if(esc->esc_3 > 2000)esc->esc_3 = 2000;                                           //Limit the esc-3 pulse to 2000us.
