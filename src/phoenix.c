@@ -20,7 +20,7 @@ volatile int fDebug_receiver = 1 ;
 volatile int fDebug_escs = 0 ;
 volatile int fDebug_battery = 1;
 volatile int fDebug_gyro = 1;
-volatile int fDebug_pid_settings = 1;
+volatile int fDebug_pid_settings_input_output = 1;
 
 /**************************************************
 * Variables used for the receiver inputs *
@@ -42,6 +42,7 @@ int main(void) {
   //malloc data structures
   LED_RED_ON();
   int masterLoopIndex = 0 ;
+  int idle_loop_counter = 0;
   gyro_t *gyro = (gyro_t *)malloc(sizeof(gyro_t));
   memset(gyro, 0, sizeof(gyro_t));
   receiver_inputs_t *receiver = (receiver_inputs_t*)malloc(sizeof(receiver_inputs_t));
@@ -57,7 +58,7 @@ int main(void) {
   ESC_outputs_t *esc= (ESC_outputs_t*)malloc(sizeof(ESC_outputs_t));
   memset(esc, 0, sizeof(ESC_outputs_t));
 
-  int sign = 1;
+
   int ret = 0;
   int MODE = CALIBRATE;
   double battery_voltage;
@@ -93,12 +94,8 @@ int main(void) {
   //Initialize PID settings for roll, pitch, yaw
   uart_puts("Initializing PID Settings \r\n");
 
+  //Initialize the gains for the PIDs
   init_pid_settings(pid_roll, pid_pitch, pid_yaw);
-  if(fDebug_pid_settings == 1){
-    print_pid_settings(&(pid_roll->settings),&(pid_pitch->settings),&(pid_yaw->settings));
-    print_pid_outputs(&(pid_roll->output),&(pid_pitch->output),&(pid_yaw->output));
-    print_pid_inputs(&(pid_roll->input),&(pid_pitch->input),&(pid_yaw->input));
-  }
 
   init_receiver_registers();
   init_esc_registers();
@@ -107,37 +104,42 @@ int main(void) {
   MODE = IDLE;
   //////**********//////
   while (MODE == IDLE) {
-    /* code */
+      // Starting the motors: GAS low and YAW left.
       if(receiver_gas_received && receiver_roll_received && receiver_pitch_received && receiver_yaw_received){
         receiver_scale(receiver);
-        if( (receiver->gas_scaled <= 1020) && (receiver->gas_scaled >= 990) &&  (receiver->roll_scaled <= 1020) && (receiver->roll_scaled >= 990) ){
+        if( (receiver->gas_scaled <= 1020) && (receiver->gas_scaled >= 990) &&  (receiver->yaw_scaled <= 1020) && (receiver->yaw_scaled >= 990) ){
           MODE = FLY;
         }
         else{
-          LED_GREEN_ON();
+          if((idle_loop_counter%125) == 0){
+            LED_GREEN_CHANGE_STATUS(); // Waiting for correct input
+          }
 
         }
         receiver_gas_received = false;
         receiver_roll_received = false;
         receiver_pitch_received = false;
         receiver_yaw_received = false;
+        idle_loop_counter++;
       }
   }
 
-  LED_RED_ON();
   LED_GREEN_ON();
 
 //Main Loop
   while(true) {
-    // @TODO set start status
-    //Read and print the gyro data
+    masterLoopIndex ++ ;
+    //Read the gyroscope
+    gyro_read_scaleOffset_filter(gyro);
+    //print the gyro data
     if (fDebug_gyro == 1){
-      gyro_loop(gyro);
+      //Print gyro filtered data
+      gyro_print(gyro);
     }
+
     if(fDebug_receiver == 1){
       if(receiver_gas_received && receiver_roll_received && receiver_pitch_received && receiver_yaw_received){
-
-        receiver->gas = 4*receiver_input_channel_3;
+        receiver->gas = 4*receiver_input_channel_3; //4 is the relation between the timer frequency and the pwm frequency
         receiver->roll = 4*receiver_input_channel_1;
         receiver->yaw = 4*receiver_input_channel_4;
         receiver->pitch = 4*receiver_input_channel_2;
@@ -145,8 +147,8 @@ int main(void) {
         //	receiver_print(receiver);
         calculate_setpoints(receiver,setpoints);
         //	setpoints_print(setpoints);
-        debug_calculate_esc_pulses_duration(receiver,esc);
-        commandPWMSignals(esc);
+        //debug_calculate_esc_pulses_duration(receiver,esc);
+        //commandPWMSignals(esc);
 
         ///////****************************************//////////////
         //***** Used to check that we do not miss PWM inputs *****//
@@ -165,37 +167,49 @@ int main(void) {
         receiver_roll_received = false;
         receiver_pitch_received = false;
         receiver_yaw_received = false;
-
+      }
+        //Stopping the motors: GAS low and YAW right.
+      if((MODE == FLY) && (receiver->gas_scaled <= 1020) && (receiver->gas_scaled >= 990) &&  (receiver->yaw_scaled >= 1950) && (receiver->yaw_scaled <= 2000) ){
+        MODE = STOP_MOTORS;
+      }
+       // Starting the motors: GAS low and YAW left.
+      if( (MODE == STOP_MOTORS) && (receiver->gas_scaled <= 1020) && (receiver->gas_scaled >= 990) &&  (receiver->yaw_scaled <= 1020) && (receiver->yaw_scaled >= 990) ){
+        MODE = FLY;
       }
     }
 
-    // //1260 / 1023 = 1.2317.
     battery_voltage = readBatteryVoltage();
+    if(battery_voltage < 11 ){LED_RED_ON();}
     if(fDebug_battery == 1){
-      uart_puts("Battery Voltage = ");
+      uart_puts("\r\n --- Battery Voltage ---\r\n");
       uart_putd(battery_voltage);
-      uart_puts("\r\n");
+      uart_puts(" volts\r\n");
       delay_us(100);
     }
     //	battery_voltage = battery_voltage * 0.92 + (analogRead(0) + 65) * 0.09853;
 
     if (MODE == FLY){ //The motors are started
-      //Read battery voltage()
       uart_puts("Calculating ESC pulses duration \r\n");
       //Calculate the PID output to feed into the ESCs
       calculate_pids(gyro, setpoints, pid_roll, pid_pitch, pid_yaw);
-      //Calculate the length of the PWM signal to feed to each motor
+      //Calculate the length of the PWM signal to feed to each motor. receiver used for gas only
       calculate_esc_pulses_duration(receiver, pid_roll, pid_pitch, pid_yaw, esc);
       //Change the registers to spin each motor
       commandPWMSignals(esc);
+      if(fDebug_pid_settings_input_output == 1){
+        print_pid_settings(&(pid_roll->settings),&(pid_pitch->settings),&(pid_yaw->settings));
+        print_pid_outputs(&(pid_roll->output),&(pid_pitch->output),&(pid_yaw->output));
+        print_pid_inputs(&(pid_roll->input),&(pid_pitch->input),&(pid_yaw->input));
+      }
     }
 
     if(MODE == STOP_MOTORS){
       //uart_puts("Calculating ESC pulses duration to stop motors \r\n");
       	calculate_esc_pulses_to_stop_motors(esc);
+        commandPWMSignals(esc);
     }
 
-    masterLoopIndex ++ ;
+
   }
   return 0;
 }

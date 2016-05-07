@@ -97,14 +97,12 @@ uint8_t gyro_calibrate(gyro_t * gyro) {
         gyro->pitch_offset += gyro->pitch;
         gyro->yaw_offset += gyro->yaw;
 
-        if(!(i % 50)) {
-          LED_RED_OFF();
-        }
         //Print a '.' every 10 readings
-        if(!(i % 100)) {
-            uart_puts(".");
-            LED_RED_ON();
+        if((i % 100) == 0) {
+          LED_RED_CHANGE_STATUS();
+          uart_puts(".");
         }
+
 
         //Delay 10ms
         delay_us(1000);
@@ -114,8 +112,7 @@ uint8_t gyro_calibrate(gyro_t * gyro) {
     gyro->yaw_offset = (gyro->yaw_offset / GYRO_CALIBRATION_STEPS);
     gyro_scale_offset(gyro);
     gyro_print_offsets(gyro);
-
-
+    LED_RED_OFF();
     return OK;
 }
 
@@ -222,4 +219,18 @@ void gyro_loop(gyro_t * gyro) {
 
     //Print gyro filtered data
     gyro_print(gyro);
+}
+
+//Gyro test loop
+void gyro_read_scaleOffset_filter(gyro_t * gyro) {
+
+    //Take a reading
+    gyro_read(gyro);
+
+    //Scale the readout according to the sensitivity
+    gyro_scale(gyro);
+
+    //Filter the gyro velocities
+    gyro_filter(gyro);
+
 }

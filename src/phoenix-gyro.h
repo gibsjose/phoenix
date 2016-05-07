@@ -95,5 +95,6 @@ void gyro_filter(gyro_t *);
 void gyro_print(gyro_t *);
 void gyro_print_offsets(gyro_t *);
 void gyro_loop(gyro_t *);
+void gyro_read_scaleOffset_filter(gyro_t *);
 
 #endif//PHOENIX_GYRO_H
