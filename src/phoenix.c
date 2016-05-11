@@ -16,11 +16,11 @@
 
 
 //Don't forget `volatile`!
-volatile int fDebug_receiver = 1 ;
+volatile int fDebug_receiver = 0 ;
 volatile int fDebug_escs = 0 ;
 volatile int fDebug_battery = 0;
-volatile int fDebug_gyro = 1;
-volatile int fDebug_pid_settings_input_output = 1;
+volatile int fDebug_gyro = 0;
+volatile int fDebug_pid_settings_input_output = 0;
 
 /**************************************************
 * Variables used for the receiver inputs *
@@ -137,7 +137,7 @@ int main(void) {
       }
     }
 
-    //LED_GREEN_ON();
+    LED_GREEN_ON();
 
     //Main Loop
     while(true) {
@@ -199,11 +199,13 @@ int main(void) {
       //Stopping the motors: GAS low and YAW right.
       if((MODE == FLY) && (receiver->gas_scaled <= 1020) && (receiver->gas_scaled >= 990) &&  (receiver->yaw_scaled >= 1950) && (receiver->yaw_scaled <= 2000) ){
         MODE = STOP_MOTORS;
+        LED_GREEN_OFF();
       }
       // Starting the motors: GAS low and YAW left.
       if( (MODE == STOP_MOTORS) && (receiver->gas_scaled <= 1020) && (receiver->gas_scaled >= 990) &&  (receiver->yaw_scaled <= 1020) && (receiver->yaw_scaled >= 990) ){
         MODE = FLY;
         reset_accoumulated_error_PID_input(pid_roll, pid_pitch, pid_yaw);
+        LED_GREEN_ON();
       }
 
 
