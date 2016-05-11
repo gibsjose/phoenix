@@ -34,40 +34,41 @@ double readBatteryVoltage(){
 }
 
 void init_LEDs_as_outputs(){
-  DDRB |= PIN_53;
-  DDRB |= PIN_51;
+  DDRB |= PIN_10;
+  DDRL |= PIN_49;
+
 }
 void LED_RED_ON(){
-	PORTB |= PIN_53;
+	PORTL |= PIN_49;
 
 }
 void LED_RED_OFF(){
-	PORTB &= !PIN_53;
+	PORTL &= ~PIN_49;
 }
 
 void LED_RED_CHANGE_STATUS(){
-  if((PORTB & (PIN_53)) == 0 ){
-     PORTB |= (1<<4);
+  if((PORTL & (PIN_49)) == 0 ){
+     PORTL |= (PIN_49);
   }
   else{
-      PORTB &= !(PIN_53);
+      PORTL &= ~(PIN_49);
     }
 }
 
 void LED_GREEN_ON(){
-	PORTB |= PIN_51;
+	PORTB |= PIN_10;
 
 }
 void LED_GREEN_OFF(){
-	PORTB &= !PIN_51;
+	PORTB &= ~PIN_10;
 }
 
 void LED_GREEN_CHANGE_STATUS(){
 
-  if((PORTB & (PIN_51)) == 0 ){
-     PORTB |= (1<<4);
+  if((PORTB & (PIN_10)) == 0 ){
+     PORTB |= (PIN_10);
   }
   else{
-      PORTB &= !(PIN_51);
+      PORTB &= ~(PIN_10);
     }
 }

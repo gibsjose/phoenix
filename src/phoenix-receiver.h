@@ -46,6 +46,9 @@
 #define PIN_15            (1 << 0)    //DDJ0: Bit to configure Pin 15 as output on PORTJ on atmega2560
 #define PIN_50            (1 << 3)    //DDB3: Bit to configure Pin 49 as output on PORTB on atmega2560
 #define PIN_52            (1 << 1)    //DDB1: Bit to configure Pin 49 as output on PORTB on atmega2560
+#define PIN_51            (1 << 2)    //DDB2: Bit to configure Pin 51 as output on PORTB on atmega2560
+#define PIN_53            (1 << 0)    //DDB0: Bit to configure Pin 53 as output on PORTB on atmega2560
+
 
 /* Previously used for the Input Capture Registers */
 //#define PIN_48            (1 << 1)    //DDL1: Bit to configure Pin 48 as output on PORTL on atmega2560
@@ -89,12 +92,16 @@ typedef struct receiver_inputs_t {
     double pitch;           // Pitch channel 2
     double gas;             // Throttle channel 3
     double yaw;             // Yaw channel 4
+    double channel5;
+    double channel6;
 
     // The raw inputs will not exactly be on the [1000,2000] microsecond range. The scaled values will be on that range
     double roll_scaled;            // Roll channel 1
     double pitch_scaled;           // Pitch channel 2
     double gas_scaled;             // Throttle channel 3
     double yaw_scaled;             // Yaw channel 4
+    double channel5_scaled;
+    double channel6_scaled;
 
 } receiver_inputs_t;
 

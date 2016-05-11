@@ -37,15 +37,23 @@ PCMSK1 |= (1 << PCINT10); // set PCINT10 (digital input 14)to trigger an interru
 PCICR |= (1 << PCIE0);    // set PCIE0 to enable PCMSK1 scan
 PCMSK0 |= (1 << PCINT3);  // set PCINT3 (digital input 50) to trigger an interrupt on state change
 PCMSK0|= (1 << PCINT1);  // set PCINT1 (digital input 52)to trigger an interrupt on state change
+PCMSK0|= (1 << PCINT0);  // set PCINT0 (digital input 53)to trigger an interrupt on state change
+PCMSK0|= (1 << PCINT2);  // set PCINT2 (digital input 51)to trigger an interrupt on state change
 
   //chip Pin PJ1, arduino pin 14, channel Pitch
-  DDRJ &= !PIN_14;
+  DDRJ &= ~PIN_14;
   //chip Pin PJ0, arduino pin 15, channel Yaw
-  DDRJ &= !PIN_15;
+  DDRJ &= ~PIN_15;
   //chip Pin PB3, arduino pin 50, channel Pitch
-  DDRB &= !PIN_50;
+  DDRB  &= (~PIN_50);
   //chip Pin PB1, arduino pin 52, channel Pitch
-  DDRB &= !PIN_52;
+  DDRB &= (~PIN_52);
+  //chip Pin PB1, arduino pin 52, channel Pitch
+  DDRB &= (~PIN_53);
+  //chip Pin PB1, arduino pin 52, channel Pitch
+  DDRB &= (~PIN_51);
+
+
 }
 
 
@@ -176,7 +184,8 @@ void receiver_scale(receiver_inputs_t * receiver) {
         receiver->yaw_scaled = 1500;
     }
 
-
+    receiver->channel5_scaled = receiver->channel5;
+    receiver->channel6_scaled = receiver->channel6;
 
 }
 
@@ -246,6 +255,18 @@ void receiver_print(receiver_inputs_t * receiver) {
     uart_putd(receiver->gas);
     uart_puts("\t");
     uart_putd(receiver->gas_scaled);
+    uart_puts(" ---\r\n");
+
+    uart_puts("Channel 5: ");
+    uart_putd(receiver->channel5);
+    uart_puts("\t");
+    uart_putd(receiver->channel5_scaled);
+    uart_puts(" ---\r\n");
+
+    uart_puts("Channel 6: ");
+    uart_putd(receiver->channel6);
+    uart_puts("\t");
+    uart_putd(receiver->channel6_scaled);
     uart_puts(" ---\r\n");
 
 }

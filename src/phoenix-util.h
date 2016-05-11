@@ -18,8 +18,8 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define PIN_51      (1 << 2)    //Bit to configure Pin 13 as output on PORTB
-#define PIN_53      (1 << 0)    //Bit to configure Pin 53 as output on PORTB
+#define PIN_49      (1 << 0)    //Bit to configure Pin 49 as output on PORTL
+#define PIN_10      (1 << 4)    //Bit to configure Pin 10 as output on PORTB
 
 void init_analog_input_pins(void);
 double readBatteryVoltage(void);

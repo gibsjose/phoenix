@@ -28,7 +28,20 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Gains for the ROLL PID, are the same as the PITCH PID
-#define P_ROLL  1.4
+
+#define P_ROLL  1
+#define I_ROLL 0
+#define D_ROLL 0
+
+#define P_PITCH  1
+#define I_PITCH 0
+#define D_PITCH 0
+
+#define P_YAW 1
+#define I_YAW 0
+#define D_YAW 0
+
+/*#define P_ROLL  1.4
 #define I_ROLL 0.05
 #define D_ROLL 15
 
@@ -38,7 +51,7 @@
 
 #define P_YAW 4
 #define I_YAW 0.02
-#define D_YAW 0
+#define D_YAW 0*/
 
 #define UPPER_LIMIT 400
 #define LOWER_LIMIT -400
