@@ -21,6 +21,7 @@ volatile int fDebug_escs = 0 ;
 volatile int fDebug_battery = 0;
 volatile int fDebug_gyro = 0;
 volatile int fDebug_pid_settings_input_output = 0;
+volatile int fDebug_masterLoopIndex = 0;
 
 /**************************************************
 * Variables used for the receiver inputs *
@@ -96,6 +97,7 @@ int main(void) {
 
     //Initialize the gains for the PIDs
     init_pid_settings(pid_roll, pid_pitch, pid_yaw);
+    print_pid_settings(&pid_roll->settings, &pid_pitch->settings, &pid_yaw->settings);
     init_receiver_registers(); //Resets PORTB!
     init_esc_registers();
 
@@ -142,6 +144,11 @@ int main(void) {
     //Main Loop
     while(true) {
       masterLoopIndex ++ ;
+      if(fDebug_masterLoopIndex == 1){
+        if((masterLoopIndex%1000) == 0 ){
+          uart_putd(masterLoopIndex);
+        }
+      }
       //Read the gyroscope
       gyro_read_scaleOffset_filter(gyro);
       //print the gyro data

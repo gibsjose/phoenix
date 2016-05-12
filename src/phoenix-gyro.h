@@ -32,7 +32,7 @@
 
 #define ROLL_COEFFICIENT    1.0        //Non-inverted
 #define PITCH_COEFFICIENT   1.0        //Non-inverted
-#define YAW_COEFFICIENT     1.0        //Non-inverted
+#define YAW_COEFFICIENT     -1.0        //Non-inverted
 
 
 //Register Definitions

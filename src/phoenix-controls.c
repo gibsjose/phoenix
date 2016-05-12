@@ -165,16 +165,17 @@ void calculate_esc_pulses_duration(receiver_inputs_t *receiver, PID_roll_t * rol
   esc->esc_3 = receiver->gas_scaled - roll->output.ut + pitch->output.ut + yaw->output.ut; //Calculate the pulse for esc 3 (rear-right - CCW)
   esc->esc_4 = receiver->gas_scaled + roll->output.ut + pitch->output.ut - yaw->output.ut; //Calculate the pulse for esc 4 (rear-left - CW)
 
-/*
+
 if (esc->esc_1 < 1200) esc->esc_1 = 1200;                                         //Keep the motors running.
 if (esc->esc_2 < 1200) esc->esc_2 = 1200;                                         //Keep the motors running.
 if (esc->esc_3 < 1200) esc->esc_3 = 1200;                                         //Keep the motors running.
 if (esc->esc_4 < 1200) esc->esc_4 = 1200;                                         //Keep the motors running.
-*/
+
 if(esc->esc_1 > 2000)esc->esc_1 = 2000;                                           //Limit the esc-1 pulse to 2000us.
 if(esc->esc_2 > 2000)esc->esc_2 = 2000;                                           //Limit the esc-2 pulse to 2000us.
 if(esc->esc_3 > 2000)esc->esc_3 = 2000;                                           //Limit the esc-3 pulse to 2000us.
 if(esc->esc_4 > 2000)esc->esc_4 = 2000;                                           //Limit the esc-4 pulse to 2000us.
+
 }
 
 void calculate_esc_pulses_to_stop_motors(ESC_outputs_t *esc){
@@ -183,6 +184,7 @@ void calculate_esc_pulses_to_stop_motors(ESC_outputs_t *esc){
   esc->esc_3 = 1000;                                                           //If start is not 2 keep a 1000us pulse for ess-3.
   esc->esc_4 = 1000;                                                           //If start is not 2 keep a 1000us pulse for ess-4.
 }
+
 
 
 void commandPWMSignals(ESC_outputs_t *esc){
@@ -266,15 +268,15 @@ void PWM_loop(int *sign){
 
     uart_puts("\r\n******** Yaw Settings ******** : ");
     uart_puts(" ---\r\n KP = ");
-    uart_putd(settings_pitch->KP);
+    uart_putd(settings_yaw->KP);
     uart_puts(" ---\r\n KI = ");
-    uart_putd(settings_pitch->KI);
+    uart_putd(settings_yaw->KI);
     uart_puts(" ---\r\n KD = ");
-    uart_putd(settings_pitch->KD);
+    uart_putd(settings_yaw->KD);
     uart_puts(" ---\r\n upper_limit = ");
-    uart_putd(settings_roll->upper_limit);
+    uart_putd(settings_yaw->upper_limit);
     uart_puts(" ---\r\n lower_limit = ");
-    uart_putd(settings_roll->lower_limit);
+    uart_putd(settings_yaw->lower_limit);
   }
 
 
