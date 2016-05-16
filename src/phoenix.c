@@ -18,7 +18,7 @@
 //Don't forget `volatile`!
 volatile int fDebug_receiver = 0 ;
 volatile int fDebug_escs = 0 ;
-volatile int fDebug_battery = 0;
+volatile int fDebug_battery = 1;
 volatile int fDebug_gyro = 0;
 volatile int fDebug_pid_settings_input_output = 0;
 volatile int fDebug_masterLoopIndex = 0;
