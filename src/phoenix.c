@@ -215,9 +215,9 @@ int main(void) {
         LED_GREEN_ON();
       }
 
-
-      battery_voltage = readBatteryVoltage();
-      if(battery_voltage < 11 ){LED_RED_ON();}
+       //A complementary filter is used to reduce noise.
+      battery_voltage = battery_voltage*0.92+ readBatteryVoltage() * 0.08;
+      if((battery_voltage < 10.2) && (battery_voltage > 6) ){LED_RED_ON();}
       if(fDebug_battery == 1){
         uart_puts("\r\n --- Battery Voltage ---\r\n");
         uart_putd(battery_voltage);

@@ -46,6 +46,9 @@ void reset_accoumulated_error_PID_input(PID_roll_t *roll, PID_pitch_t *pitch, PI
   roll->input.accomulated_error = 0;
   pitch->input.accomulated_error = 0;
   yaw->input.accomulated_error = 0;
+  roll->input.last_error = 0;
+  pitch->input.last_error = 0;
+  yaw->input.last_error = 0;
 }
 
 //Calculates the PID output from the input and settings
