@@ -29,16 +29,16 @@
 
 // Gains for the ROLL PID, are the same as the PITCH PID
 
-#define P_ROLL  0 // Fast oscillation = 6
+#define P_ROLL  1 // Fast oscillation = 6
 #define I_ROLL 0 // At 1 there is trembling
-#define D_ROLL 0 //80 Old value
+#define D_ROLL 22 //35 restless, 30 smooth again, lower 25% = 22
 
-#define P_PITCH  0 // Fast oscillation = 6, 4 old value
+#define P_PITCH  1 // Fast oscillation = 6, 4 old value
 #define I_PITCH 0 //0.06 old value
-#define D_PITCH  // 100 Trembling, 80 old value
+#define D_PITCH 22 // 35 restless, 30 smooth again, lower 25% = 22
 
-#define P_YAW 0 //3 original
-#define I_YAW 0 //0.02 original
+#define P_YAW 4 //3 original
+#define I_YAW 0.02 //0.02 original
 #define D_YAW 0
 
 /*#define P_ROLL  1.4
