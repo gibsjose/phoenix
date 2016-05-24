@@ -13,6 +13,19 @@
 
 #include "phoenix-util.h"
 
+
+void init_master_Loop_timerRegisters(){
+  TCCR3A = 0;
+  TCCR3B = 0;
+  TCNT3H  = 0;
+  TCNT3L  = 0;
+
+  OCR3A = 8000;            // compare match register 16MHz/8/
+  TCCR3B |= (1 << WGM32);   // CTC mode
+  TCCR3B |= (1 << CS31);    // 8 prescaler
+  TIMSK3 |= (1 << OCIE3A);  // enable timer compare interrupt
+
+}
 void init_analog_input_pins(){
   // Select Vref=AVcc
 ADMUX |= (1<<REFS0);

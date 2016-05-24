@@ -23,6 +23,7 @@
 
 void init_analog_input_pins(void);
 double readBatteryVoltage(void);
+void init_master_Loop_timerRegisters(void);
 
 void init_LEDs_as_outputs(void);
 

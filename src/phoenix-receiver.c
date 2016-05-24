@@ -27,7 +27,7 @@ uart_puts("Configuring receiver registers\r\n");
 
 TCCR5B = 0;
 TCCR5A = 0;
-TCCR5B =  (1<<CS51)| (1<<CS50);
+TCCR5B |=  (1<<CS51)| (1<<CS50);
 TCCR5C = 0;
 
 //Arduino (Atmega) pins default to inputs, so they don't need to be explicitly declared as inputs

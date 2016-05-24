@@ -143,15 +143,15 @@ Used for atmega328p
   //Configure Timer 1: Pins 11 & 12
   // CS12, CS11, CS10 = 100 (prescaler = 256)
   // WGM13, WGM12, WGM11, WGM10 = 0101 (Mode 5)
-  TCCR1A = (1<<COM1A1) | (1<<COM1B1) | (1<<WGM10);
-  TCCR1B = (1<<WGM12) | (1<<CS12);
+  TCCR1A |= (1<<COM1A1) | (1<<COM1B1) | (1<<WGM10);
+  TCCR1B |= (1<<WGM12) | (1<<CS12);
 
   //Configure Timer 0: Pins 13 & 6
   // CS02, CS01, CS00 = 100 (prescaler = 256)
   // WGM02, WGM01, WGM00 = 011 (Mode 3)
 
-  TCCR0A = (1<<COM0A1) | (1<<COM0B1) | (1<<WGM01) | (1<<WGM00); //Fast PWM
-  TCCR0B = (1<<CS02); //256 preescaler
+  TCCR0A |= (1<<COM0A1) | (1<<COM0B1) | (1<<WGM01) | (1<<WGM00); //Fast PWM
+  TCCR0B |= (1<<CS02); //256 preescaler
 
   //Initial values under 1000 us, motors stopped
   OCR0A = 61;
