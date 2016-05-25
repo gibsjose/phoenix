@@ -113,7 +113,7 @@ int main(void) {
   //////**********//////
   while (MODE == IDLE) {
     // Starting the motors: GAS low and YAW left.
-    if(receiver_gas_received && receiver_roll_received && receiver_pitch_received && receiver_yaw_received && receiver_channel5_received && receiver_channel6_received){
+    if(receiver_gas_received && receiver_roll_received && receiver_pitch_received && receiver_yaw_received && receiver_channel5_received){
       receiver->gas = 4*receiver_input_channel_3; //4 is the relation between the timer frequency and the pwm frequency
       receiver->roll = 4*receiver_input_channel_1;
       receiver->yaw = 4*receiver_input_channel_4;
@@ -143,6 +143,16 @@ int main(void) {
       receiver_channel6_received = false;
       idle_loop_counter++;
     }
+
+    if(fDebug_receiver){
+    uart_puts(" \r\n\r\nReceiver booleans:");
+    if(receiver_gas_received){uart_puts("\r\nreceiver_gas_received = true");}
+    if(receiver_roll_received){uart_puts("\r\nreceiver_roll_received = true");}
+    if(receiver_pitch_received){uart_puts("\r\nreceiver_pitch_received = true");}
+    if(receiver_yaw_received){uart_puts("\r\nreceiver_yaw_received = true");}
+    if(receiver_channel5_received){uart_puts("\r\nreceiver_channel5_received = true");}
+    if(receiver_channel6_received){uart_puts("\r\nreceiver_channel6_received = true");}
+  }
   }
 
   LED_GREEN_ON();
@@ -171,7 +181,7 @@ int main(void) {
       }
 
 
-      if(receiver_gas_received && receiver_roll_received && receiver_pitch_received && receiver_yaw_received && receiver_channel5_received && receiver_channel6_received){
+      if(receiver_gas_received && receiver_roll_received && receiver_pitch_received && receiver_yaw_received && receiver_channel5_received){
         receiver->gas = 4*receiver_input_channel_3; //4 is the relation between the timer frequency and the pwm frequency
         receiver->roll = 4*receiver_input_channel_1;
         receiver->yaw = 4*receiver_input_channel_4;

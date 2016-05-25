@@ -35,7 +35,7 @@
 #define SPORT  3         //Allows 500/3 = 166.67 degrees per second max angular rate (= max setpoint)
 #define RELAX  4         //Allows 500/4 = 125 degrees per second max angular rate (= max setpoint)
 
-#define PILOTING_MODE SPORT
+#define PILOTING_MODE RELAX
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

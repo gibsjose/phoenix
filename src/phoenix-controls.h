@@ -26,19 +26,24 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PID gain and limit settings
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//Comentaris 24/05
+/**
+1. Channel 5 must reset the integrator
+2. Els setpoints es queden posats. Tried with RELAX mode
+3. Disable interrupts until after gyro calibration
+*/
 // Gains for the ROLL PID, are the same as the PITCH PID
 
-#define P_ROLL  1 // Fast oscillation = 6
-#define I_ROLL 0 // At 1 there is trembling
+#define P_ROLL  2.3 // Fast oscillation = 2.5, lower 50% 1.25. 2nd Round fast oscillation at 2.5
+#define I_ROLL 0.06 // Oscillation starting at 1.2.. 50% is 0.06
 #define D_ROLL 22 //35 restless, 30 smooth again, lower 25% = 22
 
-#define P_PITCH  1 // Fast oscillation = 6, 4 old value
-#define I_PITCH 0 //0.06 old value
+#define P_PITCH  2.3// Fast oscillation = 2.5, lower 50% 1.25. 2nd Round fast oscillation at 2.5
+#define I_PITCH 0.06 // Oscillation starting at 1.2.. 50% is 0.06
 #define D_PITCH 22 // 35 restless, 30 smooth again, lower 25% = 22
 
 #define P_YAW 4 //3 original
-#define I_YAW 0.02 //0.02 original
+#define I_YAW 0.03 //0.02 original
 #define D_YAW 0
 
 /*#define P_ROLL  1.4
