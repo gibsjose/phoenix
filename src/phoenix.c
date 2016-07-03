@@ -88,6 +88,7 @@ int main(void) {
   uart_puts("Initializing ESC & Receiver registers \r\n");
   delay_us(250000);
 
+ //Disable Interrupts for gyro calibration
   //Initialize gyroscope
   gyro_init(gyro);
 
@@ -124,7 +125,9 @@ int main(void) {
       //Initialize PID settings for roll, pitch, yaw
       uart_puts("Receiver received \r\n");
       receiver_scale(receiver);
-      receiver_print(receiver);
+      //receiver_print(receiver);
+      gyro_read_scaleOffset_filter(gyro);
+      gyro_print(gyro);
       if( (receiver->gas_scaled <= 1020) && (receiver->gas_scaled >= 990) &&  (receiver->yaw_scaled <= 1020) && (receiver->yaw_scaled >= 990) ){
         MODE = FLY;
         reset_accoumulated_error_PID_input(pid_roll, pid_pitch, pid_yaw);
@@ -249,6 +252,13 @@ int main(void) {
       }
       //	battery_voltage = battery_voltage * 0.92 + (analogRead(0) + 65) * 0.09853;
 
+      if(receiver->channel5_scaled > 1500){
+        if(fDebug_receiver == 1){
+              uart_puts("\r\n --- Reseting PID errors ---\r\n");
+        }
+        reset_accoumulated_error_PID_input(pid_roll, pid_pitch, pid_yaw);
+      }
+
       if (MODE == FLY){ //The motors are started
         //Calculate the PID output to feed into the ESCs
         calculate_pids(gyro, setpoints, pid_roll, pid_pitch, pid_yaw);
@@ -258,7 +268,7 @@ int main(void) {
         commandPWMSignals(esc);
         if(fDebug_pid_settings_input_output == 1){
           //print_pid_settings(&(pid_roll->settings),&(pid_pitch->settings),&(pid_yaw->settings));
-          print_pid_outputs(&(pid_roll->output),&(pid_pitch->output),&(pid_yaw->output));
+        //  print_pid_outputs(&(pid_roll->output),&(pid_pitch->output),&(pid_yaw->output));
           print_pid_inputs(&(pid_roll->input),&(pid_pitch->input),&(pid_yaw->input));
         }
       }

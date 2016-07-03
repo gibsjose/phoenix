@@ -31,7 +31,7 @@ MCU = atmega2560
 PHOENIX_PROGRAMMER ?= wiring -D
 
 # Programmer Serial port (ex: usb, com5, ttyACM0)
-PHOENIX_PORT ?= com13
+PHOENIX_PORT ?= com3
 
 
 # Output format. (can be srec, ihex, binary)

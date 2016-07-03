@@ -28,7 +28,7 @@
 #define GYRO_ADDR           0xD6    //Gyroscope I2C Address: 0xD6 = 214 = 0b11010010
 
 //Configuration
-#define GYRO_CALIBRATION_STEPS  2000    ///Number of measurements during gyro calibration
+#define GYRO_CALIBRATION_STEPS  4000    ///Number of measurements during gyro calibration
 
 #define ROLL_COEFFICIENT    1.0        //Non-inverted
 #define PITCH_COEFFICIENT   1.0        //Non-inverted
@@ -61,7 +61,7 @@
 #define SCALE_COEFFICIENT   0.0175 // 17.5 mili-dregrees per second per count if using  GYRO_FS1 = 0 and GYRO_FS0 = 1
 
 //We low-pass filter the velocity read from the gyro. 0.8 and FILTER_COEFFICIENT = 0.2 are good values
-#define FILTER_COEFFICIENT  0.2  //That is the weight we will assign to the new gyro readouts
+#define FILTER_COEFFICIENT  0.8  //That is the weight we will assign to the new gyro readouts
 
 #define GYRO_AUTO_INC       (1 << 7)    //Auto increment
 #define GYRO_READ_REG       0x28        //Read register (0x28)

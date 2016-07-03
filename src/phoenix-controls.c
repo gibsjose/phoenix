@@ -63,11 +63,11 @@ void pid_controller(PID_input_t * PID_input, PID_settings_t * PID_settings, PID_
   PID_output->I_contribution = PID_input->accomulated_error;                    //Dumb but clearer
   PID_output->I_contribution = PID_output->I_contribution  + PID_settings->KI * PID_output->error;
 
-  if(PID_output->I_contribution > PID_settings->upper_limit){ // Do not let the Integral gain build up too much
-    PID_output->I_contribution = PID_settings->upper_limit;
+  if(PID_output->I_contribution > ((PID_settings->upper_limit)/2)){ // Do not let the Integral gain build up too much
+    PID_output->I_contribution = (PID_settings->upper_limit)/2;
   }
-  if(PID_output->I_contribution < PID_settings->lower_limit){
-    PID_output->I_contribution = PID_settings->lower_limit;
+  if(PID_output->I_contribution < ((PID_settings->lower_limit)/2)){
+    PID_output->I_contribution = ((PID_settings->lower_limit)/2);
   }
   PID_input->accomulated_error = PID_output->I_contribution; //To be used next time we compte the contribution
 
