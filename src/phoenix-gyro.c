@@ -77,6 +77,8 @@ uint8_t gyro_init(gyro_t * gyro) {
 
     //Give the gyroscope a bit of time (250ms) to start
     delay_us(250000);
+    uart_puts("Gyroscope Initialized\r\n");
+
 
     return OK;
 }

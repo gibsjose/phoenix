@@ -16,9 +16,10 @@
 
 
 //Don't forget `volatile`!
-volatile int fDebug_receiver = 0 ;
-volatile int fDebug_escs = 0 ;
-volatile int fDebug_battery = 0;
+volatile int fDebug_receiver = 1 ;
+volatile int fDebug_receiver_booleans = 0;
+volatile int fDebug_escs = 1 ;
+volatile int fDebug_battery = 1;
 volatile int fDebug_gyro = 0;
 volatile int fDebug_pid_settings_input_output = 0;
 volatile unsigned long fDebug_masterLoopIndex = 0;
@@ -55,7 +56,8 @@ int main(void) {
   gyro_t *gyro = (gyro_t *)malloc(sizeof(gyro_t));
   memset(gyro, 0, sizeof(gyro_t));
   receiver_inputs_t *receiver = (receiver_inputs_t*)malloc(sizeof(receiver_inputs_t));
-  receiver_memset(receiver);
+  //Not sure why receiver_memset(receiver);
+  memset(receiver, 0, sizeof(receiver_inputs_t));
   setpoints_t *setpoints = (setpoints_t*)malloc(sizeof(setpoints_t));
   memset(setpoints, 0, sizeof(setpoints_t));
   PID_roll_t *pid_roll = (PID_roll_t *)malloc(sizeof(PID_roll_t));
@@ -95,9 +97,9 @@ int main(void) {
   //Calibrate gyroscope. BE careful
   gyro_calibrate(gyro);
   if(fDebug_gyro == 1){
+    gyro_read_scaleOffset_filter(gyro);
     gyro_print(gyro);
   }
-
   //Initialize PID settings for roll, pitch, yaw
   uart_puts("Initializing PID Settings \r\n");
 
@@ -123,11 +125,12 @@ int main(void) {
       receiver->channel6 = 4*receiver_input_channel_6;
 
       //Initialize PID settings for roll, pitch, yaw
-      uart_puts("Receiver received \r\n");
+      //uart_puts("Receiver received \r\n");
       receiver_scale(receiver);
       //receiver_print(receiver);
       gyro_read_scaleOffset_filter(gyro);
-      gyro_print(gyro);
+      //gyro_print(gyro);
+      receiver_print(receiver);
       if( (receiver->gas_scaled <= 1020) && (receiver->gas_scaled >= 990) &&  (receiver->yaw_scaled <= 1020) && (receiver->yaw_scaled >= 990) ){
         MODE = FLY;
         reset_accoumulated_error_PID_input(pid_roll, pid_pitch, pid_yaw);
@@ -147,15 +150,16 @@ int main(void) {
       idle_loop_counter++;
     }
 
-    if(fDebug_receiver){
-    uart_puts(" \r\n\r\nReceiver booleans:");
-    if(receiver_gas_received){uart_puts("\r\nreceiver_gas_received = true");}
-    if(receiver_roll_received){uart_puts("\r\nreceiver_roll_received = true");}
-    if(receiver_pitch_received){uart_puts("\r\nreceiver_pitch_received = true");}
-    if(receiver_yaw_received){uart_puts("\r\nreceiver_yaw_received = true");}
-    if(receiver_channel5_received){uart_puts("\r\nreceiver_channel5_received = true");}
-    if(receiver_channel6_received){uart_puts("\r\nreceiver_channel6_received = true");}
-  }
+    if(fDebug_receiver_booleans){
+      uart_puts(" \r\n\r\nReceiver booleans:");
+      if(receiver_gas_received){uart_puts("\r\nreceiver_gas_received = true");}
+      else if(receiver_roll_received){uart_puts("\r\nreceiver_roll_received = true");}
+      else if(receiver_pitch_received){uart_puts("\r\nreceiver_pitch_received = true");}
+      else if(receiver_yaw_received){uart_puts("\r\nreceiver_yaw_received = true");}
+      else if(receiver_channel5_received){uart_puts("\r\nreceiver_channel5_received = true");}
+      else if(receiver_channel6_received){uart_puts("\r\nreceiver_channel6_received = true");}
+      else {uart_puts("\r\nno receiver channels received");}
+    }
   }
 
   LED_GREEN_ON();
