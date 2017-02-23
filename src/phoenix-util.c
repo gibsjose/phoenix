@@ -44,7 +44,7 @@ double readBatteryVoltage(){
     //Vbatt = 2.5 · Vx + VDiode ( x2.5 because of R3 = 1.5K and R2 = 1K)
     // VDiode = 0.65 V
   //   return (((double)ADC/1023) * 5 * 2.5 + 0.65); The 0.65 is the diode voltage drop, but since I re-did the connections, I don't need to add it.
-     return (((double)ADC/1023) * 5 * 2.5 );
+     return (((double)ADC/1023) * 5 * 2.5 + 0.7 );
 }
 
 void init_LEDs_as_outputs(){
