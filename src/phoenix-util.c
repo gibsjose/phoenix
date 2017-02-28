@@ -52,15 +52,15 @@ void init_LEDs_as_outputs(){
   DDRL |= PIN_49;
 
 }
-void LED_RED_ON(){
+void LED_GREEN_ON(){
 	PORTL |= PIN_49;
 
 }
-void LED_RED_OFF(){
+void LED_GREEN_OFF(){
 	PORTL &= ~PIN_49;
 }
 
-void LED_RED_CHANGE_STATUS(){
+void LED_GREEN_CHANGE_STATUS(){
   if((PORTL & (PIN_49)) == 0 ){
      PORTL |= (PIN_49);
   }
@@ -69,15 +69,15 @@ void LED_RED_CHANGE_STATUS(){
     }
 }
 
-void LED_GREEN_ON(){
+void LED_RED_ON(){
 	PORTB |= PIN_10;
 
 }
-void LED_GREEN_OFF(){
+void LED_RED_OFF(){
 	PORTB &= ~PIN_10;
 }
 
-void LED_GREEN_CHANGE_STATUS(){
+void LED_RED_CHANGE_STATUS(){
 
   if((PORTB & (PIN_10)) == 0 ){
      PORTB |= (PIN_10);

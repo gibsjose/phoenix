@@ -16,9 +16,9 @@
 
 
 //Don't forget `volatile`!
-volatile int fDebug_receiver = 1 ;
+volatile int fDebug_receiver = 0 ;
 volatile int fDebug_receiver_booleans = 0;
-volatile int fDebug_escs = 1 ;
+volatile int fDebug_escs = 0 ;
 volatile int fDebug_battery = 1;
 volatile int fDebug_gyro = 0;
 volatile int fDebug_pid_settings_input_output = 0;
@@ -247,7 +247,7 @@ int main(void) {
 
       //A complementary filter is used to reduce noise.
       battery_voltage = battery_voltage*0.92+ readBatteryVoltage() * 0.08;
-      if((battery_voltage < 10.2) && (battery_voltage > 6) ){LED_RED_ON();}
+      if((battery_voltage < 12.2) && (battery_voltage > 6) ){LED_RED_ON();}
       if(fDebug_battery == 1){
         uart_puts("\r\n --- Battery Voltage ---\r\n");
         uart_putd(battery_voltage);

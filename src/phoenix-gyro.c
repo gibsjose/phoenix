@@ -106,15 +106,15 @@ uint8_t gyro_calibrate(gyro_t * gyro) {
         }
 
 
-        //Delay 10ms
-        delay_us(1000);
+        //Delay 5ms
+        delay_us(500);
     }
     gyro->roll_offset = (gyro->roll_offset / GYRO_CALIBRATION_STEPS);
     gyro->pitch_offset = (gyro->pitch_offset / GYRO_CALIBRATION_STEPS);
     gyro->yaw_offset = (gyro->yaw_offset / GYRO_CALIBRATION_STEPS);
     gyro_scale_offset(gyro);
     gyro_print_offsets(gyro);
-    LED_RED_OFF();
+    LED_GREEN_OFF();
     return OK;
 }
 

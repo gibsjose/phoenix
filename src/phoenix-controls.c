@@ -139,6 +139,10 @@ Used for atmega328p
   //Reset timer counters, so the PWM signals will be in phase
   TCNT1 = 0;
   TCNT0 = 0;
+  TCCR1A = 0;
+  TCCR1B = 0;
+  TCCR0A = 0;
+  TCCR0B = 0;
 
   //Configure Timer 1: Pins 11 & 12
   // CS12, CS11, CS10 = 100 (prescaler = 256)
